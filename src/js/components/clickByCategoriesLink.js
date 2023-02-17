@@ -1,10 +1,12 @@
+import {fetchNewsByCategories} from './fetchNewsByCategories'
 export function onSerchByCategori() {
     const categoriesLink = document.querySelector('.categories-box');
     categoriesLink.addEventListener('click', (e) =>{
-        if (e.target.className !== "categories-link") {
+        if (e.target.nodeName !== "A") {
         return
         }
-        console.log(e.target.textContent);
+        const encoded = encodeURIComponent(`${e.target.textContent.toLowerCase()}`); 
+        fetchNewsByCategories(encoded);
 })   
 
 }
