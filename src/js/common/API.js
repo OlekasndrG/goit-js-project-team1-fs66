@@ -1,9 +1,8 @@
 const ENDPOINT = '';
 const API_KEY = 'lN1jAQVvVGOPSqcIQoMHMLLJA9oE1Rka';
-import Notiflix from 'notiflix';
 import axios from 'axios';
 
-export default class Picture {
+export default class API {
   constructor() {
     this.name = '';
     this.page = 1;
