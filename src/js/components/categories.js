@@ -1,5 +1,6 @@
 import {fetchCategories} from './fetchSemanticList'
 import {onSerchByCategori} from './clickByCategoriesLink'
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const buttonCategoriesRef = document.querySelector('.button-categories')
 const ulCategoriesRef = document.querySelector('.categories-list')
 const ulCategoriesOtherRef = document.querySelector('.categories-list-others')
@@ -54,19 +55,17 @@ function onMarkupSixCategories(section) {
 
 }
 
-
 function categoriesIsOpen() {
   ulCategoriesRef.classList.toggle('is-open')
   buttonCategoriesRef.classList.toggle('is-open')
   ulCategoriesOtherRef.classList.toggle('is-open')
 }
-function searchCategories() {
-  fetchCategories().then(onFilterCategories).catch(console.log('error'))
+async function searchCategories() {
+  const result = await fetchCategories()
+  onFilterCategories(result)
 }
 
-
 buttonCategoriesRef.addEventListener('click', categoriesIsOpen)
-
 
 
 function onFormatingString(string) {
