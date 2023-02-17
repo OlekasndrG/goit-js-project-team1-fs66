@@ -5,7 +5,17 @@
   |============================
 */
 @import url('./reset.css');
-@import url('./vite-promo.css');
+@import url('./components/articles.css');
+@import url('./components/burger-menu.css');
+@import url('./components/calendar.css');
+@import url('./components/categories.css');
+@import url('./components/favorites.css');
+@import url('./components/footer.css');
+@import url('./components/pagination.css');
+@import url('./components/read.css');
+@import url('./components/theme.css');
+@import url('./components/weather.css');
+@import url('./components/header.css');
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
