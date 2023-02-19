@@ -8,3 +8,8 @@ import './js/components/pagination';
 import './js/components/read';
 import './js/components/weather';
 import './js/components/burger-menu';
+import './js/components/dataBase/auth';
+import './js/components/dataBase/setDatabase';
+import './js/components/dataBase/register';
+import './js/components/dataBase/modal'
+import './js/components/dataBase/authForm'
