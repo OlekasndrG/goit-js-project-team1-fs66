@@ -14,5 +14,5 @@ import './js/components/dataBase/register';
 import './js/components/dataBase/modal';
 import './js/components/dataBase/authForm';
 import './js/components/input';
-// import './js/common/markup_template';
+import './js/common/markup_template';
 import './js/common/weather_API';
