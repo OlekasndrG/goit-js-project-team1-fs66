@@ -155,7 +155,7 @@ function makeUniqueArrayByKey({ key, array }) {
 }
 
 // Кінець----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-=======
+
 const KEY = 'lN1jAQVvVGOPSqcIQoMHMLLJA9oE1Rka';
 const MOST_POPULAR_NEWS = `https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=${KEY}`;
 
