@@ -1,6 +1,6 @@
 import './js/components/theme';
 import './js/components/categories';
-import './js/components/articles';
+// import './js/components/articles';
 import './js/components/calendar';
 import './js/components/favorites';
 import './js/components/header';
