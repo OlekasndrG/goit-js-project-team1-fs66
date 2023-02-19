@@ -1,0 +1,53 @@
+.accordion {
+	display: block;
+}
+
+.accordion__title {
+	display: flex;
+	align-items: flex-end;
+	padding-bottom: 12px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 1.71;
+	letter-spacing: 0.02em;
+
+	cursor: pointer;
+	outline: none;
+	transition: 0.4s;
+	color: #111321;
+	border-bottom: 1px solid #929292;
+}
+
+.accordion__arrow {
+	pointer-events: none;
+	margin-left: 8px;
+	border: solid black;
+	border-width: 0 2px 2px 0;
+	display: inline-block;
+	padding: 3px;
+	margin-bottom: 6px;
+}
+
+.accordion__arrow--up {
+	transform: rotate(-135deg);
+	-webkit-transform: rotate(-135deg);
+}
+
+.accordion__arrow--down {
+	align-self: center;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}
+
+.accordion__content {
+	display: none;
+}
+
+.is-active {
+	display: block;
+}
