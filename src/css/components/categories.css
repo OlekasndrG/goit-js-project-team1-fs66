@@ -8,7 +8,6 @@
 }
 .categories-box{
     display: flex;
-    height: 100%;
 
 }
 .menu-box{
@@ -41,6 +40,7 @@
     top: 30px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: flex-start;
     border: drop-shadow(0px 10px 60px rgba(0, 0, 0, 0.1));
     color: #4B48DB;
@@ -122,12 +122,11 @@
         padding: 8px 48px 8px 24px;
     }
     .categories-list-others.is-open{
-        max-height: 320px;
-        overflow: auto;
-        /* overflow-y:scroll; */
+        height: 320px;
+        overflow-y:scroll ;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: flex-start;
         position: absolute;
         top: 48px;
@@ -135,7 +134,7 @@
         box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
         color: #4B48DB;
         border-radius: 20px;
-        padding: 0px 24px 8px 24px;
+        padding: 0px 24px;
     }
     .categories-item-tablet-other{
         font-size: 12px;
