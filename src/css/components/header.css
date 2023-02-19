@@ -6,13 +6,13 @@ body.is-open {
   margin-right: auto;
   padding-left: 16px;
   padding-right: 16px;
-  width: 320px;
+  width: 480px;
 }
 .position-header {
-  position: relative;
-  flex-direction: column;
+  display: flex;
+  align-items: center;
 }
-.header {
+.home-header {
   display: flex;
   padding: 24px 0px 24px 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -34,18 +34,7 @@ body.is-open {
 }
 
 .menu-button {
-  display: inline-block;
-  padding: 0;
-  margin-left: auto;
-  background-color: #fff;
-  border: none;
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  background-color: transparent;
-  position: absolute;
-  top: 5px;
-  right: 0px;
+  margin-left: 14px;
 }
 .menu-container {
   display: none;
@@ -101,22 +90,46 @@ body.is-open {
 }
 
 .form-search {
-  fill: #000000;
-  position: absolute;
-  top: 4px;
-  right: 32px;
-  overflow: hidden;
-}
-
-.input-label {
+  height: 31px;
+  background-color: rgba(0, 0, 0, 0);
+  margin-left: auto;
   display: flex;
-  flex-direction: column;
-  transform: translateX(+88%);
-  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media screen and (min-width: 768px) {
+  .form-search {
+    border: 1px solid #111321;
+    width: 213px;
+    border-radius: 20px;
+    margin-top: 44px;
+    margin-bottom: 31px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .form-search {
+    width: 288px;
+  }
 }
 
-.input-label:hover {
-  transform: translateX(0);
+@media screen and (max-width: 768px) {
+  .search-field:hover {
+    margin-top: 1px;
+    border: 1px solid var(--text-color);
+    border-radius: 20px;
+  }
+  input {
+    width: 125px;
+    padding: 8px 0;
+  }
+
+  .search-field__btn {
+    color: #111321;
+    transition: all 0.4s;
+  }
+}
+@media screen and (min-width: 768px) {
+  .search-field__btn {
+    padding: 8px 19px 8px 14px;
+  }
 }
 
 .search-name {
@@ -135,38 +148,10 @@ body.is-open {
   border-right: 1px solid #111321;
 }
 
-.input-search {
-  width: 150px;
-  padding: 5px 0 5px 80px;
-  display: block;
-  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  outline: none;
-  border-radius: 20px;
-  background-color: transparent;
-  border-color: transparent;
-}
-
-.input-label:hover .input-search {
-  border: 1px solid #111321;
-  background-color: #fff;
-}
-
-.icon-search {
-  margin-right: 14px;
-  cursor: pointer;
-  position: absolute;
-  top: 4px;
-  left: 8px;
-}
-
 .search {
   display: inline-block;
   margin-right: 14px;
   overflow: hidden;
-}
-
-.search:hover .input-search {
-  transform: translateX(-100%);
 }
 
 .form-search.is-open {
@@ -271,40 +256,8 @@ body.is-open {
     display: flex;
   }
 
-  .form-search {
-    fill: #000000;
-    position: relative;
-    top: 0;
-    right: 0;
-  }
-  .input-label {
-    display: flex;
-    flex-direction: row;
-    transform: none;
-  }
-
-  .input-search {
-    width: 173px;
-    display: block;
-    transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    outline: none;
-    border-radius: 20px;
-    background-color: transparent;
-    border: 1px solid #111321;
-    background-color: #fff;
-  }
-
   .icon-search {
-    position: absolute;
-    top: 0px;
-  }
-
-  .icon-search {
-    margin-right: 14px;
-    cursor: pointer;
-    position: absolute;
-    top: 4px;
-    left: 8px;
+    fill: #111321;
   }
   /*     
     .theme-toggle{
@@ -320,6 +273,10 @@ body.is-open {
     border-bottom: 1px solid #4440f7;
   }
   .theme-site {
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     gap: 8px;
   }
 }
@@ -351,9 +308,6 @@ body.is-open {
     margin-right: 147px;
   }
 
-  .input-search {
-    width: 248px;
-  }
   /*     
     .theme-toggle{
         display: flex;
@@ -383,4 +337,43 @@ body.is-open {
     .theme-icon-dark{
         display: none;
     } */
+  .theme-site {
+    gap: 12px;
+  }
+}
+input {
+  font-family: 'Poppins';
+  font-size: 12px;
+  line-height: calc(21 / 12);
+  letter-spacing: 0.02em;
+  color: var(--text-color);
+  border: none;
+  background: none;
+  outline: none;
+}
+
+input:focus {
+  color: var(--text-color);
+}
+
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+  transition: background-color 9999s, color 9999s;
+}
+@media screen and (max-width: 768px) {
+  input {
+    padding: 0;
+    transition: 0.4s;
+    width: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  input {
+    padding: 5px 0;
+    font-size: 14px;
+    line-height: calc(24 / 14);
+  }
 }

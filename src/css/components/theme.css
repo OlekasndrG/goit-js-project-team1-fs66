@@ -3,6 +3,10 @@ body.themeDark {
   color: #ffffff;
 }
 
+.theme-site {
+  display: none;
+}
+
 .theme__light {
   margin: 0;
   padding: 0;
@@ -127,13 +131,4 @@ body.themeDark .theme__dark {
     border: 0;
     clip: rect(0 0 0 0);
   }
-  .theme-site {
-    padding: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-}
-.theme-site {
-  display: none;
 }
