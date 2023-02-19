@@ -1,124 +1,113 @@
 body.themeDark {
-    background-color: #2E2E2E;
-    color: #FFFFFF;
+  background-color: #2e2e2e;
+  color: #ffffff;
 }
 
 .theme-site {
-   padding: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
+  display: none;
 }
 
 .theme__light {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 .theme__dark {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
-.theme-label {      
-    margin-left: 8px;
-    margin-right: 8px;
+.theme-label {
+  margin-left: 8px;
+  margin-right: 8px;
 }
-#sitetheme{       
-    display: none;
+#sitetheme {
+  display: none;
 }
-#sitetheme+.theme-label, 
- #sitetheme+.theme-label::after {
-    transition: all .3s;
+#sitetheme + .theme-label,
+#sitetheme + .theme-label::after {
+  transition: all 0.3s;
 }
-#sitetheme+.theme-label {
-    display: inline-block;
-    position: relative;
-    width: 40px;
-    height: 20px;
+#sitetheme + .theme-label {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 20px;
 
-    background: #FFFFFF;
-    border: 1px solid #4B48DB;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-#sitetheme+.theme-label::after {
-    border-radius: 50%;
-    content: '';
-    position: absolute;
-    top: 8%;
-    left: 2%;
-    width: 17px;
-    height: 17px;
-    background-color: #4B48DB ;  
-    
+  background: #ffffff;
+  border: 1px solid #4b48db;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
-
-#sitetheme:checked+.theme-label::after {
-    left: 54%;
-    background-color: #f7f7f7;
-    
-
+#sitetheme + .theme-label::after {
+  border-radius: 50%;
+  content: '';
+  position: absolute;
+  top: 8%;
+  left: 2%;
+  width: 17px;
+  height: 17px;
+  background-color: #4b48db;
 }
 
-#sitetheme:checked+.theme-label {
-    background: #4B48DB;
+#sitetheme:checked + .theme-label::after {
+  left: 54%;
+  background-color: #f7f7f7;
+}
+
+#sitetheme:checked + .theme-label {
+  background: #4b48db;
 }
 .moon {
-    fill: #5F6775;
-    stroke: #5F6775;
-    
+  fill: #5f6775;
+  stroke: #5f6775;
 }
 
 .sun {
-    fill: #4B48DB;
-    stroke: #4B48DB;
+  fill: #4b48db;
+  stroke: #4b48db;
 }
 
-body.themeDark #sitetheme+.theme-label {
-    background: #4B48DB;
-    border: 1px solid #FFFFFF;
+body.themeDark #sitetheme + .theme-label {
+  background: #4b48db;
+  border: 1px solid #ffffff;
 }
 body.themeDark .moon {
-    fill: #4B48DB;
-    stroke: #4B48DB;
+  fill: #4b48db;
+  stroke: #4b48db;
 }
 
 body.themeDark .sun {
-    fill: #5F6775;
-    stroke: #5F6775;
+  fill: #5f6775;
+  stroke: #5f6775;
 }
 
 .theme__light {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 1.333;
-    color: #4B48DB;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.333;
+  color: #4b48db;
 }
-body.themeDark .theme__light{
-    color: #F4F4F4;
-    opacity: 0.4;
+body.themeDark .theme__light {
+  color: #f4f4f4;
+  opacity: 0.4;
 }
 .theme__dark {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    color: #5F6775; 
-
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #5f6775;
 }
-body.themeDark .theme__dark{
-    color: #4440F7;
-    
+body.themeDark .theme__dark {
+  color: #4440f7;
 }
 
 @media screen and (max-width: 1279px) {
-    .theme__dark,
-    .theme__light {
+  .theme__dark,
+  .theme__light {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -127,12 +116,12 @@ body.themeDark .theme__dark{
     overflow: hidden;
     border: 0;
     clip: rect(0 0 0 0);
-    }
+  }
 }
 
 @media screen and (min-width: 1280px) {
-    .sun,
-    .moon {
+  .sun,
+  .moon {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -141,5 +130,5 @@ body.themeDark .theme__dark{
     overflow: hidden;
     border: 0;
     clip: rect(0 0 0 0);
-    }
+  }
 }
