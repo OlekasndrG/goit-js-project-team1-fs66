@@ -28,35 +28,16 @@
                     </li>
                 </ul>
             </nav>
-            <!-- <div class="theme-toggle">
-                <div class="icon-them-sun"><span class="theme-descr">Light</span>
-                    <svg width="21" height="21" class="theme-icon-light">
-                        <use href="./img/symbol-defs.svg#icon-sun"></use>
-                    </svg>
-                </div>
-                <button type="button" class="theme-button">
-                    <svg width="40" height="20" class="icon-toggle-theme">
-                        <use href="./img/symbol-defs.svg#icon-toggle" class="icon-toggle-d"></use>
-                        <use href="./img/symbol-defs.svg#icon-toggle-n" class="icon-toggle-n"></use>
-                    </svg>
-                </button>
-                <div class="icon-them-moon">
-                    <span class="theme-descr">Dark</span>
-                    <svg width="21" height="21" class="theme-icon-dark">
-                        <use href="./img/symbol-defs.svg#icon-moon"></use>
-                    </svg>
-                </div>
-            </div> -->
-
             
         </div>
-        <form action="search" class="form-search">
-            <label for="search" class="input-label" name="search"> <span class="search-name">Search</span>
-                <input type="text" id="search" class="input-search">
-                <svg width="20" height="20" class="icon-search">
-                    <use href="./img/symbol-defs.svg#icon-search"></use>
-                </svg>
-            </label>
+        <form action="search" class="form-search" id="form-field">
+           <button class="search-field__btn" id="form-btn">
+            <svg width="20" height="20" class="icon-search">
+            <use href="./img/symbol-defs.svg#icon-search"></use>
+            </svg>
+            </button>
+                
+            <input type="text" id="search-field__input" placeholder="Search |" />
         </form>
         <button type="button" class="menu-button" date-menu-button aria-expanded="false"
             aria-label="Перемикач мобільного меню">
