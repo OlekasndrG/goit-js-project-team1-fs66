@@ -17,6 +17,7 @@
 @import url('./components/theme.css');
 @import url('./components/weather.css');
 @import url('./components/header.css');
+@import url('./components/auth.css');
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -32,4 +33,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+root body.themeDark {
+  --bg-color: #2e2e2e;
+  --text-color: #f4f4f4;
+  --switcher-accent-day: #f4f4f4;
+  --switcher-gray-moon: #4440f7;
 }

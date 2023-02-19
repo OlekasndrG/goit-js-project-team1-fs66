@@ -4,7 +4,10 @@ body.themeDark {
 }
 
 .theme-site {
-  display: none;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .theme__light {
