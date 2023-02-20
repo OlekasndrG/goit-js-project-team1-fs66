@@ -16,3 +16,5 @@ import './js/components/dataBase/authForm';
 import './js/components/input';
 // import './js/common/markup_template';
 import './js/common/weather_API';
+import './js/components/renderOneCard';
+import './js/components/homeMain';
