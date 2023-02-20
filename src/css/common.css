@@ -22,3 +22,6 @@ body {
     color: var(--main-color);
     background-color: var(--main-light-backgroundd);
 }
+html {
+    overflow-y: scroll;
+  }
