@@ -2,6 +2,8 @@
 import { newsAPI } from './fetchNews';
 import { load, save } from '../common/local_storage';
 import api from '../common/API';
+import paginator from './pagination.js';
+import PaginationSearchHandler from  './paginationSearchHandler.js'
 
 // !!!!!!!!!!!!!!!!!!!!!! код що ничже - це є для тесту, що сформувати різні дати прочитання, кожний раз коли буде перезагружатись сторінка home він буде перезаписувати localStorage кодом що нижче
 const testLocalArray = [
@@ -167,21 +169,21 @@ async function getPopularArticle() {
     const articles = await articleFetch.json();
     let { results } = articles;
     // console.log(results);
-    
+
     const articlesCardsArr = results.map(({id, media, title, published_date, abstract, url, section})=>`<li class='articles-list-item' id='${id}'>
     <article class='articles-item-news'>
 
             <div class='articles-news-wrapper'>
                 <img class='articles-img-news'  src='${media}' alt=''/>
-                <p class="articles-news-category">${section}</p> 
+                <p class="articles-news-category">${section}</p>
                 <button type='button'>
                     <span> add favorite
                         <svg></svg>
-                    </span> 
-                </button> 
-            </div> 
+                    </span>
+                </button>
+            </div>
 
-            <div>  
+            <div>
                 <h2 class='articles-tittle-news'>${title}</h2>
                 <p class='articles-text-news'>${abstract}</p>
             </div>
@@ -194,7 +196,7 @@ async function getPopularArticle() {
                 <a target='blank' class='articles-link-news'  href='${url}'>Read more</a>
             </div>
     </article>
-</li>`).join(' '); 
+</li>`).join(' ');
 
 updateNewArticles(articlesCardsArr);
 };
@@ -206,14 +208,85 @@ function updateNewArticles(articlesCardsArr) {
 };
 
 
+// ------------------------приклад використання Pagination-----------------
 
+async function searchExample() {
+  // Приклад onSearch
 
-// ------------------------приклад використання апі-----------------
+  // Взяти поточне значення с форми пошуку та дату з календаря.
+  const apiParams = { q: 'Corgi', date: null };
 
-async function renderArticles() {
-  const result = await api.articleSearchMostPopular();
-  console.log(result);
+  function onPageChanged(articles) {
+    //Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
+    // в цьому місці можна їх рендерети
+    console.log(articles);
+  }
+
+  // передати метод API та поточні параметри, Paginator буде викликати API при навігації на наступну сторінку
+  const options = {
+    perPage: 8,
+    api: {
+      method: api.articleSearchByQuery,
+      params: apiParams,
+      // Якщо ми працюємо з пошуком, то обовязково передати цей параметр.
+      // Search дуже специфічне API, тому це потрібно, щоб не писати другий вид пагінатора
+      externalHandler: new PaginationSearchHandler()
+    },
+    onPageChanged: onPageChanged,
+  };
+
+  // Виклик методу paginate з нашими параметрами
+  paginator.paginate(options);
 }
 
-renderArticles();
+// searchExample()
 
+
+async function categoryExample() {
+
+  // Отримати поточну категорію та дату
+  const apiParams = { category: 'arts', date: null };
+
+  function onPageChanged(articles) {
+    // Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
+    // в цьому місці можна їх рендерети
+    console.log(articles);
+  }
+
+  // передати метод API та поточні параметри, Paginator буде викликати API при навігації на наступну сторінку
+  const options = {
+    perPage: 8,
+    api: {
+      method: api.articleSearchByCategory,
+      params: apiParams,
+    },
+    onPageChanged: onPageChanged,
+  };
+
+
+  // Виклик методу paginate з нашими параметрами
+  paginator.paginate(options);
+}
+
+//categoryExample();
+
+async function mostPopularExample() {
+  // Цей метод API дуже простий, він завжди повератє 20 записів.
+  // Тому тут ми робимо pagination ніби-то це простий array
+  // Попередньо отримавши усі можливі результати одним запросом
+
+  const result = await api.articleSearchMostPopular();
+
+  function onPageChanged(articles) {
+    // Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
+    // в цьому місці можна їх рендерети
+    console.log(articles);
+  }
+
+  // створити Paginator
+  const options = { perPage: 8, items: result.articles, onPageChanged: onPageChanged }
+  // Виклик методу paginate з нашими параметрами
+  paginator.paginate(options);
+}
+
+mostPopularExample()
