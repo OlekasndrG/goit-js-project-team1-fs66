@@ -54,7 +54,7 @@ body.is-open {
 .menu-container.is-open {
   display: block;
   padding-bottom: 18px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   height: 85vh;
 }
 .icon-close {
