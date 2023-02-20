@@ -1,6 +1,6 @@
 <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
-        <symbol id="icon-right" viewBox="0 0 32 32">
+        <symbol id="icon-right" viewBox="0 0 32 10">
             <path d="M16.229 16l-3.773-3.771 1.887-1.887 5.657 5.657-5.657 5.657-1.885-1.887 3.772-3.771z"></path>
         </symbol>
         <symbol id="icon-left" viewBox="0 0 32 32">
