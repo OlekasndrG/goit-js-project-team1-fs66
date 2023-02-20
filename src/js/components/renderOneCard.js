@@ -3,20 +3,11 @@ const ulCardList = document.querySelector('.list-news')
 
 export function onRenderOneCard(arrayNews) {
 
-    const arrayCard = arrayNews.map(news => {
-
+    const arrayCard = arrayNews.map((news, index) => {
         const {media, section,title,abstract,published_date, url} = news;
         let mediaUrl = ''
-        
-        if (media.length === 0) {
-            mediaUrl = 'https://static01.nyt.com/images/2023/02/17/opinion/16PAUL_4/16PAUL_4-thumbStandard.jpg'
-        }else{
-            const mediaData = media[0]
-            mediaUrl = mediaData['media-metadata'][2].url
-
- 
-        }
-        return `        <li class="list-news__item">
+        const WETHER = '<li class="wether-a"></li>'
+        const MARKUP = `<li class="list-news__item">
         <article class="item-news__article">
             <div class="item-news__wrapper-img">
                 <img class="item-news__img" src="${mediaUrl}" alt="">
@@ -41,7 +32,20 @@ export function onRenderOneCard(arrayNews) {
                 <a class="item-news__info-link" href="${url}#">Read more</a>
             </div>
         </article>
-    </li>`}).join('')
+    </li>`
+
+        if (media.length === 0) {
+            mediaUrl = 'https://static01.nyt.com/images/2023/02/17/opinion/16PAUL_4/16PAUL_4-thumbStandard.jpg'
+        }else{
+            const mediaData = media[0]
+            mediaUrl = mediaData['media-metadata'][2].url
+ 
+        }
+        if (index === 1) {
+            return MARKUP + WETHER
+        }
+        return MARKUP
+    }).join('')
     onMarkupCard(arrayCard)
 }
 
