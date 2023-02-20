@@ -50,12 +50,13 @@
   padding: 14px;
   max-height: 148px;
   overflow-y: scroll;
+
 }
 .button-categories {
   background-color: transparent;
   border-color: transparent;
   position: absolute;
-  top: 3px;
+  top: 5px;
   right: 3px;
 }
 .categories-item {
@@ -83,6 +84,7 @@
     border: none;
   }
   .categories-item-tablet {
+    background-color: #f4f4f4;
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;
@@ -108,6 +110,7 @@
     padding: 0;
   }
   .categories-others-menu {
+    background-color: #f4f4f4;
     display: flex;
     font-size: 12px;
     line-height: 16px;
@@ -119,11 +122,12 @@
     justify-content: center;
     align-items: center;
     padding: 8px 48px 8px 24px;
+    z-index: 19;
   }
   .categories-list-others.is-open {
     max-height: 320px;
     overflow: auto;
-    /* overflow-y:scroll; */
+    z-index: 20;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -154,9 +158,10 @@
   }
   .button-categories {
     position: absolute;
-    top: 6px;
-    right: 28px;
+    top: 9px;
+    right: 20px;
     width: 14px;
+    fill: #4440F6;
   }
 }
 @media screen and (min-width: 1280px) {
@@ -179,6 +184,7 @@
     color: #4b48db;
     border-radius: 20px;
     padding: 0px 24px;
+    background-color: #f4f4f4;
   }
   .categories-item-tablet:nth-child(3) {
     background-color: #f4f4f4;
