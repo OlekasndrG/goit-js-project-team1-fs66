@@ -18,3 +18,4 @@ import './js/components/input';
 import './js/common/weather_API';
 import './js/components/renderOneCard';
 import './js/components/homeMain';
+import './js/components/input';
