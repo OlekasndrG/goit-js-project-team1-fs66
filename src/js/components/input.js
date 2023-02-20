@@ -27,13 +27,14 @@ class API {
 
 const api = new API();
 
-const form = document.getElementById('form-field');
-const input = document.getElementById('search-field__input');
+const form = document.querySelector('form.form-search');
+const input = document.querySelector('.input-search');
 form.addEventListener('submit', onSubmit);
 const section = document.querySelector('.section__list-news');
 const articles = document.querySelector('.list-news');
 function onSubmit(event) {
   event.preventDefault();
+  console.log(input.value.trim());
   api.name = input.value.trim();
   api
     .articleSearchByQuery()
