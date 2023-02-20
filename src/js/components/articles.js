@@ -1,9 +1,11 @@
-
 import { newsAPI } from './fetchNews';
 import { load, save } from '../common/local_storage';
 import api from '../common/API';
 import paginator from './pagination.js';
-import PaginationSearchHandler from  './paginationSearchHandler.js'
+import PaginationSearchHandler from './paginationSearchHandler.js';
+import { writeUserCards } from './dataBase/setDatabase';
+import { onGetCookie } from './dataBase/getCookie';
+import { getDatabase, ref, child, get } from 'firebase/database';
 
 // !!!!!!!!!!!!!!!!!!!!!! код що ничже - це є для тесту, що сформувати різні дати прочитання, кожний раз коли буде перезагружатись сторінка home він буде перезаписувати localStorage кодом що нижче
 const testLocalArray = [
@@ -62,12 +64,12 @@ const newsFetch = new newsAPI();
 const data = {
   source: 'nyt',
   section: 'business',
-  cardsArray: [],
+  readCardsArray: [],
 };
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 const refs = {
-  homePageGallery: document.querySelector('.section__list-news'),
+  homePageGallery: document.querySelector('.list-news'),
 };
 
 newsFetch.fetchNews(data).then(makeArrayOfNewsData).catch(console.log);
@@ -106,13 +108,52 @@ function makeArrayOfNewsData(response) {
   );
 
   //  цейц код перезаписує local Storage після перезагрузки сторінки Home--------------------------------------------------------------------------------------------------
-  save('cards', testLocalArray);
+  // save('cards', testLocalArray);
   // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 // кінець кастомного фетчу----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // запис коду у local storage. З коду вище потрібний тільки data об'єкт із cardsArray властивістю
+
+// function findFavoriteCards() {
+//   if (load('favCards')) {
+//     const cardsArray = load('favCards');
+//     const arrayHomePageCards = Array.from(
+//       refs.homePageGallery.querySelectorAll('.item-news__article')
+//     );
+
+//     arrayHomePageCards.forEach(card => {
+//       const cardBtn = card.querySelector('.item-news__add-to-favorite');
+//       const cardTitle = card.querySelector('.item-news__title');
+//       cardsArray.forEach(({ title }) => {
+//         if (title === cardTitle.textContent) {
+// cardBtn.textContent = 'Remove from favorites';
+//           cardBtn.classList.add('fav-in-storage');
+//         }
+//       });
+//     });
+//   }
+// }
+
+// function findReadCards() {
+//   if (load('readCards')) {
+//     const cardsArray = load('readCards');
+//     const arrayHomePageCards = Array.from(
+//       refs.homePageGallery.querySelectorAll('.item-news__article')
+//     );
+
+//     arrayHomePageCards.forEach(card => {
+//       const cardStatus = card.querySelector('.news-card__status');
+//       const cardTitle = card.querySelector('.item-news__title');
+//       cardsArray.forEach(({ title }) => {
+//         if (title === cardTitle.textContent) {
+//           cardStatus.classList.add('is-already-read');
+//         }
+//       });
+//     });
+//   }
+// }
 
 refs.homePageGallery.addEventListener('click', handleClickGallery);
 
@@ -121,36 +162,104 @@ function handleClickGallery(e) {
   const targetElement = e.target;
 
   if (targetElement.nodeName === 'A') {
-    const date = new Date(Date.now());
-    const card = targetElement.closest('.news-card');
-    const cardStatus = card.querySelector('.news-card__status');
-    cardStatus.textContent = 'Already read';
+    const date = new Date(Date.now()).toISOString();
+    const card = targetElement.closest('.item-news__article');
+    // const cardStatus = card.querySelector('.news-card__status');
+    const cardTitle = card.querySelector('.item-news__title');
+    // cardStatus.classList.add('is-already-read')
 
     const stringifyCard = card.outerHTML;
-
-    data.cardsArray.push({ watchDate: date, card: stringifyCard });
-  }
-
-  const uniqueNewsCardsArray = makeUniqueArrayByKey({
-    key: 'card',
-    array: data.cardsArray,
-  });
-
-  saveCardsToLocalStorage(uniqueNewsCardsArray);
-}
-
-function saveCardsToLocalStorage(array) {
-  if (!load('cards')) {
-    save('cards', array);
-  } else {
-    const cardsFromLocal = load('cards').concat(array);
-    const uniqueConcatedArray = makeUniqueArrayByKey({
-      key: 'card',
-      array: cardsFromLocal,
+    data.readCardsArray.push({
+      watchDate: date,
+      card: stringifyCard,
+      title: cardTitle.textContent,
     });
 
-    save('cards', uniqueConcatedArray);
+    const uniqueReadNewsArray = makeUniqueArrayByKey({
+      key: 'card',
+      array: data.readCardsArray,
+    });
+
+    saveCardsReadHistory('readCards', uniqueReadNewsArray);
   }
+
+  const favoritesLocal = load('favCards') || [];
+
+  if (targetElement.nodeName === 'P' || targetElement.nodeName === 'svg') {
+    const card = targetElement.closest('.item-news__article');
+    const cardBtn = card.querySelector('.item-news__add-to-favorite');
+    const cardTitle = card.querySelector('.item-news__title');
+    // тут потрібно створити врапер для p тегу з класом item-news__add-to-favorite, щоб при зміні textCotent не зникало серце. Вони мають бути сусідами, а не батько-дитя
+    cardBtn.textContent = 'Remove from favorites';
+    const stringifyCard = card.outerHTML;
+
+    const indexArray = favoritesLocal.map(el => el.title);
+    const index = indexArray.indexOf(cardTitle.textContent);
+
+    if (!cardTitle) return;
+
+    if (index == -1) {
+      favoritesLocal.push({
+        card: stringifyCard,
+        title: cardTitle.textContent,
+      });
+    } else {
+      favoritesLocal.splice(index, 1);
+      cardBtn.textContent = 'Add to favorites';
+    }
+
+    save('favCards', favoritesLocal);
+  }
+}
+
+function saveCardsReadHistory(key, array) {
+  if (onGetCookie('user')) {
+    const userId = onGetCookie('user');
+    mergeDbAndCurrentData(userId, array, key);
+  } else {
+    if (!load(key)) {
+      save(key, array);
+    } else {
+      const cardsFromLocal = load(key).concat(array);
+      const uniqueConcatedArray = makeUniqueArrayByKey({
+        key: 'card',
+        array: cardsFromLocal,
+      });
+      save(key, uniqueConcatedArray);
+    }
+  }
+}
+
+function mergeDbAndCurrentData(userId, array, key) {
+  const dbRef = ref(getDatabase());
+
+  get(child(dbRef, `users/${userId}/${key}`))
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        const cardsObject = snapshot.val();
+
+        setDataToDatabase({
+          userId,
+          dbData: cardsObject,
+          currentData: array,
+          key,
+        });
+      } else {
+        writeUserCards(userId, { [key]: array });
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+function setDataToDatabase({ userId, dbData, currentData, key }) {
+  const cardsArray = Object.values(dbData).flat().concat(currentData);
+  const uniqueConcatedArray = makeUniqueArrayByKey({
+    key: 'card',
+    array: cardsArray,
+  });
+  writeUserCards(userId, { [key]: uniqueConcatedArray });
 }
 
 function makeUniqueArrayByKey({ key, array }) {
@@ -162,15 +271,23 @@ function makeUniqueArrayByKey({ key, array }) {
 const KEY = 'lN1jAQVvVGOPSqcIQoMHMLLJA9oE1Rka';
 const MOST_POPULAR_NEWS = `https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=${KEY}`;
 
-
-
 async function getPopularArticle() {
-    const articleFetch = await fetch(MOST_POPULAR_NEWS);
-    const articles = await articleFetch.json();
-    let { results } = articles;
-    // console.log(results);
+  const articleFetch = await fetch(MOST_POPULAR_NEWS);
+  const articles = await articleFetch.json();
+  let { results } = articles;
+  // console.log(results);
 
-    const articlesCardsArr = results.map(({id, media, title, published_date, abstract, url, section})=>`<li class='articles-list-item' id='${id}'>
+  const articlesCardsArr = results
+    .map(
+      ({
+        id,
+        media,
+        title,
+        published_date,
+        abstract,
+        url,
+        section,
+      }) => `<li class='articles-list-item' id='${id}'>
     <article class='articles-item-news'>
 
             <div class='articles-news-wrapper'>
@@ -189,104 +306,104 @@ async function getPopularArticle() {
             </div>
 
             <div>
-                <span class='articles-date-news'>${published_date.split('')
-                .splice(0, 10)
-                .join('')
-                .replaceAll('-', '/')}</span>
+                <span class='articles-date-news'>${published_date
+                  .split('')
+                  .splice(0, 10)
+                  .join('')
+                  .replaceAll('-', '/')}</span>
                 <a target='blank' class='articles-link-news'  href='${url}'>Read more</a>
             </div>
     </article>
-</li>`).join(' ');
+</li>`
+    )
+    .join(' ');
 
-updateNewArticles(articlesCardsArr);
-};
+  updateNewArticles(articlesCardsArr);
+}
 
 getPopularArticle();
 
 function updateNewArticles(articlesCardsArr) {
-    // document.querySelector('.country-list').innerHTML = articlesCardsArr;
-};
-
+  // document.querySelector('.country-list').innerHTML = articlesCardsArr;
+}
 
 // ------------------------приклад використання Pagination-----------------
 
-async function searchExample() {
-  // Приклад onSearch
+// async function searchExample() {
+//   // Приклад onSearch
 
-  // Взяти поточне значення с форми пошуку та дату з календаря.
-  const apiParams = { q: 'Corgi', date: null };
+//   // Взяти поточне значення с форми пошуку та дату з календаря.
+//   const apiParams = { q: 'Corgi', date: null };
 
-  function onPageChanged(articles) {
-    //Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
-    // в цьому місці можна їх рендерети
-    console.log(articles);
-  }
+//   function onPageChanged(articles) {
+//     //Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
+//     // в цьому місці можна їх рендерети
+//     console.log(articles);
+//   }
 
-  // передати метод API та поточні параметри, Paginator буде викликати API при навігації на наступну сторінку
-  const options = {
-    perPage: 8,
-    api: {
-      method: api.articleSearchByQuery,
-      params: apiParams,
-      // Якщо ми працюємо з пошуком, то обовязково передати цей параметр.
-      // Search дуже специфічне API, тому це потрібно, щоб не писати другий вид пагінатора
-      externalHandler: new PaginationSearchHandler()
-    },
-    onPageChanged: onPageChanged,
-  };
+//   // передати метод API та поточні параметри, Paginator буде викликати API при навігації на наступну сторінку
+//   const options = {
+//     perPage: 8,
+//     api: {
+//       method: api.articleSearchByQuery,
+//       params: apiParams,
+//       // Якщо ми працюємо з пошуком, то обовязково передати цей параметр.
+//       // Search дуже специфічне API, тому це потрібно, щоб не писати другий вид пагінатора
+//       externalHandler: new PaginationSearchHandler()
+//     },
+//     onPageChanged: onPageChanged,
+//   };
 
-  // Виклик методу paginate з нашими параметрами
-  paginator.paginate(options);
-}
+//   // Виклик методу paginate з нашими параметрами
+//   paginator.paginate(options);
+// }
 
-// searchExample()
+// // searchExample()
 
+// async function categoryExample() {
 
-async function categoryExample() {
+//   // Отримати поточну категорію та дату
+//   const apiParams = { category: 'arts', date: null };
 
-  // Отримати поточну категорію та дату
-  const apiParams = { category: 'arts', date: null };
+//   function onPageChanged(articles) {
+//     // Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
+//     // в цьому місці можна їх рендерети
+//     console.log(articles);
+//   }
 
-  function onPageChanged(articles) {
-    // Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
-    // в цьому місці можна їх рендерети
-    console.log(articles);
-  }
+//   // передати метод API та поточні параметри, Paginator буде викликати API при навігації на наступну сторінку
+//   const options = {
+//     perPage: 8,
+//     api: {
+//       method: api.articleSearchByCategory,
+//       params: apiParams,
+//     },
+//     onPageChanged: onPageChanged,
+//   };
 
-  // передати метод API та поточні параметри, Paginator буде викликати API при навігації на наступну сторінку
-  const options = {
-    perPage: 8,
-    api: {
-      method: api.articleSearchByCategory,
-      params: apiParams,
-    },
-    onPageChanged: onPageChanged,
-  };
+//   // Виклик методу paginate з нашими параметрами
+//   paginator.paginate(options);
+// }
 
+// //categoryExample();
 
-  // Виклик методу paginate з нашими параметрами
-  paginator.paginate(options);
-}
+// async function mostPopularExample() {
+//   // Цей метод API дуже простий, він завжди повератє 20 записів.
+//   // Тому тут ми робимо pagination ніби-то це простий array
+//   // Попередньо отримавши усі можливі результати одним запросом
 
-//categoryExample();
+//   const result = await api.articleSearchMostPopular();
 
-async function mostPopularExample() {
-  // Цей метод API дуже простий, він завжди повератє 20 записів.
-  // Тому тут ми робимо pagination ніби-то це простий array
-  // Попередньо отримавши усі можливі результати одним запросом
+//   function onPageChanged(articles) {
+//     // Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
+//     // в цьому місці можна їх рендерети
+//     console.log(articles);
+//   }
 
-  const result = await api.articleSearchMostPopular();
+//   // створити Paginator
+//   const options = { perPage: 8, items: result.articles, onPageChanged: onPageChanged }
+//   // Виклик методу paginate з нашими параметрами
+//   paginator.paginate(options);
+// }
 
-  function onPageChanged(articles) {
-    // Тут ми отримаємо статті для поточної сторінкі на пагінаторі,
-    // в цьому місці можна їх рендерети
-    console.log(articles);
-  }
-
-  // створити Paginator
-  const options = { perPage: 8, items: result.articles, onPageChanged: onPageChanged }
-  // Виклик методу paginate з нашими параметрами
-  paginator.paginate(options);
-}
-
-mostPopularExample()
+// mostPopularExample()

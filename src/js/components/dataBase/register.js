@@ -35,7 +35,7 @@ refs.formRef.addEventListener('submit', (e)=>{
     const  auth = getAuth();
      const createUser = createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
-    // Signed in 
+    // Signed in
     const user = userCredential.user;
     Notify.success('Registration successful');
     return user
@@ -50,16 +50,16 @@ refs.formRef.addEventListener('submit', (e)=>{
     const errorMessage = error.message;
     console.log(errorMessage);
     if (errorMessage === 'Firebase: Error (auth/email-already-in-use).') {
-        Notify.failure(`Користувач за таким вже зареєстрований`) 
+        Notify.failure(`Користувач за таким вже зареєстрований`)
     } else if(errorMessage === 'Firebase: Password should be at least 6 characters (auth/weak-password).') {
         console.log(errorMessage);
-        Notify.failure(`пароль повинен містити мінімум 6 символів`) 
+        Notify.failure(`пароль повинен містити мінімум 6 символів`)
     } else{
         console.log(errorMessage);
-        Notify.failure(`${errorMessage}`) 
+        Notify.failure(`${errorMessage}`)
     }
   });
-    
+
 }
 
 
