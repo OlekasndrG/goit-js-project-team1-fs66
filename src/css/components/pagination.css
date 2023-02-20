@@ -1,45 +1,80 @@
-
 .pagination {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-top: 2rem;
-    background-color: #fff;
-    box-shadow: 0 0 10px #d3d3d3;
-    border-radius: 5px;
-    padding: 10px 15px;
-    color: black;
-  }
-  .page-container li {
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: 18px;
-    pointer-events: none;
-  }
-  .page-container button {
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-  }
-  .page-container button:disabled {
-    color: #aaadc7;
-  }
-  .pages {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .pages li {
-    list-style: none;
-    cursor: pointer;
-    border-radius: 5px;
-    overflow: hidden;
-    margin: 0 3px;
-  }
-  .pages li.active {
-    background-color: #39f;
-  }
-  .pages li.active a {
-    color: #fff;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  margin: 60px 0 150px;
+  padding: 10px 15px;
+  line-height: 1.4;
+}
+
+.pagination .pages {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pages li {
+  list-style: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.pages li.active {
+  background-color: var(--border-color);
+}
+.pages li.active a {
+  color: #fff;
+}
+
+.prev-page,
+.next-page,
+.pages li {
+  padding: 4px 12px 5px;
+  border: 1px solid var(--accent-color);
+  border-radius: 2px;
+  margin: 0 8px 0 0;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.prev-page[disabled],
+.next-page[disabled] {
+  cursor: default;
+}
+
+.pages li.pg-ellipsis {
+  border: none;
+  cursor: default;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+body.themeDark .prev-page,
+.next-page,
+.pages li {
+  background-color: var(--third-color);
+  color: var(--main-color);
+}
+
+body.themeDark .pages li.pg-ellipsis {
+  background-color: transparent;
+  color: var(--third-color);
+}
+
+.prev-page svg {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.next-page svg {
+  display: inline-block;
+  margin-left: 10px;
+}
+ 
+body.themeDark .prev-page[disabled],
+.next-page[disabled] {
+  color: var( --second-color);
+}
