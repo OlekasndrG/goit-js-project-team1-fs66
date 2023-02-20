@@ -32,6 +32,8 @@ const input = document.querySelector('.input-search');
 form.addEventListener('submit', onSubmit);
 const section = document.querySelector('.section__list-news');
 const articles = document.querySelector('.list-news');
+const articlesSection = document.querySelector('.section__list-news');
+console.log(articlesSection);
 function onSubmit(event) {
   event.preventDefault();
   console.log(input.value.trim());
@@ -40,7 +42,7 @@ function onSubmit(event) {
     .articleSearchByQuery()
     .then(articles => {
       if (articles.length === 0) {
-        return console.log(`ми не знайшли статтей про ${api.name}`);
+        return onError();
       }
 
       return createMarkUp(articles);
@@ -49,15 +51,9 @@ function onSubmit(event) {
 }
 
 function createMarkUp(articles) {
-  console.log(articles);
-
   const markup = articles.map(
-    ({
-      news_desk,
-      section_name,
-      abstract,
-      web_url,
-    }) => `<li class="list-news__item">
+    ({ news_desk, headline, abstract, web_url, pub_date }) => {
+      return `<li class="list-news__item">
             <article class="item-news__article">
                 <div class="item-news__wrapper-img">
                     <img class="item-news__img" src="#" alt="">
@@ -70,7 +66,7 @@ function createMarkUp(articles) {
                 </div>
                 <div class=".item-news__wrapper-text">
                     <h2 class="item-news__title">
-                        ${section_name}
+                        ${headline.main}
                     </h2>
                     <p class="item-news__description">
                         ${abstract}</p>
@@ -82,7 +78,8 @@ function createMarkUp(articles) {
                     <a class="item-news__info-link" href="${web_url}">Read more</a>
                 </div>
             </article>
-        </li>`
+        </li>`;
+    }
   );
 
   markup.join('');
@@ -91,4 +88,25 @@ function createMarkUp(articles) {
 
 function insertMarkUp(markup) {
   articles.innerHTML = markup;
+}
+
+function onError() {
+  const emptyPage = `<section class="empty">
+
+<p class="empty_title">We haven't found news 
+    <br> 
+    from this category</p>
+<picture>
+    <source srcset="../../img/mobile.png 1x, .../../img/mobile@2x.png 2x" type="image/png" media="(max-width: 480px)"
+        alt="empty-page" />
+    <source srcset="../../img/tablet.png 1x, ../../img/tablet@2x.png 2x" type="image/png" media="(max-width:768px)"
+        alt="empty-page" />
+    <source srcset="../../img/desktop.png 1x, ../../img/desktop@2x.png 2x" type="image/png" media="(min-width: 1280px)"
+        alt="empty-page" />
+    <img class="empty_picture" src="../../img/mobile.png" alt="empty-page" width="248" height="198" />
+</picture>
+
+</section>`;
+
+  articlesSection.innerHTML = emptyPage;
 }
