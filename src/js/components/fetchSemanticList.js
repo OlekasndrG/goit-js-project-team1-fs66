@@ -13,5 +13,3 @@ export async function fetchCategories() {
 }
   }
 
-  // 76882478-afc6-447b-914d-bc911ba6f5bf
-// 2CU5jHC0OFWuoOquTogFU31832ZDQk3X

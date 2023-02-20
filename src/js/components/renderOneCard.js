@@ -2,9 +2,8 @@ const ulCardList = document.querySelector('.list-news')
 
 
 export function onRenderOneCard(arrayNews) {
-console.log("🚀 ~ arrayNews:", arrayNews);
 
-    const arrayCard = arrayNews.map((news, index) => {
+    const arrayCard = arrayNews.articles.map((news, index) => {
         const {image, section, title, description, date, url} = news;
         const WETHER = '<li class="wether-a"></li>'
         const MARKUP = `<li class="list-news__item">
@@ -39,9 +38,10 @@ console.log("🚀 ~ arrayNews:", arrayNews);
         return MARKUP
     }).join('')
     onMarkupCard(arrayCard)
+    
 }
 
 function onMarkupCard(cards) {
-    ulCardList.innerHTML = "";
-    ulCardList.insertAdjacentHTML('beforeend', cards)
+    ulCardList.innerHTML = cards
+    // ulCardList.insertAdjacentHTML('beforeend', cards)
   }
