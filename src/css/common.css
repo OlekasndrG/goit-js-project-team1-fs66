@@ -1,27 +1,27 @@
 :root {
-    /*color*/
-    --main-color: #111321;
-    --accent-color: #4440F6;
-    --second-color: #A8A8A8;
-    --third-color: #ffffff;
-    --border-color: #4440F7;
-    --theme-color: #4B48DB;
+  /*color*/
+  --main-color: #111321;
+  --accent-color: #4440f6;
+  --second-color: #a8a8a8;
+  --third-color: #ffffff;
+  --border-color: #4440f7;
+  --theme-color: #4b48db;
 
-    /*background*/
-    --main-light-background: #A8A8A8;
-    --main-durk-background: #111321;
-    
-    /*font*/
-    --main-font: Manrope, sans-serif;
-    --weather-font: Roboto, sans-serif;
-    --calendar-font: Poppins, sans-serif;
+  /*background*/
+  --main-light-background: #a8a8a8;
+  --main-durk-background: #111321;
+
+  /*font*/
+  --main-font: Manrope, sans-serif;
+  --weather-font: Roboto, sans-serif;
+  --calendar-font: Poppins, sans-serif;
 }
 
 body {
-    font-family: var(--main-font);
-    color: var(--main-color);
-    background-color: var(--main-light-backgroundd);
+  font-family: var(--main-font);
+  color: var(--main-color);
+  background-color: #f4f4f4;
 }
 html {
-    overflow-y: scroll;
-  }
+  overflow-y: scroll;
+}
