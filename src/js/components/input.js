@@ -30,6 +30,7 @@ function createMarkUp(articles) {
       ) {
         return generateArticlesMarkup(article);
       } else {
+        return;
       }
     }
     return generateArticlesMarkup(article);
