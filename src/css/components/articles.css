@@ -8,7 +8,7 @@
 .list-news__item {
     position: relative;
     max-width: 288px;
-    max-height: 630px;
+    height: 630px;
 }
   
 .item-news__wrapper-img {
