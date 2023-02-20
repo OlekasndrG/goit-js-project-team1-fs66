@@ -1,0 +1,45 @@
+
+.pagination {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px #d3d3d3;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: black;
+  }
+  .page-container i {
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 18px;
+    pointer-events: none;
+  }
+  .page-container button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+  }
+  .page-container button:disabled {
+    color: #aaadc7;
+  }
+  .pages {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .pages li {
+    list-style: none;
+    cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0 3px;
+  }
+  .pages li.active {
+    background-color: #39f;
+  }
+  .pages li.active a {
+    color: #fff;
+  }
