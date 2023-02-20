@@ -27,7 +27,7 @@ body.is-open {
   font-weight: 700;
   font-size: 24px;
   line-height: 33px;
-  color: #111321;
+  /* color: #111321; */
 }
 .logo-header {
   margin-right: 10px;
@@ -215,6 +215,15 @@ body.is-open {
 .login {
   margin-bottom: 20px;
 }
+body.themeDark .login {
+  color: #fff;
+}
+body.themeDark .registr {
+  color: #fff;
+}
+body.themeDark .logout {
+  color: #fff;
+}
 @media screen and (min-width: 768px) {
   .logo {
     font-size: 32px;
@@ -251,7 +260,7 @@ body.is-open {
   }
   .site-nav--link {
     display: inline;
-    color: #111321;
+
     font-weight: 700;
     font-size: 16px;
     line-height: 22px;
