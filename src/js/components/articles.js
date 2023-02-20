@@ -1,6 +1,7 @@
 
 import { newsAPI } from './fetchNews';
 import { load, save } from '../common/local_storage';
+import api from '../common/API';
 
 // !!!!!!!!!!!!!!!!!!!!!! код що ничже - це є для тесту, що сформувати різні дати прочитання, кожний раз коли буде перезагружатись сторінка home він буде перезаписувати localStorage кодом що нижче
 const testLocalArray = [
@@ -203,4 +204,16 @@ getPopularArticle();
 function updateNewArticles(articlesCardsArr) {
     // document.querySelector('.country-list').innerHTML = articlesCardsArr;
 };
+
+
+
+
+// ------------------------приклад використання апі-----------------
+
+async function renderArticles() {
+  const result = await api.articleSearchMostPopular();
+  console.log(result);
+}
+
+renderArticles();
 

@@ -1,5 +1,3 @@
-import api from '../common/API';
-
 class Paginator {
   currentPage = 1;
   itemsPerPage = 8;
@@ -120,9 +118,4 @@ class Paginator {
 
 const paginator = new Paginator('.pagination');
 
-async function renderArticles() {
-  const result = await api.articleSearchMostPopular();
-  console.log(result);
-}
 
-renderArticles();
