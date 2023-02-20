@@ -221,6 +221,9 @@ body.themeDark .login {
 body.themeDark .registr {
   color: #fff;
 }
+body.themeDark .logout {
+  color: #fff;
+}
 @media screen and (min-width: 768px) {
   .logo {
     font-size: 32px;
