@@ -32,6 +32,7 @@ const input = document.getElementById('search-field__input');
 form.addEventListener('submit', onSubmit);
 const section = document.querySelector('.section__list-news');
 const articles = document.querySelector('.list-news');
+const dateInput = document.getElementById('input-picker');
 function onSubmit(event) {
   event.preventDefault();
   api.name = input.value.trim();
@@ -53,7 +54,7 @@ function createMarkUp(articles) {
   const markup = articles.map(
     ({
       news_desk,
-      section_name,
+      headline,
       abstract,
       web_url,
     }) => `<li class="list-news__item">
@@ -69,7 +70,7 @@ function createMarkUp(articles) {
                 </div>
                 <div class=".item-news__wrapper-text">
                     <h2 class="item-news__title">
-                        ${section_name}
+                        ${headline.main}
                     </h2>
                     <p class="item-news__description">
                         ${abstract}</p>
