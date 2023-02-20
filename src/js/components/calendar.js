@@ -11,7 +11,7 @@ iconCalendar = document.querySelector('.calendar-icon')
 
 
 modalOpenBtn.addEventListener("click", toggleInput);
-document.addEventListener('click', hideModal);
+daysTag.addEventListener('click', hideModal);
 
 function toggleInput(){
     modal.classList.toggle('is-hidden');
@@ -21,20 +21,18 @@ function toggleInput(){
 }
 
 function hideModal(e){
-    
    
-    if (e.target.closest('.calendar-form')) {
-      return;
-    }
-    if (refs.input.classList.contains('isActive')){
+    if(input.classList.contains('is-Active')) {
         modal.classList.add('is-hidden');
-        input.classList.remove('isActive');
-         iconCalendar.classList.remove('change_color');
+        input.classList.remove('is-Active');
+        iconCalendar.classList.remove('change_color');
         inputBtn.classList.remove('changeUp');
+        
         document.getElementById('input-picker').value = '';
         localStorage.removeItem('VALUE');
         localStorage.removeItem('Date_current');
     }
+    
 
 }
 
@@ -172,7 +170,7 @@ prevNextIcon.forEach(icon =>{
 });
 
 nextYear.addEventListener("click",()=> {
-    currMonth +=1;
+    currYear +=1;
     renderCalendar();
 
     let saveDate = JSON.parse(localStorage.getItem('VALUE'));
