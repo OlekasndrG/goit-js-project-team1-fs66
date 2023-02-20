@@ -7,7 +7,7 @@ const ulCategoriesOtherRef = document.querySelector('.categories-list-others')
 const categorieItem = [];
 const categorieOther = [];
 
-let counterSection = 0;
+
 searchCategories()
 onSerchByCategori()
 function onFilterCategories(arrayNews) {

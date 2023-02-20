@@ -1,8 +1,8 @@
 const V2_API_KEY = 'lN1jAQVvVGOPSqcIQoMHMLLJA9oE1Rka';
-const V3_API_KEY = '3CItmRm8j68GAL0hCexL4TtbIz43N2Mu';
+const V3_API_KEY = '2CU5jHC0OFWuoOquTogFU31832ZDQk3X';
 import axios from 'axios';
 import { format, parse } from 'date-fns';
-
+// 3CItmRm8j68GAL0hCexL4TtbIz43N2Mu
 class API {
   async articleSearchByQuery({ q, page = 1, date = null }) {
     let fq = '';
@@ -78,6 +78,7 @@ class API {
         description: result.abstract,
         date: new Date(result.published_date),
         url: result.url,
+        section: result.section
       };
     });
 
