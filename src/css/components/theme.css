@@ -42,10 +42,10 @@ body.themeDark {
   border-radius: 50%;
   content: '';
   position: absolute;
-  top: 8%;
-  left: 2%;
-  width: 17px;
-  height: 17px;
+  top: 1px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
   background-color: #4b48db;
 }
 
