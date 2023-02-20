@@ -2,8 +2,41 @@ const currentDate = document.querySelector('.current-date'),
 daysTag = document.querySelector('.calendar-days'),
 prevNextIcon = document.querySelectorAll('.calendar-img'),
 nextYear = document.querySelector('#next__year'),
-input = document.querySelector('.calendar-input')
+input = document.querySelector('.input-calendar'),
+inputBtn = document.querySelector('.calendar-arrows'),
+modalOpenBtn = document.querySelector('.input-date-form '),
+modal = document.querySelector('.wrapper-calendar'),
+iconCalendar = document.querySelector('.calendar-icon')
 
+
+
+modalOpenBtn.addEventListener("click", toggleInput);
+document.addEventListener('click', hideModal);
+
+function toggleInput(){
+    modal.classList.toggle('is-hidden');
+    input.classList.toggle('is-Active');
+    iconCalendar.classList.toggle('change_color');
+    inputBtn.classList.toggle('changeUp');
+}
+
+function hideModal(e){
+    
+   
+    if (e.target.closest('.calendar-form')) {
+      return;
+    }
+    if (refs.input.classList.contains('isActive')){
+        modal.classList.add('is-hidden');
+        input.classList.remove('isActive');
+         iconCalendar.classList.remove('change_color');
+        inputBtn.classList.remove('changeUp');
+        document.getElementById('input-picker').value = '';
+        localStorage.removeItem('VALUE');
+        localStorage.removeItem('Date_current');
+    }
+
+}
 
 
 let date = new Date();
@@ -16,15 +49,15 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
 const VALUE_DAY ="";
 
 const renderCalendar = () => {
-    let firstDayOfMonth = new Date(currYear, currMonth,0).getDay();
-    let lastDateOfMonth = new Date(currYear, currMonth +1,0).getDate();
-    let lastDayOfManth =new Date(currYear, currMonth, lastDateOfMonth-1).getDay();
-    let lastDateOfLastManth =new Date(currYear, currMonth ,0).getDate();
-    let renderTag = "";
+    let firstDayOfMonth = new Date(currYear, currMonth,0).getDay(),
+     lastDateOfMonth = new Date(currYear, currMonth +1,0).getDate(),
+     lastDayOfManth =new Date(currYear, currMonth, lastDateOfMonth-1).getDay(),
+     lastDateOfLastManth =new Date(currYear, currMonth ,0).getDate(),
+     renderTag = "";
 
-    // розмітка inactive
+    // розмітка "inactive"
     let counterlnactive =0;
-    const arrayInactive =[6,7,13,14,20,21,27,28,34,35];
+    const arrayInactive =[6,7,13,14,20,21,27,28,34,35,41,42];
     
 
     for(let i=firstDayOfMonth; i>0; i-- ){
@@ -36,9 +69,9 @@ const renderCalendar = () => {
 
     for(let i=1; i<=lastDateOfMonth; i++ ) {
        
-        // let isToday = i === date.getDate() && currMonth === new Date().getMonth() && 
-        // currYear === new Date().getFullYear() ? 
-        // "active" : "";
+        let isToday = i === date.getDate() && currMonth === new Date().getMonth() && 
+        currYear === new Date().getFullYear() ? 
+        "today" : "";
         
         counterlnactive +=1;
         let inactivDay = ""
@@ -48,7 +81,7 @@ const renderCalendar = () => {
 
         })
           
-        renderTag += `<li class="calendar-days__list ${inactivDay}">${i}</li>`
+        renderTag += `<li class="calendar-days__list ${isToday} ${inactivDay}">${i}</li>`
                
     }
     
@@ -69,7 +102,7 @@ const renderCalendar = () => {
     currentDate.textContent = `${months[ currMonth]} ${currYear}`;
     daysTag.innerHTML = renderTag;
 
-    // клік по даті в календарі зі зміною active
+    // клік по даті в календарі зі зміною "active"
     daysTag.addEventListener('click', e => {
 
         
@@ -141,6 +174,16 @@ prevNextIcon.forEach(icon =>{
 nextYear.addEventListener("click",()=> {
     currMonth +=1;
     renderCalendar();
+
+    let saveDate = JSON.parse(localStorage.getItem('VALUE'));
+    let rendCurrentDays = daysTag.childNodes;
+    
+
+    rendCurrentDays.forEach(el => {
+        if(el.textContent === saveDate) {
+            el.classList.add('active')
+        }
+    });
 })
 
 localStorage.removeItem('VALUE');
