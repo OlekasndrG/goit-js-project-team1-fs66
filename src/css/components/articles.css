@@ -41,6 +41,22 @@
     line-height: 16px;
     justify-content: center;
 }
+
+.item-news__already-read {
+    position: absolute;
+    display: none;
+    min-width: 107px;
+    height: auto;
+    margin: 0;
+    right: 21px;
+    top: 20px;
+    background: transparent;
+    color: #00DD73;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    justify-content: center;
+}
   
 .item-news__add-to-favorite {
     position: absolute;

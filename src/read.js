@@ -1,21 +1,47 @@
+import { getAuth } from 'firebase/auth';
 import { load } from './js/common/local_storage';
+import { onGetCookie } from './js/components/dataBase/getCookie';
+import { getDatabase, ref, child, get } from 'firebase/database';
+import { initializeApp } from 'firebase/app';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
+  authDomain: 'news-goit-1.firebaseapp.com',
+  databaseURL:
+    'https://news-goit-1-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'news-goit-1',
+  storageBucket: 'news-goit-1.appspot.com',
+  messagingSenderId: '618434101899',
+  appId: '1:618434101899:web:58e5277fd4ec3d55f6ca8e',
+  measurementId: 'G-7YDFYWJH4S',
+};
+
+const app = initializeApp(firebaseConfig);
 
 const refs = {
   readPage: document.querySelector('.read-page-gallery'),
 };
 
-if (load('cards')) {
-  const newsCardArray = cardsByDate(load('cards'));
-  makeCardsTemplate(newsCardArray);
+if (onGetCookie('user')) {
+  const auth = getAuth(app);
+  const userId = onGetCookie('user');
+  renderCardsDatabase(userId);
+} else {
+  if (load('readCards')) {
+    renderCards(load('readCards'));
+  }
 }
 
-function makeCardsTemplate(array) {
-  const datesArray = Object.keys(array);
-  const decrSortedDates = datesArray.sort((a, b) => new Date(b) - new Date(a));
+function renderCards(array) {
+  const newsCardArray = cardsByDate(array);
+  renderCardsTemplate(newsCardArray);
+}
 
+function renderCardsTemplate(array) {
+  const datesArray = Object.keys(array);
   const accordionGallery = makeAccordionGalleryMarkup();
 
-  for (let date of decrSortedDates) {
+  for (let date of datesArray) {
     const news = array[date];
     const parsedDatesToString = new Date(date).toLocaleDateString('en-GB');
 
@@ -39,8 +65,29 @@ function makeCardsTemplate(array) {
   refs.readPage.appendChild(accordionGallery);
 }
 
+function renderCardsDatabase(userId) {
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `users/${userId}/readCards`))
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        const cardsObject = snapshot.val();
+        const cardsArray = Object.values(cardsObject).flat();
+        renderCards(cardsArray);
+      } else {
+        console.log('No data available');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
 function cardsByDate(array) {
-  return array.reduce((acc, card) => {
+  const decrSortedDates = array.sort(
+    (a, b) => new Date(b.watchDate) - new Date(a.watchDate)
+  );
+
+  return decrSortedDates.reduce((acc, card) => {
     const { card: newsCard } = card;
     const date = new Date(card.watchDate).toLocaleDateString({
       year: 'numeric',
@@ -102,19 +149,19 @@ function changeCardStatus(array) {
 
 function onAccordionTitleClick(e) {
   const arrowRef = e.target.querySelector('.accordion__arrow');
-  const bodyREf = e.target.nextSibling;
+  const contentRef = e.target.nextSibling;
 
   if (arrowRef.classList.contains('accordion__arrow--up')) {
     arrowRef.classList.replace(
       'accordion__arrow--up',
       'accordion__arrow--down'
     );
-    bodyREf.classList.add('is-active');
+    contentRef.classList.add('is-active');
   } else {
     arrowRef.classList.replace(
       'accordion__arrow--down',
       'accordion__arrow--up'
     );
-    bodyREf.classList.remove('is-active');
+    contentRef.classList.remove('is-active');
   }
 }

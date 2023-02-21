@@ -1,8 +1,8 @@
 import API from '../common/API';
 console.log(API);
 
-const form = document.getElementById('form-field');
-const input = document.getElementById('search-field__input');
+const form = document.querySelector('form.form-search');
+const input = document.querySelector('.input-search');
 form.addEventListener('submit', onSubmit);
 const section = document.querySelector('.section__list-news');
 const articles = document.querySelector('.list-news');
