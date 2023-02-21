@@ -3,9 +3,8 @@ const ulCardList = document.querySelector('.list-news')
 import { format, parse } from 'date-fns';
 
 
-
 export function onRenderOneCard(arrayNews) {
-  const arrayCard = arrayNews.articles
+  const arrayCard = arrayNews
     .map((news, index) => {
       const { image, section, title, description, date, url } = news;
       function truncateString(str) {

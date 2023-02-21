@@ -7,13 +7,14 @@ class Paginator {
   items = null;
   api = null;
   apiHandler = null;
-  iconLeft = "<svg width='8px' height='13px'><use href='img/sprite-icons.svg#vector-left'></use></svg>";
-  iconRight = "<svg width='8px' height='12px'><use href='img/sprite-icons.svg#vector-right'></use></svg>";
+  iconLeft =
+    "<svg width='8px' height='13px'><use href='img/sprite-icons.svg#vector-left'></use></svg>";
+  iconRight =
+    "<svg width='8px' height='12px'><use href='img/sprite-icons.svg#vector-right'></use></svg>";
 
   constructor(selector) {
     this.rootEl = document.querySelector(selector);
-    this.rootEl.innerHTML =
-      `<button class='prev-page'>${this.iconLeft}Prev</button><ul class='pages'></ul><button class='next-page'>Next${this.iconRight}</button>`;
+    this.rootEl.innerHTML = `<button class='prev-page'>${this.iconLeft}Prev</button><ul class='pages'></ul><button class='next-page'>Next${this.iconRight}</button>`;
     this.pagesEl = this.rootEl.querySelector('.pages');
     this.btnPrev = this.rootEl.querySelector('.prev-page');
     this.btnNext = this.rootEl.querySelector('.next-page');
@@ -37,6 +38,7 @@ class Paginator {
 
   async onPageChanged() {
     let paginated;
+
     if (this.api) {
       if (this.api.externalHandler) {
         // external function to handle api
@@ -60,6 +62,7 @@ class Paginator {
         this.currentPage * this.itemsPerPage
       );
     }
+
     this.render();
     this.onPageChangedCallback(paginated);
   }
@@ -67,6 +70,7 @@ class Paginator {
   addEventListeners() {
     this.btnPrev.addEventListener('click', async e => {
       e.preventDefault();
+
       await this.setPage(this.currentPage - 1);
     });
     this.btnNext.addEventListener('click', async e => {
@@ -136,6 +140,7 @@ class Paginator {
     this.btnPrev.disabled = this.currentPage === 1;
     this.btnNext.disabled = this.currentPage === this.totalPages;
 
+    this.scrollToTop();
     this.pagesEl.querySelectorAll('.pg-link').forEach(el => {
       el.addEventListener('click', e => {
         e.preventDefault();
@@ -151,6 +156,13 @@ class Paginator {
     return `<li class='pg-item${
       isActive ? ' active' : ''
     }'><a class='pg-link' href='#' data-page='${page}'>${page}</a></li>`;
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 }
 

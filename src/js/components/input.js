@@ -1,4 +1,6 @@
-import API from '../common/API';
+import api from '../common/API';
+import paginator from './pagination';
+import PaginationSearchHandler from './paginationSearchHandler';
 // console.log(API);
 
 const form = document.querySelector('form.form-search');
@@ -13,9 +15,17 @@ const date = document.getElementById('input-picker');
 function onSubmit(event) {
   event.preventDefault();
 
-  API.articleSearchByQuery({ q: input.value })
-    .then(({ articles }) => createMarkUp(articles))
-    .catch(error => console.error(error));
+  const options = {
+    perPage: 8,
+    api: {
+      method: api.articleSearchByQuery,
+      params: {q: input.value, date: null},
+      externalHandler: new PaginationSearchHandler(),
+    },
+    onPageChanged: createMarkUp
+  };
+
+  paginator.paginate(options);
 }
 
 function createMarkUp(articles) {
@@ -42,14 +52,18 @@ function createMarkUp(articles) {
   }
 }
 
-
-function generateArticlesMarkup({ title, image, description, url, date, category}) {
-  
+function generateArticlesMarkup({
+  title,
+  image,
+  description,
+  url,
+  date,
+  category,
+}) {
   function truncateString(str) {
-    
-    return str.length > 75 ? str.slice(0, 75) + "..." : str;
+    return str.length > 75 ? str.slice(0, 75) + '...' : str;
   }
-  let limitString = truncateString(description)
+  let limitString = truncateString(description);
 
   return `<li class="list-news__item">
             <article class="item-news__article">
