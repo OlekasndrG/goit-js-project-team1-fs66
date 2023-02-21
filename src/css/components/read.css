@@ -1,29 +1,20 @@
-.accordion {
-	display: block;
-}
-
-.accordion__by-date {
-	display: block;
+.read-page-gallery {
 	margin-top: 40px;
 	margin-bottom: 40px;
 }
 
-@media screen and (min-width: 767px) {
-	.accordion__title {
-		padding-left: 16px;
-	}
+.accordion {
+	display: block;
+	margin-bottom: 60px;
 }
 
-@media screen and (min-width: 1279px) {
-	.accordion__title {
-		padding-left: 127px;
-	}
+.accordion__border {
+	border-bottom: 1px solid #929292;
+	margin-bottom: 40px;
 }
 
-@media screen and (max-width: 766px) {
-	.accordion__title {
-		padding-left: 65px;
-	}
+.accordion__by-date {
+	display: block;
 }
 
 .accordion__title {
@@ -31,7 +22,7 @@
 
 	align-items: flex-end;
 	padding-bottom: 12px;
-	border-bottom: 1px solid #929292;
+
 	font-family: 'Poppins';
 	font-style: normal;
 	font-weight: 400;
