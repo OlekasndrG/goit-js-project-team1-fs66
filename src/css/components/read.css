@@ -68,8 +68,11 @@
 
 .accordion__content {
 	display: none;
+	flex-wrap: wrap;
+	gap: 30px;
+	justify-content: flex-start;
 }
 
 .is-active {
-	display: block;
+	display: flex;
 }

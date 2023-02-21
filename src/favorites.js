@@ -48,7 +48,9 @@ function handleClickGallery(e) {
 
 function renderCards(array) {
   const newsList = document.createElement('ul');
-  newsList.classList.add('list-news');
+	newsList.classList.add('list-news');
+	newsList.classList.add('favorite-flex-start');
+
 
   const cardsMarup = array.map(el => Object.values(el)[0]);
   newsList.insertAdjacentHTML('beforeend', cardsMarup.join(''));

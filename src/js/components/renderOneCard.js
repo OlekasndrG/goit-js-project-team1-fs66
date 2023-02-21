@@ -22,6 +22,7 @@ export function onRenderOneCard(arrayNews) {
                   <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
                 </svg>
               </div>
+						</div>
               <div class='item-news__already-read'>
                 <span class='item-news__already-read-text'>Already read</span>
                 <svg class='item-news__icon' width='18' height='18'>
