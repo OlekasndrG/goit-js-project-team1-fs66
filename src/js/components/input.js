@@ -1,5 +1,7 @@
-import API from '../common/API';
-import { findFavoriteCards, findReadCards } from './articles';
+
+import api from '../common/API';
+import paginator from './pagination';
+import PaginationSearchHandler from './paginationSearchHandler';
 // console.log(API);
 
 const form = document.querySelector('form.form-search');
@@ -14,11 +16,19 @@ const date = document.getElementById('input-picker');
 function onSubmit(event) {
   event.preventDefault();
 
-  API.articleSearchByQuery({ q: input.value })
-    .then(({ articles }) => {
-      createMarkUp(articles);
-    })
-    .catch(error => console.error(error));
+
+  const options = {
+    perPage: 8,
+    api: {
+      method: api.articleSearchByQuery,
+      params: {q: input.value, date: null},
+      externalHandler: new PaginationSearchHandler(),
+    },
+    onPageChanged: createMarkUp
+  };
+
+  paginator.paginate(options);
+
 }
 
 function createMarkUp(articles) {
