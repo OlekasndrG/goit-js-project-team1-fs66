@@ -10,8 +10,75 @@
 </head>
 
 <body>
-	<load="partials/header.html" />
+	<header class="home-header">
+		<div class="container position-header">
+			<a href="./index.html" class="logo"><span class="logo-header">News</span></a>
+			<div class="menu-container" date-menu>
+				<nav class="site-nav">
+					<ul class="site-nav--list">
+						<li class="site-nav--item">
+							<a href="./index.html" class="site-nav--link"> <svg width="32" height="32" class="icon">
+									<use href="./img/symbol-defs.svg#icon-home"></use>
+								</svg>Home<svg width="24" height="24" class="icon-right">
+									<use href="./img/symbol-defs.svg#icon-Frame-right"></use>
+								</svg></a>
+						</li>
+						<li class="site-nav--item">
+							<a href="./favorites.html" class="site-nav--link">
+								<svg width="32" height="32" class="icon">
+									<use href="./img/symbol-defs.svg#icon_heart-2"></use>
+								</svg>Favorite<svg width="24" height="24" class="icon-right">
+									<use href="../img/symbol-defs.svg#icon-Frame-right"></use>
+								</svg></a>
+						</li>
+						<li class="site-nav--item">
+							<a href="./read.html" class="site-nav--link current-page"> <svg width="32" height="32" class="icon">
+									<use href="./img/symbol-defs.svg#icon-book"></use>
+								</svg>Read<svg width="24" height="24" class="icon-right">
+									<use href="./img/symbol-defs.svg#icon-Frame-right"></use>
+								</svg></a>
+						</li>
+					</ul>
+				</nav>
+				<div class="theme-site theme-site__mobile theme-toggle">
+					<svg class="mobile-menu__icon-theme sun " width="21" height="21">
+						<use href="./img/icons_site.svg#icon-sun_theme">
+					</svg>
+					<p class="theme__light">Light</p>
+					<input type="checkbox" id="sitetheme" name="highload">
+					<label for="sitetheme" class="theme-label"></label>
+					<p class="theme__dark">Dark</p>
+					<svg class="mobile-menu__icon-theme moon" width="21" height="21">
+						<use href="./img/icons_site.svg#icon-moon_theme">
+					</svg>
+				</div>
+				<div class="button-box">
+					<button type="button" class="login" id="login">Login</button>
+					<button type="button" class="logout displayNone" id="Logout">Logout</button>
+					<button type="button" class="registr">Registr</button>
+				</div>
+			</div>
+			<form action="search" class="form-search">
+				<label for="search" class="input-label" name="search">
+					<input type="text" id="search" class="input-search" placeholder="Search |">
+					<button type="submit"><svg width="20" height="20" class="icon-search">
+							<use href="./img/symbol-defs.svg#icon-search"></use>
+						</svg></button>
+				</label>
+			</form>
+			<button type="button" class="menu-button" date-menu-button aria-expanded="false"
+				aria-label="Перемикач мобільного меню">
+				<svg width="24" height="24" class="menu-button--icon">
+					<use href="./img/symbol-defs.svg#menu" class="icon-menu"></use>
+					<use href="./img/symbol-defs.svg#close" class="icon-close"></use>
+				</svg>
+			</button>
+		</div>
+	</header>
 	<div class="read-page-gallery"></div>
+	<div class="empty-page">
+		<load="partials/empty_page.html" />
+	</div>
 	<script type="module" src="./read.js"></script>
 </body>
 
