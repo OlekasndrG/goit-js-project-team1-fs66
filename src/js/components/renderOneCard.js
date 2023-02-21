@@ -10,7 +10,7 @@ export function onRenderOneCard(arrayNews) {
       const { image, section, title, description, date, url } = news;
       function truncateString(str) {
     
-        return str.length > 100 ? str.slice(0, 100) + "..." : str;
+        return str.length > 75 ? str.slice(0, 75) + "..." : str;
       }
       let limitString = truncateString(description);
 
