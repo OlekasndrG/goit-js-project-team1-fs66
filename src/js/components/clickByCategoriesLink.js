@@ -12,28 +12,8 @@ export function onSerchByCategori() {
         return
         }
         const category = encodeURIComponent(`${e.target.textContent.toLowerCase()}`); 
-
-        if (dataCurrent === 0) {
-            onRenderByOneCategorie.articleSearchByCategory(category, data);
-        } else {
-            onRenderByOneCategorie.articleSearchByCategory({category}).then(
-                data => onRenderOneCard(data)
-            )
-
-        }
+        onRenderByOneCategorie.articleSearchByCategory({category}).then(
+            data => onRenderOneCard(data))
 })   
 
 }
-
-
-// const fethByCategorie = new API;
-
-// export async function onRenderByOneCategorie(params) {
-//     const dataCurrent = localStorage.getItem('Date_current')
-//     if(dataCurrent){
-//     const result = await fethByCategorie.articleSearchByCategory(category, dataCurrent)
-
-//     }
-//     console.log(result);
-    
-// }

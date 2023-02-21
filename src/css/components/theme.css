@@ -1,6 +1,6 @@
 body.themeDark {
-  background-color: #2e2e2e;
-  color: #ffffff;
+  background-color: var(--bg-color);
+  color: var(--third-color);
 }
 body.themeDark .home-header {
   border-bottom: 1px solid rgba(244, 244, 244, 0.2);
@@ -34,8 +34,8 @@ body.themeDark .home-header {
   width: 40px;
   height: 20px;
 
-  background: #ffffff;
-  border: 1px solid #4b48db;
+  background: var(--third-color);
+  border: 1px solid var(--theme-color);
   border-radius: 20px;
   cursor: pointer;
 }
@@ -48,39 +48,39 @@ body.themeDark .home-header {
   left: 1px;
   width: 16px;
   height: 16px;
-  background-color: #4b48db;
+  background-color: var(--theme-color);
 }
 
 #sitetheme:checked + .theme-label::after {
   left: 54%;
-  background-color: #f7f7f7;
+  background-color: var(--third-color);
 }
 
 #sitetheme:checked + .theme-label {
-  background: #4b48db;
+  background: var(--theme-color);
 }
 .moon {
-  fill: #5f6775;
-  stroke: #5f6775;
+  fill: var(--switcher-gray-moon);
+  stroke: var(--switcher-gray-moon);
 }
 
 .sun {
-  fill: #4b48db;
-  stroke: #4b48db;
+  fill: var(--theme-color);
+  stroke: var(--theme-color);
 }
 
 body.themeDark #sitetheme + .theme-label {
-  background: #4b48db;
-  border: 1px solid #ffffff;
+  background: var(--theme-color);
+  border: 1px solid var(--third-color);
 }
 body.themeDark .moon {
-  fill: #4b48db;
-  stroke: #4b48db;
+  fill: var(--bg-color);
+  stroke: var(--switcher-gray-moon);
 }
 
 body.themeDark .sun {
-  fill: #5f6775;
-  stroke: #5f6775;
+  fill: var(--switcher-accent-day);
+  stroke: var(--switcher-accent-day);
 }
 
 .theme__light {
@@ -89,10 +89,10 @@ body.themeDark .sun {
   font-weight: 400;
   font-size: 18px;
   line-height: 1.333;
-  color: #4b48db;
+  color: var(--switcher-accent-day);
 }
 body.themeDark .theme__light {
-  color: #f4f4f4;
+  color: var(--bg-color);
   opacity: 0.4;
 }
 .theme__dark {
@@ -101,10 +101,10 @@ body.themeDark .theme__light {
   font-weight: 400;
   font-size: 18px;
   line-height: 24px;
-  color: #5f6775;
+  color: var(--switcher-gray-moon);
 }
 body.themeDark .theme__dark {
-  color: #4440f7;
+  color: var(--switcher-gray-moon);
 }
 
 @media screen and (max-width: 1279px) {

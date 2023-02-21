@@ -37,9 +37,5 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-root body.themeDark {
-  --bg-color: #2e2e2e;
-  --text-color: #f4f4f4;
-  --switcher-accent-day: #f4f4f4;
-  --switcher-gray-moon: #4440f7;
-}
+
+
