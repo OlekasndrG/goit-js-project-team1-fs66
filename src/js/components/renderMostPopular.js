@@ -1,3 +1,4 @@
+
 import api from '../common/API';
 import { onRenderOneCard } from './renderOneCard';
 import paginator from './pagination.js';
@@ -14,3 +15,4 @@ async function onRanderMostPopular() {
 
   paginator.paginate(options);
 }
+
