@@ -1,5 +1,5 @@
 import { getAuth } from 'firebase/auth';
-import { load } from './js/common/local_storage';
+import { load, save } from './js/common/local_storage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
@@ -20,6 +20,7 @@ const app = initializeApp(firebaseConfig);
 
 const refs = {
   readPage: document.querySelector('.read-page-gallery'),
+  emptyPage: document.querySelector('.empty-page'),
 };
 
 if (onGetCookie('user')) {
@@ -29,6 +30,45 @@ if (onGetCookie('user')) {
 } else {
   if (load('readCards')) {
     renderCards(load('readCards'));
+  }
+  findFavoriteCards();
+
+  isEmptyPage();
+}
+
+refs.readPage.addEventListener('click', handleClickGallery);
+
+function handleClickGallery(e) {
+  e.preventDefault();
+  const targetElement = e.target;
+  const favoritesLocal = load('favCards') || [];
+
+  if (targetElement.nodeName === 'P') {
+    const card = targetElement.closest('.list-news__item');
+    const cardBtn = card.querySelector('.item-news__add-text');
+    const cardTitle = card.querySelector('.item-news__title');
+    const cardHeartImg = card.querySelector('.item-news__heart-icon');
+    cardHeartImg.classList.add('is-saved');
+    cardBtn.textContent = 'Remove from favorite';
+    const stringifyCard = card.outerHTML;
+
+    const indexArray = favoritesLocal.map(el => el.title);
+    const index = indexArray.indexOf(cardTitle.textContent);
+
+    if (!cardTitle) return;
+
+    if (index == -1) {
+      favoritesLocal.push({
+        card: stringifyCard,
+        title: cardTitle.textContent,
+      });
+    } else {
+      favoritesLocal.splice(index, 1);
+      cardBtn.textContent = 'Add to favorite';
+      cardHeartImg.classList.remove('is-saved');
+    }
+
+    save('favCards', favoritesLocal);
   }
 }
 
@@ -52,6 +92,13 @@ function renderCardsTemplate(array) {
 
     title.append(arrow);
     content.insertAdjacentHTML('beforeend', news.join(''));
+
+    const cardBtn = content.querySelector('.item-news__add-text');
+    const cardHeartImg = content.querySelector('.item-news__heart-icon');
+
+    cardBtn.textContent = 'Add to favorite';
+    cardHeartImg.classList.remove('is-saved');
+
     accordion.appendChild(title);
     accordion.appendChild(content);
     accordionGallery.appendChild(accordion);
@@ -59,7 +106,7 @@ function renderCardsTemplate(array) {
     const titleArrayRef = accordion.querySelectorAll('.accordion__title');
     ListenAllTitleClick(titleArrayRef);
 
-    const cardStatusRef = content.querySelectorAll('.news-card__status');
+    const cardStatusRef = content.querySelectorAll('.item-news__already-read');
     changeCardStatus(cardStatusRef);
   }
   refs.readPage.appendChild(accordionGallery);
@@ -105,9 +152,18 @@ function cardsByDate(array) {
   }, {});
 }
 
+function isEmptyPage() {
+  const content = document.querySelector('.accordion__content');
+
+  if (!content) {
+    console.log('yes');
+    refs.emptyPage.classList.add('is-show');
+  }
+}
+
 function makeAccordionGalleryMarkup() {
   const accordionGallery = document.createElement('div');
-  accordionGallery.classList.add('accordion__gallery');
+  accordionGallery.classList.add('accordion__by-date');
   return accordionGallery;
 }
 
@@ -132,8 +188,9 @@ function makeArrowMarkUp() {
 }
 
 function makeContentMarkup() {
-  const content = document.createElement('div');
+  const content = document.createElement('ul');
   content.classList.add('accordion__content');
+  content.classList.add('container');
   return content;
 }
 
@@ -163,5 +220,26 @@ function onAccordionTitleClick(e) {
       'accordion__arrow--up'
     );
     contentRef.classList.remove('is-active');
+  }
+}
+
+function findFavoriteCards() {
+  if (load('favCards')) {
+    const cardsArray = load('favCards');
+    const arrayHomePageCards = Array.from(
+      refs.readPage.querySelectorAll('.item-news__article')
+    );
+
+    arrayHomePageCards.forEach(card => {
+      const cardBtn = card.querySelector('.item-news__add-text');
+      const cardHeartImg = card.querySelector('.item-news__heart-icon');
+      const cardTitle = card.querySelector('.item-news__title');
+      cardsArray.forEach(({ title }) => {
+        if (title === cardTitle.textContent) {
+          cardBtn.textContent = 'Remove from favorite';
+          cardHeartImg.classList.add('is-saved');
+        }
+      });
+    });
   }
 }
