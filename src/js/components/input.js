@@ -2,6 +2,7 @@
 import api from '../common/API';
 import paginator from './pagination';
 import PaginationSearchHandler from './paginationSearchHandler';
+import { findFavoriteCards, findReadCards } from './articles';
 // console.log(API);
 
 const form = document.querySelector('form.form-search');
@@ -21,13 +22,16 @@ function onSubmit(event) {
     perPage: 8,
     api: {
       method: api.articleSearchByQuery,
-      params: {q: input.value, date: null},
+      params: { q: input.value, date: null },
       externalHandler: new PaginationSearchHandler(),
     },
-    onPageChanged: createMarkUp
+    onPageChanged: createMarkUp,
   };
 
   paginator.paginate(options);
+
+  findFavoriteCards();
+  findReadCards();
 
 }
 

@@ -1,4 +1,6 @@
 import { getAuth } from 'firebase/auth';
+import './js/components/burger-menu';
+import './js/components/theme';
 import { load, save } from './js/common/local_storage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
@@ -86,7 +88,9 @@ function renderCardsTemplate(array) {
   const accordionGallery = makeAccordionGalleryMarkup();
 
   for (let date of datesArray) {
-		const news = array[date];
+
+    const news = array[date];
+
 
     const accordion = makeAccordionMarkup();
     const title = makeTitleMarkup(date);

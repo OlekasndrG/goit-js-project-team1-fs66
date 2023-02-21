@@ -1,4 +1,6 @@
 import { load, save } from './js/common/local_storage';
+import './js/components/burger-menu';
+import './js/components/theme';
 
 const refs = {
   favPage: document.querySelector('.favotire-page-gallery'),
