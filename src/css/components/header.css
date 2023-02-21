@@ -1,39 +1,39 @@
-body.is-open{
+body.is-open {
   overflow: hidden;
 }
-.container{
+.container {
   margin-left: auto;
   margin-right: auto;
   padding-left: 16px;
   padding-right: 16px;
   width: 320px;
 }
-.position-header{
+.position-header {
   position: relative;
   flex-direction: column;
 }
-.home-header{
+.home-header {
   display: flex;
   padding: 24px 0px 24px 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   position: relative;
 }
 
-.icon-menu{
+.icon-menu {
   fill: #111321;
   color: #111321;
 }
-.logo{
+.logo {
   font-weight: 700;
   font-size: 24px;
   line-height: 33px;
-  color: #111321;
+  /* color: #111321; */
 }
-.logo-header{
+.logo-header {
   margin-right: 10px;
 }
 
-.menu-button{
+.menu-button {
   display: inline-block;
   padding: 0;
   margin-left: auto;
@@ -47,57 +47,55 @@ body.is-open{
   top: 5px;
   right: 0px;
 }
-.menu-container{
+.menu-container {
   display: none;
   position: relative;
 }
-.menu-container.is-open{
+.menu-container.is-open {
   display: block;
   padding-bottom: 18px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   height: 85vh;
 }
-.icon-close{
+.icon-close {
   display: none;
   fill: #111321;
   color: #111321;
-  background-color:rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
-.menu-button.is-open .icon-close{
+.menu-button.is-open .icon-close {
   display: block;
-
 }
 .menu-button.is-open .icon-menu {
   display: none;
 }
 
-.icon{
+.icon {
   margin-right: 14px;
-  border: 1px solid #F4F4F4;
+  border: 1px solid #f4f4f4;
   border-radius: 50%;
 }
-.site-nav--link{
+.site-nav--link {
   display: flex;
-  align-items:center;
+  align-items: center;
   padding: 6px 0px 6px 0px;
-  color: #111321;
+
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
-
 }
-.site-nav--link:hover{
-  background-color: #4440F6;
+.site-nav--link:hover {
+  background-color: #4440f6;
 }
-.site-nav--item{
+.site-nav--item {
   margin-bottom: 0;
   width: 320px;
 }
-.icon-right{
+.icon-right {
   margin-left: auto;
-  fill: #F4F4F4;
+  fill: #f4f4f4;
 }
-.site-nav--list{
+.site-nav--list {
   height: 100%;
   margin-top: 68px;
 }
@@ -115,14 +113,13 @@ body.is-open{
   flex-direction: column;
   transform: translateX(+80%);
   transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-
 }
 
-.input-label:hover{
+.input-label:hover {
   transform: translateX(0);
 }
 
-.search-name{
+.search-name {
   position: absolute;
   top: 4px;
   left: 0px;
@@ -140,7 +137,7 @@ body.is-open{
 
 .input-search {
   width: 150px;
-  padding: 5px 0 5px 80px;
+  padding: 5px 0 5px 30px;
   display: block;
   transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
@@ -149,12 +146,12 @@ body.is-open{
   border-color: transparent;
 }
 
-.input-label:hover .input-search{
+.input-label:hover .input-search {
   border: 1px solid #111321;
-  background-color: #FFF;
+  background-color: #fff;
 }
 
-.icon-search{
+.icon-search {
   margin-right: 14px;
   cursor: pointer;
   position: absolute;
@@ -162,13 +159,13 @@ body.is-open{
   left: 8px;
 }
 
-.search{
+.search {
   display: inline-block;
   margin-right: 14px;
   overflow: hidden;
 }
 
-.search:hover .input-search{
+.search:hover .input-search {
   transform: translateX(-100%);
 }
 
@@ -176,28 +173,28 @@ body.is-open{
   display: none;
 }
 
-.icon-toggle-n{
+.icon-toggle-n {
   display: none;
 }
 
-.theme-toggle{
+.theme-toggle {
   display: flex;
-  align-items:flex-end;
+  align-items: flex-end;
   margin-top: auto;
   position: absolute;
   bottom: 18px;
 }
 
-.theme-descr{
+.theme-descr {
   display: none;
 }
-.icon-them-sun{
+.icon-them-sun {
   display: flex;
 }
-.icon-them-moon{
+.icon-them-moon {
   display: flex;
 }
-.theme-button{
+.theme-button {
   display: flex;
   align-items: center;
   background-color: transparent;
@@ -208,129 +205,138 @@ body.is-open{
   margin-left: 8px;
   border: none;
 }
-.button-box{
+.button-box {
   display: flex;
   flex-direction: column;
   align-items: start;
   margin-top: 20px;
 }
-.login{
+
+.login {
   margin-bottom: 20px;
 }
+body.themeDark .login {
+  color: #fff;
+}
+body.themeDark .registr {
+  color: #fff;
+}
+body.themeDark .logout {
+  color: #fff;
+}
 @media screen and (min-width: 768px) {
-  .logo{
-      font-size: 32px;
-      line-height: 44px;
+  .logo {
+    font-size: 32px;
+    line-height: 44px;
   }
-  .container{
-      width: 768px;
+  .container {
+    width: 768px;
   }
-  .position-header{
-      position: static;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+  .position-header {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
-  .home-header{
-      padding: 32px 0px 32px 0px;
-      position:static;
-      display: block;
+  .home-header {
+    padding: 32px 0px 32px 0px;
+    position: static;
+    display: block;
   }
   .icon-menu {
-      display: none;
+    display: none;
   }
-  .logo-header{
-      margin-right: 48px;
+  .logo-header {
+    margin-right: 48px;
   }
-  .menu-button{
-      display: none;
+  .menu-button {
+    display: none;
   }
-  .menu-container{
-      display: flex;
+  .menu-container {
+    display: flex;
   }
-  .icon{
-      display: none;
+  .icon {
+    display: none;
   }
-  .site-nav--link{
-      display: inline;
-      color: #111321;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 22px;
-      padding-bottom: 8px;
+  .site-nav--link {
+    display: inline;
+
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    padding-bottom: 8px;
   }
 
-  .site-nav--item{
-      width: 100%;
+  .site-nav--item {
+    width: 100%;
   }
-  .site-nav--link:hover{
-      background-color: transparent;
-      color: #4440F7;
+  .site-nav--link:hover {
+    background-color: transparent;
+    color: #4440f7;
   }
-  .site-nav--item:not(:last-child){
-      margin: 0 44px 0 0;
-  }    
-  .site-nav--item:last-child{
-      margin: 0 32px 0 0;
+  .site-nav--item:not(:last-child) {
+    margin: 0 44px 0 0;
   }
-  .icon-right{
-      display: none;
+  .site-nav--item:last-child {
+    margin: 0 32px 0 0;
   }
-  .site-nav--list{
-      margin-top: 0;
-      display: flex;
+  .icon-right {
+    display: none;
+  }
+  .site-nav--list {
+    margin-top: 0;
+    display: flex;
+  }
 
-  }
-  
   .form-search {
-      fill: #000000;
-      position: relative;
-      top: 0;
-      right: 0;
+    fill: #000000;
+    position: relative;
+    top: 0;
+    right: 0;
   }
   .input-label {
-      display: flex;
-      flex-direction: row;
-      transform: none;
+    display: flex;
+    flex-direction: row;
+    transform: none;
   }
-  
+
   .input-search {
-      width: 173px;
-      display: block;
-      transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-      outline: none;
-      border-radius: 20px;
-      background-color: transparent;
-      border: 1px solid #111321;
-      background-color: #FFF;
+    width: 173px;
+    display: block;
+    transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    border-radius: 20px;
+    background-color: transparent;
+    border: 1px solid #111321;
+    background-color: #fff;
   }
-  
+
   .icon-search {
-      position: absolute;
-      top: 0px;
+    position: absolute;
+    top: 0px;
   }
-  
-  .icon-search{
-      margin-right: 14px;
-      cursor: pointer;
-      position: absolute;
-      top: 4px;
-      left: 8px;
+
+  .icon-search {
+    margin-right: 14px;
+    cursor: pointer;
+    position: absolute;
+    top: 4px;
+    left: 8px;
   }
-  
-  .theme-toggle{
-      display: flex;
-      align-items: center;
-      margin-top: auto;
-      position: absolute;
-      bottom: 0;
-      top: 0px;
-      right: -370px;
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    top: 0px;
+    right: -370px;
   }
-  .current-page{
-      border-bottom: 1px solid #4440F7;
+  .current-page {
+    border-bottom: 1px solid #4440f7;
   }
-  .button-box{
+  .button-box {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -340,70 +346,68 @@ body.is-open{
     top: -45px;
     right: -240px;
   }
-
 }
 @media screen and (min-width: 1280px) {
-  .logo{
-      font-size: 42px;
-      line-height: 57px;
+  .logo {
+    font-size: 42px;
+    line-height: 57px;
   }
-  .container{
-      width: 1280px;
-  }
-
-  .home-header{
-      padding: 28px 0px 28px 0px;
-  }
-  .logo-header{
-      margin-right: 102px;
-  }
-  .site-nav--link{
-      font-size: 18px;
-      line-height: 25px;
-      padding-bottom: 5px;
+  .container {
+    width: 1280px;
   }
 
-  .site-nav--item:not(:last-child){
-      margin-right: 69px;
-  }    
-  .site-nav--item:last-child{
-      margin-right: 147px;
+  .home-header {
+    padding: 28px 0px 28px 0px;
+  }
+  .logo-header {
+    margin-right: 102px;
+  }
+  .site-nav--link {
+    font-size: 18px;
+    line-height: 25px;
+    padding-bottom: 5px;
   }
 
-  
+  .site-nav--item:not(:last-child) {
+    margin-right: 69px;
+  }
+  .site-nav--item:last-child {
+    margin-right: 147px;
+  }
+
   .input-search {
-      width: 248px;
+    width: 248px;
   }
-  
-  .theme-toggle{
-      display: flex;
-      align-items: center;
-      margin-top: auto;
-      position: absolute;
-      top: 0px;
-      right: -600px;
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    position: absolute;
+    top: 0px;
+    right: -600px;
   }
-  .theme-descr{
-  display: inline;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
+  .theme-descr {
+    display: inline;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
   }
-  .icon-them-sun{
-      display: flex;
+  .icon-them-sun {
+    display: flex;
   }
-  .icon-them-moon{
-      display: flex;
+  .icon-them-moon {
+    display: flex;
   }
-  .theme-icon-light{
-      display: none;
+  .theme-icon-light {
+    display: none;
   }
-  .theme-icon-dark{
-      display: none;
+  .theme-icon-dark {
+    display: none;
   }
-  .button-box{
+  .button-box {
     display: inline;
     position: absolute;
     margin: 0;
@@ -411,7 +415,7 @@ body.is-open{
     top: 0;
     right: -390px;
   }
-  .login{
+  .login {
     margin-bottom: 0px;
     margin-right: 15px;
   }

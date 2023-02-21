@@ -20,16 +20,18 @@ class API {
           fq: fq,
           'api-key': V2_API_KEY,
         },
-      },
+      }
     );
 
     const articles = response.data.response.docs.map(result => {
-      let image;
+      let image =
+        'https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg';
       if (result.multimedia.length > 0) {
         image = 'https://nyt.com/' + result.multimedia[0].url;
       }
 
       return {
+        category: result.section_name ,
         title: result.headline.main,
         image: image,
         description: result.abstract,
@@ -51,7 +53,9 @@ class API {
     );
 
     const articles = response.data.results.map(result => {
+
       if (result.media.length === 0) {
+
         return {
           title: result.title,
           image:
@@ -79,7 +83,7 @@ class API {
   async articleSearchByCategory({ category, date = null, limit, offset }) {
     const response = await axios(
       `https://api.nytimes.com/svc/news/v3/content/all/${category}.json`,
-      { params: { 'api-key': V3_API_KEY, limit: limit, offset: offset } },
+      { params: { 'api-key': V3_API_KEY, limit: limit, offset: offset } }
     );
     const articles = response.data.results.map(result => {
       if (!result.multimedia) {
@@ -98,7 +102,9 @@ class API {
           description: result.abstract,
           date: new Date(result.published_date),
           url: result.url,
+
           section: result.section
+
         };
     });
     return {
