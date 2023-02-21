@@ -2,13 +2,36 @@
 	display: block;
 }
 
-.accordion__title {
-	display: flex;
-	align-items: flex-end;
-	padding-bottom: 12px;
+.accordion__by-date {
+	display: block;
 	margin-top: 40px;
 	margin-bottom: 40px;
+}
 
+@media screen and (min-width: 767px) {
+	.accordion__title {
+		padding-left: 16px;
+	}
+}
+
+@media screen and (min-width: 1279px) {
+	.accordion__title {
+		padding-left: 127px;
+	}
+}
+
+@media screen and (max-width: 766px) {
+	.accordion__title {
+		padding-left: 65px;
+	}
+}
+
+.accordion__title {
+	display: flex;
+
+	align-items: flex-end;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #929292;
 	font-family: 'Poppins';
 	font-style: normal;
 	font-weight: 400;
@@ -20,7 +43,6 @@
 	outline: none;
 	transition: 0.4s;
 	color: #111321;
-	border-bottom: 1px solid #929292;
 }
 
 .accordion__arrow {
