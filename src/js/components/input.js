@@ -1,4 +1,5 @@
 import API from '../common/API';
+import { findFavoriteCards, findReadCards } from './articles';
 // console.log(API);
 
 const form = document.querySelector('form.form-search');
@@ -14,7 +15,9 @@ function onSubmit(event) {
   event.preventDefault();
 
   API.articleSearchByQuery({ q: input.value })
-    .then(({ articles }) => createMarkUp(articles))
+    .then(({ articles }) => {
+      createMarkUp(articles);
+    })
     .catch(error => console.error(error));
 }
 
@@ -40,16 +43,22 @@ function createMarkUp(articles) {
   } else {
     return insertMarkUp(onNoResults());
   }
+  findFavoriteCards();
+  findReadCards();
 }
 
-
-function generateArticlesMarkup({ title, image, description, url, date, category}) {
-  
+function generateArticlesMarkup({
+  title,
+  image,
+  description,
+  url,
+  date,
+  category,
+}) {
   function truncateString(str) {
-    
-    return str.length > 75 ? str.slice(0, 75) + "..." : str;
+    return str.length > 75 ? str.slice(0, 75) + '...' : str;
   }
-  let limitString = truncateString(description)
+  let limitString = truncateString(description);
 
   return `<li class="list-news__item">
             <article class="item-news__article">
@@ -58,7 +67,7 @@ function generateArticlesMarkup({ title, image, description, url, date, category
                     <p class="item-news__category">${category}</p>
                     <p class="item-news__add-to-favorite">Add to favorite
                         <svg class="item-news__icon" width="16" height="16">
-                            <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
+                            <use class="item-news__heart-icon" href="./img/icons_site.svg#icon-heart_wite"></use>
                         </svg>
                     </p>
                 </div>
