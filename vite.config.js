@@ -8,8 +8,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'src/index.html'),
-        second: resolve(__dirname, 'src/second.html'),
-        next: resolve(__dirname, 'src/next.html'),
+        second: resolve(__dirname, 'src/favorites.html'),
+        next: resolve(__dirname, 'src/read.html'),
       },
     },
     outDir: '../dist',
