@@ -30,7 +30,7 @@ export function onRenderOneCard(arrayNews) {
                 </svg>
               </div>
 
-            <div class=".item-news__wrapper-text">
+            <div class="item-news__wrapper-text">
                 <h2 class="item-news__title">
                 ${title}
                 </h2>
