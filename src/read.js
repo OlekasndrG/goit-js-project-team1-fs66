@@ -85,17 +85,16 @@ function renderCards(array) {
 
 function renderCardsTemplate(array) {
   const datesArray = Object.keys(array);
-  const accordionGallery = makeAccordionGalleryMarkup();
+  const accordionByDate = makeAccordionByDateMarkup();
 
   for (let date of datesArray) {
-
     const news = array[date];
-
 
     const accordion = makeAccordionMarkup();
     const title = makeTitleMarkup(date);
     const arrow = makeArrowMarkUp();
     const content = makeContentMarkup();
+    const border = makeBorderMarkUp();
 
     title.append(arrow);
     content.insertAdjacentHTML('beforeend', news.join(''));
@@ -109,8 +108,9 @@ function renderCardsTemplate(array) {
     cardHeartImg.classList.remove('is-saved');
 
     accordion.appendChild(title);
+    accordion.appendChild(border);
     accordion.appendChild(content);
-    accordionGallery.appendChild(accordion);
+    accordionByDate.appendChild(accordion);
 
     const titleArrayRef = accordion.querySelectorAll('.accordion__title');
     ListenAllTitleClick(titleArrayRef);
@@ -118,7 +118,7 @@ function renderCardsTemplate(array) {
     const cardStatusRef = content.querySelectorAll('.item-news__already-read');
     changeCardStatus(cardStatusRef);
   }
-  refs.readPage.appendChild(accordionGallery);
+  refs.readPage.appendChild(accordionByDate);
 }
 
 function renderCardsDatabase(userId) {
@@ -150,7 +150,7 @@ function cardsByDate(array) {
       year: 'numeric',
       day: 'numeric',
       month: 'numeric',
-		});
+    });
 
     if (acc[date]) {
       acc[date].push(newsCard);
@@ -171,10 +171,10 @@ function isEmptyPage() {
   }
 }
 
-function makeAccordionGalleryMarkup() {
-  const accordionGallery = document.createElement('div');
-  accordionGallery.classList.add('accordion__by-date');
-  return accordionGallery;
+function makeAccordionByDateMarkup() {
+  const accordionByDate = document.createElement('div');
+  accordionByDate.classList.add('accordion__by-date');
+  return accordionByDate;
 }
 
 function makeAccordionMarkup() {
@@ -186,6 +186,7 @@ function makeAccordionMarkup() {
 function makeTitleMarkup(textContent) {
   const title = document.createElement('h2');
   title.classList.add('accordion__title');
+  title.classList.add('container');
   title.textContent = textContent;
   return title;
 }
@@ -195,6 +196,12 @@ function makeArrowMarkUp() {
   arrow.classList.add('accordion__arrow');
   arrow.classList.add('accordion__arrow--up');
   return arrow;
+}
+
+function makeBorderMarkUp() {
+  const border = document.createElement('div');
+  border.classList.add('accordion__border');
+  return border;
 }
 
 function makeContentMarkup() {
@@ -215,8 +222,10 @@ function changeCardStatus(array) {
 }
 
 function onAccordionTitleClick(e) {
-  const arrowRef = e.target.querySelector('.accordion__arrow');
-  const contentRef = e.target.nextSibling;
+  const targetElement = e.target;
+  const accordion = targetElement.closest('.accordion');
+  const arrowRef = accordion.querySelector('.accordion__arrow');
+  const contentRef = accordion.querySelector('.accordion__content');
 
   if (arrowRef.classList.contains('accordion__arrow--up')) {
     arrowRef.classList.replace(
@@ -266,7 +275,3 @@ function findFavoriteCards() {
     });
   }
 }
-import './js/components/theme';
-
-import './js/components/burger-menu';
-// import './js/components/input';
