@@ -1,5 +1,6 @@
 const V2_API_KEY = 'lN1jAQVvVGOPSqcIQoMHMLLJA9oE1Rka';
-const V3_API_KEY = '3CItmRm8j68GAL0hCexL4TtbIz43N2Mu';
+const V3_API_KEY = '2CU5jHC0OFWuoOquTogFU31832ZDQk3X';
+// 3CItmRm8j68GAL0hCexL4TtbIz43N2Mu
 import axios from 'axios';
 import { format, parse } from 'date-fns';
 
@@ -52,7 +53,9 @@ class API {
     );
 
     const articles = response.data.results.map(result => {
-      if (!result.media) {
+
+      if (result.media.length === 0) {
+
         return {
           title: result.title,
           image:
@@ -86,12 +89,11 @@ class API {
       if (!result.multimedia) {
         return {
           title: result.title,
-          image:
-            'https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg',
+          image: "https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg",
           description: result.abstract,
           date: new Date(result.published_date),
           url: result.url,
-          section: result.section,
+          section: result.section
         };
       } else
         return {
@@ -100,7 +102,9 @@ class API {
           description: result.abstract,
           date: new Date(result.published_date),
           url: result.url,
-          section: result.section,
+
+          section: result.section
+
         };
     });
     return {

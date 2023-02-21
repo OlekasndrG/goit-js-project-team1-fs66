@@ -3,14 +3,13 @@ const ulCardList = document.querySelector('.list-news')
 
 export function onRenderOneCard(arrayNews) {
 
-    const arrayCard = arrayNews.map((news, index) => {
-        const {media, section,title,abstract,published_date, url} = news;
-        let mediaUrl = ''
+    const arrayCard = arrayNews.articles.map((news, index) => {
+        const {image, section, title, description, date, url} = news;
         const WETHER = '<li class="wether-a"></li>'
         const MARKUP = `<li class="list-news__item">
         <article class="item-news__article">
             <div class="item-news__wrapper-img">
-                <img class="item-news__img" src="${mediaUrl}" alt="">
+                <img class="item-news__img" src="${image}" alt="">
                 <p class="item-news__category">${section}</p>
                 <p class="item-news__add-to-favorite">Add to favorite
                     <svg class="item-news__icon" width="16" height="16">
@@ -23,34 +22,26 @@ export function onRenderOneCard(arrayNews) {
                 ${title}
                 </h2>
                 <p class="item-news__description">
-                ${abstract}</p>
+                ${description}</p>
             </div>
             <div class="item-news__info">
                 <span class="item-news__info-date">
-                ${published_date}
+                ${date}
                 </span>
                 <a class="item-news__info-link" href="${url}#">Read more</a>
             </div>
         </article>
     </li>`
-
-        if (media.length === 0) {
-            mediaUrl = 'https://static01.nyt.com/images/2023/02/17/opinion/16PAUL_4/16PAUL_4-thumbStandard.jpg'
-        }else{
-            const mediaData = media[0]
-            mediaUrl = mediaData['media-metadata'][2].url
- 
-        }
         if (index === 1) {
             return MARKUP + WETHER
         }
         return MARKUP
     }).join('')
     onMarkupCard(arrayCard)
+    
 }
 
 function onMarkupCard(cards) {
-    ulCardList.insertAdjacentHTML('beforeend', cards)
-  
+    ulCardList.innerHTML = cards
+    // ulCardList.insertAdjacentHTML('beforeend', cards)
   }
-
