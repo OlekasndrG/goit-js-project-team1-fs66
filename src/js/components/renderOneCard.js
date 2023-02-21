@@ -8,6 +8,12 @@ export function onRenderOneCard(arrayNews) {
   const arrayCard = arrayNews.articles
     .map((news, index) => {
       const { image, section, title, description, date, url } = news;
+      function truncateString(str) {
+    
+        return str.length > 100 ? str.slice(0, 100) + "..." : str;
+      }
+      let limitString = truncateString(description);
+
       const WETHER = '<li class="wether-a"></li>';
       const MARKUP = `<li class="list-news__item">
         <article class="item-news__article">
@@ -35,7 +41,7 @@ export function onRenderOneCard(arrayNews) {
                 ${title}
                 </h2>
                 <p class="item-news__description">
-                ${description}</p>
+                ${limitString}</p>
             </div>
             <div class="item-news__info">
                 <span class="item-news__info-date">
