@@ -42,7 +42,15 @@ function createMarkUp(articles) {
   }
 }
 
+
 function generateArticlesMarkup({ title, image, description, url, date, category}) {
+  
+  function truncateString(str) {
+    
+    return str.length > 100 ? str.slice(0, 100) + "..." : str;
+  }
+  let limitString = truncateString(description)
+
   return `<li class="list-news__item">
             <article class="item-news__article">
                 <div class="item-news__wrapper-img">
@@ -59,7 +67,7 @@ function generateArticlesMarkup({ title, image, description, url, date, category
                         ${title}
                     </h2>
                     <p class="item-news__description">
-                        ${description}</p>
+                        ${limitString}</p>
                 </div>
                 <div class="item-news__info">
                     <span class="item-news__info-date">
