@@ -1,5 +1,5 @@
 import API from '../common/API';
-console.log(API);
+// console.log(API);
 
 const form = document.querySelector('form.form-search');
 const input = document.querySelector('.input-search');
@@ -8,7 +8,7 @@ const section = document.querySelector('.section__list-news');
 const articles = document.querySelector('.list-news');
 const date = document.getElementById('input-picker');
 
-console.log(API);
+// console.log(API);
 
 function onSubmit(event) {
   event.preventDefault();
