@@ -88,7 +88,7 @@ function cleanLocalStorageFav() {
 
 import './js/components/theme';
 
-// import './js/components/burger-menu';
+import './js/components/burger-menu';
 // import './js/components/input';
 
 
