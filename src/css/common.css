@@ -1,24 +1,43 @@
 :root {
     /*color*/
+    --bg-color: #f4f4f4;
     --main-color: #111321;
+    --color-btn-favorite: #111321;
     --accent-color: #4440F6;
     --second-color: #A8A8A8;
     --third-color: #ffffff;
     --border-color: #4440F7;
     --theme-color: #4B48DB;
+    --switcher-gray-moon: #5f6775;
+    --switcher-accent-day: #4b48db;
+    --footer-color: #7a7a7a;
 
     /*background*/
-    --main-light-background: #A8A8A8;
-    --main-durk-background: #111321;
+    /* --main-light-background: #A8A8A8;
+    --main-durk-background: #111321; */
     
     /*font*/
     --main-font: Manrope, sans-serif;
     --weather-font: Roboto, sans-serif;
     --calendar-font: Poppins, sans-serif;
+
+  
 }
+
+body.themeDark {
+    --bg-color: #2e2e2e;
+    --main-color:#f4f4f4;
+    --switcher-gray-moon: #4B48DB;
+    --switcher-accent-day: #5F6775;
+}
+ 
+  
+
+
 
 body {
     font-family: var(--main-font);
     color: var(--main-color);
     background-color: var(--main-light-backgroundd);
 }
+
