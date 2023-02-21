@@ -9,7 +9,7 @@ export async function onRenderByOneCategorie(params) {
     const result = await fethByCategorie.articleSearchByCategory(category, dataCurrent)
 
     }
-    console.log(result);
+ 
     
 }
 
