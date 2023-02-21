@@ -42,12 +42,12 @@ function createMarkUp(articles) {
   }
 }
 
-function generateArticlesMarkup({ title, image, description, url, date }) {
+function generateArticlesMarkup({ title, image, description, url, date, category}) {
   return `<li class="list-news__item">
             <article class="item-news__article">
                 <div class="item-news__wrapper-img">
                     <img class="item-news__img" src="${image}" alt="">
-                    <p class="item-news__category"></p>
+                    <p class="item-news__category">${category}</p>
                     <p class="item-news__add-to-favorite">Add to favorite
                         <svg class="item-news__icon" width="16" height="16">
                             <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>

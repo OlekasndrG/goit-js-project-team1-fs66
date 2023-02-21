@@ -23,12 +23,14 @@ class API {
     );
 
     const articles = response.data.response.docs.map(result => {
-      let image;
+      let image =
+        'https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg';
       if (result.multimedia.length > 0) {
         image = 'https://nyt.com/' + result.multimedia[0].url;
       }
 
       return {
+        category: result.section_name ,
         title: result.headline.main,
         image: image,
         description: result.abstract,
