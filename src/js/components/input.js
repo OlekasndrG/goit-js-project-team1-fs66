@@ -1,3 +1,4 @@
+
 import api from '../common/API';
 import paginator from './pagination';
 import PaginationSearchHandler from './paginationSearchHandler';
@@ -16,14 +17,15 @@ const date = document.getElementById('input-picker');
 function onSubmit(event) {
   event.preventDefault();
 
+
   const options = {
     perPage: 8,
     api: {
       method: api.articleSearchByQuery,
-      params: {q: input.value, date: null},
+      params: { q: input.value, date: null },
       externalHandler: new PaginationSearchHandler(),
     },
-    onPageChanged: createMarkUp
+    onPageChanged: createMarkUp,
   };
 
   paginator.paginate(options);
@@ -54,6 +56,8 @@ function createMarkUp(articles) {
   } else {
     return insertMarkUp(onNoResults());
   }
+  findFavoriteCards();
+  findReadCards();
 }
 
 function generateArticlesMarkup({
@@ -76,7 +80,7 @@ function generateArticlesMarkup({
                     <p class="item-news__category">${category}</p>
                     <p class="item-news__add-to-favorite">Add to favorite
                         <svg class="item-news__icon" width="16" height="16">
-                            <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
+                            <use class="item-news__heart-icon" href="./img/icons_site.svg#icon-heart_wite"></use>
                         </svg>
                     </p>
                 </div>
