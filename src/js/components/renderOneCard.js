@@ -12,6 +12,18 @@ export function onRenderOneCard(arrayNews) {
             <div class="item-news__wrapper-img">
                 <img class="item-news__img" src="${image}" alt="">
                 <p class="item-news__category">${section}</p>
+                <div class="item-news__add-to-favorite">
+                  <p class="item-news__add-text">Add to favorite</p>
+                  <svg class="item-news__icon" width="16" height="16">
+                    <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
+                  </svg>
+                </div>
+                <div class='item-news__already-read'>
+                  <span class='item-news__already-read-text'>Already read</span>
+                  <svg class='item-news__icon' width='18' height='18'>
+                    <use class='item-news__check-icon' href='../img/sprite-icons.svg#icon-done'></use>
+                  </svg>
+                </div>
                 <p class="item-news__add-to-favorite">Add to favorite
                     <svg class="item-news__icon" width="16" height="16">
                         <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
