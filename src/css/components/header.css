@@ -426,7 +426,7 @@ body.themeDark .logout {
     align-items: center;
     margin-top: auto;
     position: absolute;
-    top: 0px;
+    top: 18px;
     right: -600px;
   }
   .theme-descr {
