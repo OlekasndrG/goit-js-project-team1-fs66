@@ -18,7 +18,7 @@ async function error() {
 async function geolocationSuccess(succeessGeo) {
   geoData = succeessGeo;
 
-  console.log(await getWeather());
+  // console.log(await getWeather());
 }
 
 async function getWeather() {
