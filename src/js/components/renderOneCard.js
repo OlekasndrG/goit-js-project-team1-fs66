@@ -1,4 +1,5 @@
 const ulCardList = document.querySelector('.list-news')
+import { format, parse } from 'date-fns';
 
 
 export function onRenderOneCard(arrayNews) {
@@ -26,7 +27,7 @@ export function onRenderOneCard(arrayNews) {
             </div>
             <div class="item-news__info">
                 <span class="item-news__info-date">
-                ${date}
+                ${format(date, 'yyyy-MM-dd')}
                 </span>
                 <a class="item-news__info-link" href="${url}#">Read more</a>
             </div>
@@ -43,5 +44,4 @@ export function onRenderOneCard(arrayNews) {
 
 function onMarkupCard(cards) {
     ulCardList.innerHTML = cards
-    // ulCardList.insertAdjacentHTML('beforeend', cards)
   }

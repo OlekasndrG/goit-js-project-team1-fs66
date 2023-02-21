@@ -63,6 +63,7 @@ class API {
           description: result.abstract,
           date: parse(result.published_date, 'yyyy-MM-dd', new Date()),
           url: result.url,
+          section: result.section
         };
       } else
         return {
@@ -71,6 +72,7 @@ class API {
           description: result.abstract,
           date: parse(result.published_date, 'yyyy-MM-dd', new Date()),
           url: result.url,
+          section: result.section
         };
     });
 
