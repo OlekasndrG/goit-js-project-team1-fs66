@@ -5,13 +5,15 @@ import PaginationSearchHandler from './paginationSearchHandler.js';
 import { writeUserCards } from './dataBase/setDatabase';
 import { onGetCookie } from './dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
-export { findFavoriteCards };
+export { findFavoriteCards, findReadCards };
 
 const data = {
   source: 'nyt',
   section: 'business',
   readCardsArray: [],
 };
+
+cleanLocalStorageFav();
 
 const refs = {
   newsList: document.querySelector('.list-news'),
@@ -61,6 +63,7 @@ function findReadLocalStorage(array) {
     array.forEach(({ title }) => {
       if (title === cardTitle.textContent) {
         cardStatus.classList.add('is-read');
+        card.classList.add('is-ghost');
       }
     });
   });
@@ -93,6 +96,7 @@ function handleClickGallery(e) {
     const card = targetElement.closest('.list-news__item');
     const cardStatus = card.querySelector('.item-news__already-read');
     const cardTitle = card.querySelector('.item-news__title');
+    card.classList.add('is-ghost');
     cardStatus.classList.add('is-read');
 
     const stringifyCard = card.outerHTML;
@@ -112,7 +116,7 @@ function handleClickGallery(e) {
 
   const favoritesLocal = load('favCards') || [];
 
-  if (targetElement.nodeName === 'P') {
+  if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.list-news__item');
     const cardBtn = card.querySelector('.item-news__add-text');
     const cardTitle = card.querySelector('.item-news__title');
@@ -139,6 +143,8 @@ function handleClickGallery(e) {
 
     save('favCards', favoritesLocal);
   }
+
+  cleanLocalStorageFav();
 }
 
 function saveCardsReadHistory(key, array) {
@@ -193,6 +199,12 @@ function setDataToDatabase({ userId, dbData, currentData, key }) {
 
 function makeUniqueArrayByKey({ key, array }) {
   return [...new Map(array.map(item => [item[key], item])).values()];
+}
+
+function cleanLocalStorageFav() {
+  if (load('favCards').length === 0) {
+    localStorage.removeItem('favCards');
+  }
 }
 
 // Кінець----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

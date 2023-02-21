@@ -1,4 +1,6 @@
 import { getAuth } from 'firebase/auth';
+import './js/components/burger-menu';
+import './js/components/theme';
 import { load, save } from './js/common/local_storage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
@@ -15,6 +17,8 @@ const firebaseConfig = {
   appId: '1:618434101899:web:58e5277fd4ec3d55f6ca8e',
   measurementId: 'G-7YDFYWJH4S',
 };
+
+cleanLocalStorageFav();
 
 const app = initializeApp(firebaseConfig);
 
@@ -43,7 +47,7 @@ function handleClickGallery(e) {
   const targetElement = e.target;
   const favoritesLocal = load('favCards') || [];
 
-  if (targetElement.nodeName === 'P') {
+  if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.list-news__item');
     const cardBtn = card.querySelector('.item-news__add-text');
     const cardTitle = card.querySelector('.item-news__title');
@@ -70,6 +74,8 @@ function handleClickGallery(e) {
 
     save('favCards', favoritesLocal);
   }
+
+  cleanLocalStorageFav();
 }
 
 function renderCards(array) {
@@ -83,10 +89,9 @@ function renderCardsTemplate(array) {
 
   for (let date of datesArray) {
     const news = array[date];
-    const parsedDatesToString = new Date(date).toLocaleDateString('en-GB');
 
     const accordion = makeAccordionMarkup();
-    const title = makeTitleMarkup(parsedDatesToString);
+    const title = makeTitleMarkup(date);
     const arrow = makeArrowMarkUp();
     const content = makeContentMarkup();
 
@@ -95,7 +100,9 @@ function renderCardsTemplate(array) {
 
     const cardBtn = content.querySelector('.item-news__add-text');
     const cardHeartImg = content.querySelector('.item-news__heart-icon');
+    const cards = content.querySelectorAll('.list-news__item');
 
+    cleanLabelFromHomePage(cards);
     cardBtn.textContent = 'Add to favorite';
     cardHeartImg.classList.remove('is-saved');
 
@@ -136,7 +143,8 @@ function cardsByDate(array) {
 
   return decrSortedDates.reduce((acc, card) => {
     const { card: newsCard } = card;
-    const date = new Date(card.watchDate).toLocaleDateString({
+
+    const date = new Date(card.watchDate).toLocaleDateString('en-GB', {
       year: 'numeric',
       day: 'numeric',
       month: 'numeric',
@@ -220,6 +228,19 @@ function onAccordionTitleClick(e) {
       'accordion__arrow--up'
     );
     contentRef.classList.remove('is-active');
+  }
+}
+
+function cleanLabelFromHomePage(cards) {
+  cards.forEach(el => {
+    el.classList.remove('is-ghost');
+    const cardStatus = el.querySelector('.item-news__already-read');
+  });
+}
+
+function cleanLocalStorageFav() {
+  if (load('favCards').length === 0) {
+    localStorage.removeItem('favCards');
   }
 }
 

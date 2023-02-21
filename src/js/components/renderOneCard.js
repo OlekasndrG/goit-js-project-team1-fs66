@@ -1,15 +1,13 @@
-
-const ulCardList = document.querySelector('.list-news')
+const ulCardList = document.querySelector('.list-news');
 import { format, parse } from 'date-fns';
-
+import { findFavoriteCards, findReadCards } from './articles';
 
 export function onRenderOneCard(arrayNews) {
   const arrayCard = arrayNews
     .map((news, index) => {
       const { image, section, title, description, date, url } = news;
       function truncateString(str) {
-    
-        return str.length > 75 ? str.slice(0, 75) + "..." : str;
+        return str.length > 75 ? str.slice(0, 75) + '...' : str;
       }
       let limitString = truncateString(description);
 
@@ -24,14 +22,14 @@ export function onRenderOneCard(arrayNews) {
 
                 <p class="item-news__add-text">Add to favorite</p>
                 <svg class="item-news__icon" width="16" height="16">
-                  <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
+                  <use class="item-news__heart-icon" href="./img/icons_site.svg#icon-heart_wite"></use>
                 </svg>
               </div>
 						</div>
               <div class='item-news__already-read'>
                 <span class='item-news__already-read-text'>Already read</span>
                 <svg class='item-news__icon' width='18' height='18'>
-                  <use class='item-news__check-icon' href='../img/sprite-icons.svg#icon-done'></use>
+                  <use class='item-news__check-icon' href='./img/sprite-icons.svg#icon-done'></use>
                 </svg>
               </div>
 
@@ -57,10 +55,10 @@ export function onRenderOneCard(arrayNews) {
     })
     .join('');
   onMarkupCard(arrayCard);
+  findFavoriteCards();
+  findReadCards();
 }
 
 function onMarkupCard(cards) {
-
-    ulCardList.innerHTML = cards
-  }
-
+  ulCardList.innerHTML = cards;
+}
