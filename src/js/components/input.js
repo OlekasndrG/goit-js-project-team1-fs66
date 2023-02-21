@@ -1,3 +1,4 @@
+
 import api from '../common/API';
 import paginator from './pagination';
 import PaginationSearchHandler from './paginationSearchHandler';
@@ -16,6 +17,7 @@ const date = document.getElementById('input-picker');
 function onSubmit(event) {
   event.preventDefault();
 
+
   const options = {
     perPage: 8,
     api: {
@@ -27,8 +29,10 @@ function onSubmit(event) {
   };
 
   paginator.paginate(options);
+
   findFavoriteCards();
   findReadCards();
+
 }
 
 function createMarkUp(articles) {
@@ -53,6 +57,8 @@ function createMarkUp(articles) {
   } else {
     return insertMarkUp(onNoResults());
   }
+  findFavoriteCards();
+  findReadCards();
 }
 
 function generateArticlesMarkup({

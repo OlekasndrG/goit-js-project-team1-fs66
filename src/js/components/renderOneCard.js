@@ -2,6 +2,7 @@ const ulCardList = document.querySelector('.list-news');
 import { format, parse } from 'date-fns';
 import { findFavoriteCards, findReadCards } from './articles';
 
+
 export function onRenderOneCard(arrayNews) {
   const arrayCard = arrayNews
     .map((news, index) => {

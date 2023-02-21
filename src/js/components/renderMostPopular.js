@@ -1,3 +1,4 @@
+
 import api from '../common/API';
 import { findFavoriteCards, findReadCards } from './articles';
 import { onRenderOneCard } from './renderOneCard';
@@ -17,3 +18,4 @@ async function onRanderMostPopular() {
   findFavoriteCards();
   findReadCards();
 }
+

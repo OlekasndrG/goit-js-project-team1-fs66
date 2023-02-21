@@ -88,7 +88,9 @@ function renderCardsTemplate(array) {
   const accordionGallery = makeAccordionGalleryMarkup();
 
   for (let date of datesArray) {
+
     const news = array[date];
+
 
     const accordion = makeAccordionMarkup();
     const title = makeTitleMarkup(date);
@@ -148,7 +150,7 @@ function cardsByDate(array) {
       year: 'numeric',
       day: 'numeric',
       month: 'numeric',
-    });
+		});
 
     if (acc[date]) {
       acc[date].push(newsCard);
