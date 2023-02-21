@@ -4,6 +4,7 @@
   | default @import url()
   |============================
 */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Poppins&display=swap');
 @import url('./common.css');
 @import url('./reset.css');
 @import url('./components/articles.css');
@@ -19,6 +20,7 @@
 @import url('./components/header.css');
 @import url('./components/auth.css');
 @import url('./components/pagination.css');
+@import url('./components/empty_page.css');
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;

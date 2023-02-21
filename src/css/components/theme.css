@@ -2,7 +2,9 @@ body.themeDark {
   background-color: var(--bg-color);
   color: var(--third-color);
 }
-
+body.themeDark .home-header {
+  border-bottom: 1px solid rgba(244, 244, 244, 0.2);
+}
 .theme-site {
   display: none;
 }

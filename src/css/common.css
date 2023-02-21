@@ -1,4 +1,5 @@
 :root {
+
     /*color*/
     --bg-color: #f4f4f4;
     --main-color: #111321;
@@ -29,6 +30,7 @@ body.themeDark {
     --main-color:#f4f4f4;
     --switcher-gray-moon: #4B48DB;
     --switcher-accent-day: #5F6775;
+
 }
  
   
@@ -36,8 +38,10 @@ body.themeDark {
 
 
 body {
+
     font-family: var(--main-font);
     color: var(--main-color);
     background-color: var(--main-light-backgroundd);
 }
+
 

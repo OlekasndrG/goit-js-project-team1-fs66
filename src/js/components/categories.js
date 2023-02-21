@@ -7,24 +7,24 @@ const ulCategoriesOtherRef = document.querySelector('.categories-list-others')
 const categorieItem = [];
 const categorieOther = [];
 
-let counterSection = 0;
+
 searchCategories()
 onSerchByCategori()
 function onFilterCategories(arrayNews) {
   // const arrayCategories = arrayNews.map(categorie => {  })
       if (window.matchMedia("(max-width: 768px)").matches) {
-        const arrayCategories = arrayNews.map(categorie => `<li class="categories-item"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`).join('')
+        const arrayCategories = arrayNews.map(categorie => `<li class="categories-item"><a class="categories-link">${categorie.display_name}</a></li>`).join('')
 
-        onMarkupMobil(onFormatingString(arrayCategories))
+        onMarkupMobil(arrayCategories)
 
       } else if (window.matchMedia("(min-width: 768px)").matches && window.matchMedia("(max-width: 1280px)").matches) {
         const arrayCategories = arrayNews.map(
           (categorie, i) => {
             if (i < 4) {
-              categorieItem.push(`<li class="categories-item-tablet"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`) 
+              categorieItem.push(`<li class="categories-item-tablet"><a class="categories-link">${categorie.display_name}</a></li>`) 
               return categorieItem
             }else{
-              categorieOther.push(`<li class="categories-item-tablet-other"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`)
+              categorieOther.push(`<li class="categories-item-tablet-other"><a class="categories-link">${categorie.display_name}</a></li>`)
               return categorieOther
             }
           })
@@ -35,10 +35,10 @@ function onFilterCategories(arrayNews) {
         const arrayCategories = arrayNews.map(
           (categorie, i) => {
             if (i < 6) {
-              categorieItem.push(`<li class="categories-item-tablet"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`) 
+              categorieItem.push(`<li class="categories-item-tablet"><a class="categories-link">${categorie.display_name}</a></li>`) 
               return categorieItem
             }else{
-              categorieOther.push(`<li class="categories-item-tablet-other"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`)
+              categorieOther.push(`<li class="categories-item-tablet-other"><a class="categories-link">${categorie.display_name}</a></li>`)
               return categorieOther
             }
           })
@@ -80,7 +80,3 @@ async function searchCategories() {
 buttonCategoriesRef.addEventListener('click', categoriesIsOpen)
 
 
-function onFormatingString(string) {
-  const formatingString = string[0].toUpperCase() + string.slice(1, string.length)
-  return formatingString;
-}
