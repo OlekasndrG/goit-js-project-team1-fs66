@@ -31,7 +31,7 @@ class API {
       }
 
       return {
-        category: result.section_name ,
+        category: result.section_name,
         title: result.headline.main,
         image: image,
         description: result.abstract,
@@ -53,9 +53,7 @@ class API {
     );
 
     const articles = response.data.results.map(result => {
-
       if (result.media.length === 0) {
-
         return {
           title: result.title,
           image:
@@ -63,7 +61,7 @@ class API {
           description: result.abstract,
           date: parse(result.published_date, 'yyyy-MM-dd', new Date()),
           url: result.url,
-          section: result.section
+          section: result.section,
         };
       } else
         return {
@@ -72,7 +70,7 @@ class API {
           description: result.abstract,
           date: parse(result.published_date, 'yyyy-MM-dd', new Date()),
           url: result.url,
-          section: result.section
+          section: result.section,
         };
     });
 
@@ -88,32 +86,33 @@ class API {
       { params: { 'api-key': V3_API_KEY, limit: limit, offset: offset } }
     );
     const articles = response.data.results.map(result => {
-      if (!result.multimedia) {
-        return {
-          title: result.title,
-          image: "https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg",
-          description: result.abstract,
-          date: new Date(result.published_date),
-          url: result.url,
-          section: result.section
-        };
-      } else
-        return {
-          title: result.title,
-          image: result.multimedia[2].url,
-          description: result.abstract,
-          date: new Date(result.published_date),
-          url: result.url,
+      console.log(result);
+      return {
+        title: result.title,
+        image: getImage(result),
+        description: result.abstract,
+        date: new Date(result.published_date),
+        url: result.url,
 
-          section: result.section
-
-        };
+        section: result.section,
+      };
     });
     return {
       articles: articles,
-      total: response.data.num_results,
+      total: 26, // api always returns 26 results, yet it shows total number of 500
     };
   }
 }
 
+function getImage(result) {
+  if (!result.multimedia || result.multimedia.length === 0) {
+    return 'https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg';
+  }
+  return getBiggestImage(result.multimedia).url;
+}
+
 export default new API();
+
+function getBiggestImage(multimedia) {
+  return multimedia.reduce((max, obj) => (max.height > obj.height ? max : obj));
+}
