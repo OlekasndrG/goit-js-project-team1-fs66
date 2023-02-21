@@ -1,6 +1,7 @@
 import api from '../common/API';
 import paginator from './pagination';
 import PaginationSearchHandler from './paginationSearchHandler';
+import { findFavoriteCards, findReadCards } from './articles';
 // console.log(API);
 
 const form = document.querySelector('form.form-search');
@@ -26,7 +27,10 @@ function onSubmit(event) {
   };
 
   paginator.paginate(options);
+  findFavoriteCards();
+  findReadCards();
 }
+
 
 function createMarkUp(articles) {
   const markup = articles.map(article => {
