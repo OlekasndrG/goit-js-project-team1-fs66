@@ -2,7 +2,7 @@ import { load, save } from '../common/local_storage';
 import { updateUserCards } from './dataBase/setDatabase';
 import { onGetCookie } from './dataBase/getCookie';
 import { cleanLocalStorageFav } from './findCardsInBase';
-import { makeCardObject } from './onReadMore';
+import { makeCardObject, onClickReadMoreHome } from './onReadMore';
 
 cleanLocalStorageFav();
 
@@ -14,7 +14,7 @@ function handleClickGallery(e) {
   const targetElement = e.target;
 
   if (targetElement.nodeName === 'A') {
-    onClickReadMoreFav(targetElement);
+    onClickReadMoreHome(targetElement);
   }
 
   const favoritesLocal = load('favCards') || [];
