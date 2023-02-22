@@ -5,87 +5,23 @@ import PaginationSearchHandler from './paginationSearchHandler.js';
 import { writeUserCards } from './dataBase/setDatabase';
 import { onGetCookie } from './dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
-export { findFavoriteCards, findReadCards };
+import {
+  findFavoriteCards,
+  findReadCards,
+  cleanLocalStorageFav,
+	saveCardsReadHistory,
+	makeUniqueArrayByKey,
+} from './findCardsInBase';
 
 const data = {
-  source: 'nyt',
-  section: 'business',
   readCardsArray: [],
 };
 
 cleanLocalStorageFav();
 
-const refs = {
-  newsList: document.querySelector('.list-news'),
-};
+export const newsListRef = document.querySelector('.list-news');
 
-function findFavoriteCards() {
-  if (load('favCards')) {
-    const cardsArray = load('favCards');
-    const arrayHomePageCards = Array.from(
-      refs.newsList.querySelectorAll('.item-news__article')
-    );
-
-    arrayHomePageCards.forEach(card => {
-      const cardBtn = card.querySelector('.item-news__add-text');
-      const cardHeartImg = card.querySelector('.item-news__heart-icon');
-      const cardTitle = card.querySelector('.item-news__title');
-      cardsArray.forEach(({ title }) => {
-        if (title === cardTitle.textContent) {
-          cardBtn.textContent = 'Remove from favorite';
-          cardHeartImg.classList.add('is-saved');
-        }
-      });
-    });
-  }
-}
-
-function findReadCards() {
-  if (onGetCookie('user')) {
-    const userId = onGetCookie('user');
-    findReadDataBase(userId);
-  } else {
-    if (load('readCards')) {
-      const cardsArray = load('readCards');
-      findReadLocalStorage(cardsArray);
-    }
-  }
-}
-
-function findReadLocalStorage(array) {
-  const arrayHomePageCards = Array.from(
-    refs.newsList.querySelectorAll('.item-news__article')
-  );
-
-  arrayHomePageCards.forEach(card => {
-    const cardStatus = card.querySelector('.item-news__already-read');
-    const cardTitle = card.querySelector('.item-news__title');
-    array.forEach(({ title }) => {
-      if (title === cardTitle.textContent) {
-        cardStatus.classList.add('is-read');
-        card.classList.add('is-ghost');
-      }
-    });
-  });
-}
-
-function findReadDataBase(userId) {
-  const dbRef = ref(getDatabase());
-
-  get(child(dbRef, `users/${userId}/readCards`))
-    .then(snapshot => {
-      if (snapshot.exists()) {
-        const cardsObject = snapshot.val();
-        findReadLocalStorage(cardsObject);
-        console.log('yes');
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-refs.newsList.addEventListener('click', handleClickGallery);
+newsListRef.addEventListener('click', handleClickGallery);
 
 function handleClickGallery(e) {
   e.preventDefault();
@@ -93,21 +29,32 @@ function handleClickGallery(e) {
 
   if (targetElement.nodeName === 'A') {
     const date = new Date(Date.now()).toISOString();
-    const card = targetElement.closest('.list-news__item');
-    const cardStatus = card.querySelector('.item-news__already-read');
+    const card = targetElement.closest('.item-news__article');
+    const cardImg = card.querySelector('.item-news__img');
+    const cardSection = card.querySelector('.item-news__category');
     const cardTitle = card.querySelector('.item-news__title');
+    const cardDescr = card.querySelector('.item-news__description');
+    const carDate = card.querySelector('.item-news__info-date');
+    const readMore = card.querySelector('.item-news__info-link');
+
+    const cardStatus = card.querySelector('.item-news__already-read');
     card.classList.add('is-ghost');
     cardStatus.classList.add('is-read');
 
-    const stringifyCard = card.outerHTML;
-    data.readCardsArray.push({
+    const cardObject = {
+      image: cardImg.src.trim(),
+      section: cardSection.textContent.trim(),
+      title: cardTitle.textContent.trim(),
+      limitString: cardDescr.textContent.trim(),
+      date: carDate.textContent.trim(),
+      url: readMore.href.trim(),
       watchDate: date,
-      card: stringifyCard,
-      title: cardTitle.textContent,
-    });
+    };
+
+    data.readCardsArray.push(cardObject);
 
     const uniqueReadNewsArray = makeUniqueArrayByKey({
-      key: 'card',
+      key: 'title',
       array: data.readCardsArray,
     });
 
@@ -117,24 +64,35 @@ function handleClickGallery(e) {
   const favoritesLocal = load('favCards') || [];
 
   if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
-    const card = targetElement.closest('.list-news__item');
-    const cardBtn = card.querySelector('.item-news__add-text');
+    const card = targetElement.closest('.item-news__article');
+    const cardImg = card.querySelector('.item-news__img');
+    const cardSection = card.querySelector('.item-news__category');
     const cardTitle = card.querySelector('.item-news__title');
-    const cardHeartImg = card.querySelector('.item-news__heart-icon');
+    const cardDescr = card.querySelector('.item-news__description');
+    const carDate = card.querySelector('.item-news__info-date');
+    const readMore = card.querySelector('.item-news__info-link');
+
+    const cardBtn = card.querySelector('.item-news__add-text');
+    const cardHeartImg = card.querySelector('.item-news__icon');
     cardHeartImg.classList.add('is-saved');
     cardBtn.textContent = 'Remove from favorite';
-    const stringifyCard = card.outerHTML;
+
+    const cardObject = {
+      image: cardImg.src.trim(),
+      section: cardSection.textContent.trim(),
+      title: cardTitle.textContent.trim(),
+      limitString: cardDescr.textContent.trim(),
+      date: carDate.textContent.trim(),
+      url: readMore.href.trim(),
+    };
 
     const indexArray = favoritesLocal.map(el => el.title);
-    const index = indexArray.indexOf(cardTitle.textContent);
+    const index = indexArray.indexOf(cardTitle.textContent.trim());
 
     if (!cardTitle) return;
 
     if (index == -1) {
-      favoritesLocal.push({
-        card: stringifyCard,
-        title: cardTitle.textContent,
-      });
+      favoritesLocal.push(cardObject);
     } else {
       favoritesLocal.splice(index, 1);
       cardBtn.textContent = 'Add to favorite';
@@ -145,66 +103,6 @@ function handleClickGallery(e) {
   }
 
   cleanLocalStorageFav();
-}
-
-function saveCardsReadHistory(key, array) {
-  if (onGetCookie('user')) {
-    const userId = onGetCookie('user');
-    mergeDbAndCurrentData(userId, array, key);
-  } else {
-    if (!load(key)) {
-      save(key, array);
-    } else {
-      const cardsFromLocal = load(key).concat(array);
-      const uniqueConcatedArray = makeUniqueArrayByKey({
-        key: 'card',
-        array: cardsFromLocal,
-      });
-      save(key, uniqueConcatedArray);
-    }
-  }
-}
-
-function mergeDbAndCurrentData(userId, array, key) {
-  const dbRef = ref(getDatabase());
-
-  get(child(dbRef, `users/${userId}/${key}`))
-    .then(snapshot => {
-      if (snapshot.exists()) {
-        const cardsObject = snapshot.val();
-
-        setDataToDatabase({
-          userId,
-          dbData: cardsObject,
-          currentData: array,
-          key,
-        });
-      } else {
-        writeUserCards(userId, { [key]: array });
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-function setDataToDatabase({ userId, dbData, currentData, key }) {
-  const cardsArray = Object.values(dbData).flat().concat(currentData);
-  const uniqueConcatedArray = makeUniqueArrayByKey({
-    key: 'card',
-    array: cardsArray,
-  });
-  writeUserCards(userId, { [key]: uniqueConcatedArray });
-}
-
-function makeUniqueArrayByKey({ key, array }) {
-  return [...new Map(array.map(item => [item[key], item])).values()];
-}
-
-function cleanLocalStorageFav() {
-  if (load('favCards').length === 0) {
-    localStorage.removeItem('favCards');
-  }
 }
 
 // Кінець----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
