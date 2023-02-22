@@ -1,4 +1,3 @@
-
 import api from '../common/API';
 import paginator from './pagination';
 import PaginationSearchHandler from './paginationSearchHandler';
@@ -17,7 +16,6 @@ const date = document.getElementById('input-picker');
 function onSubmit(event) {
   event.preventDefault();
 
-
   const options = {
     api: {
       method: api.articleSearchByQuery,
@@ -29,7 +27,6 @@ function onSubmit(event) {
 
   paginator.paginate(options);
 }
-
 
 function createMarkUp(articles) {
   const markup = articles.map(article => {
