@@ -12,7 +12,7 @@ export function findFavoriteCards(favPage) {
 
     arrayHomePageCards.forEach(card => {
       const cardBtn = card.querySelector('.item-news__add-text');
-      const cardHeartImg = card.querySelector('.item-news__icon');
+      const cardHeartImg = card.querySelector('#icon-heart');
       const cardTitle = card.querySelector('.item-news__title');
       cardsArray.forEach(({ title }) => {
         if (title === cardTitle.textContent.trim()) {
@@ -42,12 +42,13 @@ function findReadLocalStorage(link, array) {
   );
 
   arrayHomePageCards.forEach(card => {
+    const cardContentWrapper = card.querySelector('.item-news__content');
     const cardStatus = card.querySelector('.item-news__already-read');
     const cardTitle = card.querySelector('.item-news__title');
     array.forEach(({ title }) => {
       if (title === cardTitle.textContent.trim()) {
         cardStatus.classList.add('is-read');
-        card.classList.add('is-ghost');
+        cardContentWrapper.classList.add('is-ghost');
       }
     });
   });

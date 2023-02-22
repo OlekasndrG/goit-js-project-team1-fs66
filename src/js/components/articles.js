@@ -9,8 +9,8 @@ import {
   findFavoriteCards,
   findReadCards,
   cleanLocalStorageFav,
-	saveCardsReadHistory,
-	makeUniqueArrayByKey,
+  saveCardsReadHistory,
+  makeUniqueArrayByKey,
 } from './findCardsInBase';
 
 const data = {
@@ -24,21 +24,21 @@ export const newsListRef = document.querySelector('.list-news');
 newsListRef.addEventListener('click', handleClickGallery);
 
 function handleClickGallery(e) {
-  e.preventDefault();
   const targetElement = e.target;
 
   if (targetElement.nodeName === 'A') {
     const date = new Date(Date.now()).toISOString();
     const card = targetElement.closest('.item-news__article');
+    const cardContentWrapper = card.querySelector('.item-news__content');
     const cardImg = card.querySelector('.item-news__img');
     const cardSection = card.querySelector('.item-news__category');
     const cardTitle = card.querySelector('.item-news__title');
     const cardDescr = card.querySelector('.item-news__description');
     const carDate = card.querySelector('.item-news__info-date');
     const readMore = card.querySelector('.item-news__info-link');
-
     const cardStatus = card.querySelector('.item-news__already-read');
-    card.classList.add('is-ghost');
+
+    cardContentWrapper.classList.add('is-ghost');
     cardStatus.classList.add('is-read');
 
     const cardObject = {
@@ -73,7 +73,8 @@ function handleClickGallery(e) {
     const readMore = card.querySelector('.item-news__info-link');
 
     const cardBtn = card.querySelector('.item-news__add-text');
-    const cardHeartImg = card.querySelector('.item-news__icon');
+    const cardHeartImg = card.querySelector('#icon-heart');
+
     cardHeartImg.classList.add('is-saved');
     cardBtn.textContent = 'Remove from favorite';
 
