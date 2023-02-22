@@ -34,7 +34,7 @@ function createMarkUp(articles) {
       const selectedDate = new Date(localStorage.getItem('Date_current'));
 
       if (
-        (article.date.getUTCDate() === selectedDate.getUTCDate()) &
+        (article.date.getUTCDate() === selectedDate.getUTCDate() + 1) &
         ((article.date.getUTCMonth() === selectedDate.getUTCMonth()) &
           (article.date.getUTCFullYear() === selectedDate.getUTCFullYear()))
       ) {
