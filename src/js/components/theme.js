@@ -5,6 +5,7 @@ import { onGetCookie } from "./dataBase/getCookie"
 import { updateUserCards } from "./dataBase/setDatabase"
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { async } from "@firebase/util";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw",
   authDomain: "news-goit-1.firebaseapp.com",

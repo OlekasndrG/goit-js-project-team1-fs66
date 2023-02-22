@@ -100,7 +100,7 @@ body.themeDark .theme__light {
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 24px;
+  line-height: 1.333;
   color: var(--switcher-gray-moon);
 }
 body.themeDark .theme__dark {
