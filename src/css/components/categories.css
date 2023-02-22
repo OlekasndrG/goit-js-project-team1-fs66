@@ -210,6 +210,10 @@
   fill: var(--third-color);
 }
 
+.categories-others-menu{
+  background: var(--third-color);
+  color: var(--accent-color);
+}
 .categories-others-menu.js-others-open {
   background: var(--accent-color);
   color: var(--third-color);
