@@ -28,10 +28,10 @@ function findFavoriteCards() {
 
     arrayHomePageCards.forEach(card => {
       const cardBtn = card.querySelector('.item-news__add-text');
-      const cardHeartImg = card.querySelector('.item-news__heart-icon');
+      const cardHeartImg = card.querySelector('.item-news__icon');
       const cardTitle = card.querySelector('.item-news__title');
       cardsArray.forEach(({ title }) => {
-        if (title === cardTitle.textContent) {
+        if (title === cardTitle.textContent.trim()) {
           cardBtn.textContent = 'Remove from favorite';
           cardHeartImg.classList.add('is-saved');
         }
@@ -61,7 +61,7 @@ function findReadLocalStorage(array) {
     const cardStatus = card.querySelector('.item-news__already-read');
     const cardTitle = card.querySelector('.item-news__title');
     array.forEach(({ title }) => {
-      if (title === cardTitle.textContent) {
+      if (title === cardTitle.textContent.trim()) {
         cardStatus.classList.add('is-read');
         card.classList.add('is-ghost');
       }
@@ -77,7 +77,6 @@ function findReadDataBase(userId) {
       if (snapshot.exists()) {
         const cardsObject = snapshot.val();
         findReadLocalStorage(cardsObject);
-        console.log('yes');
       }
     })
     .catch(error => {
@@ -93,21 +92,32 @@ function handleClickGallery(e) {
 
   if (targetElement.nodeName === 'A') {
     const date = new Date(Date.now()).toISOString();
-    const card = targetElement.closest('.list-news__item');
-    const cardStatus = card.querySelector('.item-news__already-read');
+    const card = targetElement.closest('.item-news__article');
+    const cardImg = card.querySelector('.item-news__img');
+    const cardSection = card.querySelector('.item-news__category');
     const cardTitle = card.querySelector('.item-news__title');
+    const cardDescr = card.querySelector('.item-news__description');
+    const carDate = card.querySelector('.item-news__info-date');
+    const readMore = card.querySelector('.item-news__info-link');
+
+    const cardStatus = card.querySelector('.item-news__already-read');
     card.classList.add('is-ghost');
     cardStatus.classList.add('is-read');
 
-    const stringifyCard = card.outerHTML;
-    data.readCardsArray.push({
+    const cardObject = {
+      image: cardImg.src.trim(),
+      section: cardSection.textContent.trim(),
+      title: cardTitle.textContent.trim(),
+      limitString: cardDescr.textContent.trim(),
+      date: carDate.textContent.trim(),
+      url: readMore.href.trim(),
       watchDate: date,
-      card: stringifyCard,
-      title: cardTitle.textContent,
-    });
+    };
+
+    data.readCardsArray.push(cardObject);
 
     const uniqueReadNewsArray = makeUniqueArrayByKey({
-      key: 'card',
+      key: 'title',
       array: data.readCardsArray,
     });
 
@@ -117,24 +127,35 @@ function handleClickGallery(e) {
   const favoritesLocal = load('favCards') || [];
 
   if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
-    const card = targetElement.closest('.list-news__item');
-    const cardBtn = card.querySelector('.item-news__add-text');
+    const card = targetElement.closest('.item-news__article');
+    const cardImg = card.querySelector('.item-news__img');
+    const cardSection = card.querySelector('.item-news__category');
     const cardTitle = card.querySelector('.item-news__title');
-    const cardHeartImg = card.querySelector('.item-news__heart-icon');
+    const cardDescr = card.querySelector('.item-news__description');
+    const carDate = card.querySelector('.item-news__info-date');
+    const readMore = card.querySelector('.item-news__info-link');
+
+    const cardBtn = card.querySelector('.item-news__add-text');
+    const cardHeartImg = card.querySelector('.item-news__icon');
     cardHeartImg.classList.add('is-saved');
     cardBtn.textContent = 'Remove from favorite';
-    const stringifyCard = card.outerHTML;
+
+    const cardObject = {
+      image: cardImg.src.trim(),
+      section: cardSection.textContent.trim(),
+      title: cardTitle.textContent.trim(),
+      limitString: cardDescr.textContent.trim(),
+      date: carDate.textContent.trim(),
+      url: readMore.href.trim(),
+    };
 
     const indexArray = favoritesLocal.map(el => el.title);
-    const index = indexArray.indexOf(cardTitle.textContent);
+    const index = indexArray.indexOf(cardTitle.textContent.trim());
 
     if (!cardTitle) return;
 
     if (index == -1) {
-      favoritesLocal.push({
-        card: stringifyCard,
-        title: cardTitle.textContent,
-      });
+      favoritesLocal.push(cardObject);
     } else {
       favoritesLocal.splice(index, 1);
       cardBtn.textContent = 'Add to favorite';
@@ -150,14 +171,14 @@ function handleClickGallery(e) {
 function saveCardsReadHistory(key, array) {
   if (onGetCookie('user')) {
     const userId = onGetCookie('user');
-    mergeDbAndCurrentData(userId, array, key);
+    setDataToDataBase(userId, array, key);
   } else {
     if (!load(key)) {
       save(key, array);
     } else {
       const cardsFromLocal = load(key).concat(array);
       const uniqueConcatedArray = makeUniqueArrayByKey({
-        key: 'card',
+        key: 'title',
         array: cardsFromLocal,
       });
       save(key, uniqueConcatedArray);
@@ -165,7 +186,7 @@ function saveCardsReadHistory(key, array) {
   }
 }
 
-function mergeDbAndCurrentData(userId, array, key) {
+function setDataToDataBase(userId, array, key) {
   const dbRef = ref(getDatabase());
 
   get(child(dbRef, `users/${userId}/${key}`))
@@ -173,7 +194,7 @@ function mergeDbAndCurrentData(userId, array, key) {
       if (snapshot.exists()) {
         const cardsObject = snapshot.val();
 
-        setDataToDatabase({
+        mergeLocalAndBaseData({
           userId,
           dbData: cardsObject,
           currentData: array,
@@ -188,10 +209,10 @@ function mergeDbAndCurrentData(userId, array, key) {
     });
 }
 
-function setDataToDatabase({ userId, dbData, currentData, key }) {
+function mergeLocalAndBaseData({ userId, dbData, currentData, key }) {
   const cardsArray = Object.values(dbData).flat().concat(currentData);
   const uniqueConcatedArray = makeUniqueArrayByKey({
-    key: 'card',
+    key: 'title',
     array: cardsArray,
   });
   writeUserCards(userId, { [key]: uniqueConcatedArray });

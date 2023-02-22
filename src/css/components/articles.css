@@ -103,11 +103,13 @@
 .item-news__icon {
 	padding-left: 4px;
 	pointer-events: none;
+	fill: #ffffff;
+	width: 16px;
+	height: 16px;
 }
 
 .item-news__heart-icon {
 	position: absolute;
-	fill: #ffffff;
 	/* transition-duration: 250ms;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); */
 }
