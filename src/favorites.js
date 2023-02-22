@@ -4,20 +4,32 @@ import './js/components/theme';
 import {
   findFavoriteCards,
   cleanLocalStorageFav,
-  saveCardsReadHistory,
-  makeUniqueArrayByKey,
 } from './js/components/findCardsInBase';
+import { makeCardObject, onClickReadMoreFav } from './js/components/onReadMore';
+import { onGetCookie } from './js/components/dataBase/getCookie';
+import { updateUserCards } from './js/components/dataBase/setDatabase';
+import { initializeApp } from 'firebase/app';
 
 const refs = {
   favPage: document.querySelector('.favotire-page-gallery'),
   emptyPage: document.querySelector('.empty-page'),
 };
 
-const data = {
-  readCardsArray: [],
+const firebaseConfig = {
+  apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
+  authDomain: 'news-goit-1.firebaseapp.com',
+  databaseURL:
+    'https://news-goit-1-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'news-goit-1',
+  storageBucket: 'news-goit-1.appspot.com',
+  messagingSenderId: '618434101899',
+  appId: '1:618434101899:web:58e5277fd4ec3d55f6ca8e',
+  measurementId: 'G-7YDFYWJH4S',
 };
 
 cleanLocalStorageFav();
+
+const app = initializeApp(firebaseConfig);
 
 if (load('favCards')) {
   renderCards(load('favCards'));
@@ -30,66 +42,24 @@ function handleClickGallery(e) {
   const targetElement = e.target;
 
   if (targetElement.nodeName === 'A') {
-    const date = new Date(Date.now()).toISOString();
-    const card = targetElement.closest('.item-news__article');
-    const cardImg = card.querySelector('.item-news__img');
-    const cardSection = card.querySelector('.item-news__category');
-    const cardTitle = card.querySelector('.item-news__title');
-    const cardDescr = card.querySelector('.item-news__description');
-    const carDate = card.querySelector('.item-news__info-date');
-    const readMore = card.querySelector('.item-news__info-link');
-
-    const cardObject = {
-      image: cardImg.src.trim(),
-      section: cardSection.textContent.trim(),
-      title: cardTitle.textContent.trim(),
-      limitString: cardDescr.textContent.trim(),
-      date: carDate.textContent.trim(),
-      url: readMore.href.trim(),
-      watchDate: date,
-    };
-
-    data.readCardsArray.push(cardObject);
-
-    const uniqueReadNewsArray = makeUniqueArrayByKey({
-      key: 'title',
-      array: data.readCardsArray,
-    });
-
-    saveCardsReadHistory('readCards', uniqueReadNewsArray);
+    onClickReadMoreFav(targetElement);
   }
 
   const favoritesLocal = load('favCards') || [];
 
   if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.item-news__article');
-    const cardImg = card.querySelector('.item-news__img');
-    const cardSection = card.querySelector('.item-news__category');
-    const cardTitle = card.querySelector('.item-news__title');
-    const cardDescr = card.querySelector('.item-news__description');
-    const carDate = card.querySelector('.item-news__info-date');
-    const readMore = card.querySelector('.item-news__info-link');
-
+    const cardObject = makeCardObject(card);
     const cardBtn = card.querySelector('.item-news__add-text');
     const cardHeartImg = card.querySelector('#icon-heart');
 
     cardHeartImg.classList.add('is-saved');
     cardBtn.textContent = 'Remove from favorite';
 
-    const cardObject = {
-      image: cardImg.src.trim(),
-      section: cardSection.textContent.trim(),
-      title: cardTitle.textContent.trim(),
-      limitString: cardDescr.textContent.trim(),
-      date: carDate.textContent.trim(),
-      url: readMore.href.trim(),
-    };
-
     const indexArray = favoritesLocal.map(el => el.title);
-    const index = indexArray.indexOf(cardTitle.textContent.trim());
+    const index = indexArray.indexOf(cardObject.title);
 
-    if (!cardTitle) return;
-
+    if (!cardObject.title) return;
     if (index == -1) {
       favoritesLocal.push(cardObject);
     } else {
@@ -98,7 +68,14 @@ function handleClickGallery(e) {
       cardHeartImg.classList.remove('is-saved');
     }
 
-    save('favCards', favoritesLocal);
+    if (onGetCookie('user')) {
+      const userId = onGetCookie('user');
+      save('favCards', favoritesLocal);
+      console.log(userId);
+      updateUserCards(userId, { favCards: load('favCards') });
+    } else {
+      save('favCards', favoritesLocal);
+    }
   }
   cleanLocalStorageFav();
 }
