@@ -19,9 +19,7 @@ export async function onRenderWetherCard({lat = "48.452339", lon = '35.027011'})
       </div>
     </div>
   </div>
-  <div class="weather__icon">
-    <img class="weather__pic" src="https://openweathermap.org/img/wn/${weatherIcon}@4x.png" alt="${weather}" />
-  </div>
+    <img class="weather__img" src="https://openweathermap.org/img/wn/${weatherIcon}@4x.png" alt="${weather}" />
     <p class="weather__day">
     <div class="weather__date">
     <p class="weather__day">

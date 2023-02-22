@@ -6,14 +6,14 @@
   border-radius: 4px;
   height: 100%;
 }
-.weather__info {
+.weather__hat {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
   justify-content: center;
 }
 
-.weather__deg {
+.weather__temperature {
   border-right: 1px solid #fff;
   font-family: 'Roboto';
   font-weight: 400;
@@ -21,13 +21,13 @@
   line-height: calc((64 / 55));
 }
 
-.weather__geo {
+.weather__contain {
   display: flex;
   flex-direction: column;
   margin-left: 11px;
 }
 
-.weather__value {
+.weather__description {
   font-weight: 400;
   font-size: 24px;
   line-height: calc(28 / 24);
@@ -52,7 +52,7 @@
   color: #fff;
   margin-right: 5px;
 }
-.weatner__img {
+.weather__img {
   margin-bottom: 20px;
   width: 168px;
   margin-left: auto;
@@ -74,7 +74,7 @@
   margin-bottom: 20px;
 }
 
-.weather link {
+.weather__btn {
   display: block;
   padding: 8px 14px;
   width: 151px;
@@ -88,7 +88,7 @@
   line-height: calc(19 / 16);
   transition: background-color 250ms ease;
 }
-.weather link:hover {
+.weather__btn:hover {
   background: rgba(254, 254, 255, 0.5);
 }
 
@@ -104,18 +104,18 @@
     width: 353px;
     padding: 40px 32px 60px 32px;
   }
-  .weather__info {
+  .weather__hat {
     margin-bottom: 65px;
   }
-  .weather__deg {
+  .weather__temperature {
     font-size: 64px;
     line-height: calc(75 / 64);
     padding-right: 8px;
   }
-  .weather__geo {
+  .weather__contain {
     margin-left: 8px;
   }
-  .weather__value {
+  .weather__description {
     font-size: 36px;
     line-height: calc(42 / 36);
   }
@@ -130,12 +130,12 @@
     width: 27px;
     height: 27px;
   }
-  .weatner__img {
+  .weather__img {
     margin-bottom: 65px;
     width: 205px;
   }
 
-  .weather link {
+  .weather__btn {
     padding: 10px 12px;
     width: 177px;
     font-size: 20px;
