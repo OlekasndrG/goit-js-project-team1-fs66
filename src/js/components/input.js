@@ -16,13 +16,12 @@ function onSubmit(event) {
   event.preventDefault();
 
   const options = {
-    perPage: 8,
     api: {
       method: api.articleSearchByQuery,
-      params: {q: input.value, date: null},
+      params: { q: input.value, date: null },
       externalHandler: new PaginationSearchHandler(),
     },
-    onPageChanged: createMarkUp
+    onPageChanged: createMarkUp,
   };
 
   paginator.paginate(options);

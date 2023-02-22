@@ -7,7 +7,6 @@ async function onRanderMostPopular() {
   const result = await api.articleSearchMostPopular();
 
   const options = {
-    perPage: 8,
     items: result.articles,
     onPageChanged: onRenderOneCard,
   };
