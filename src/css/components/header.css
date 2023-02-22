@@ -55,7 +55,7 @@ body.is-open {
   display: block;
   padding-bottom: 18px;
   /* overflow-y: scroll; */
-  height: 85vh;
+  height: 560px;
 }
 .icon-close {
   display: none;
@@ -93,7 +93,7 @@ body.is-open {
 }
 .icon-right {
   margin-left: auto;
-  fill:var(--bg-color);
+  fill: var(--bg-color);
 }
 .site-nav--list {
   height: 100%;
@@ -229,8 +229,8 @@ body.is-open {
   color: var(--third-color);
 } */
 .logout {
-   color: var(--main-color);
-   font-weight: 400;
+  color: var(--main-color);
+  font-weight: 400;
 }
 /* body.themeDark .logout {
   color: var(--third-color);
