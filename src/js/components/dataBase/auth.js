@@ -40,7 +40,7 @@ export const onAuthorizationUser = function(password, email){
         onSetCookie('user', user.uid)
         saveLocalStorageTheme()
         onAuthorizationCheck()
-     onGetUserName(user.uid)  
+     onGetUserName(user.uid)
     })
     .catch((error) => {
         const errorCode = error.code;
@@ -63,7 +63,7 @@ function onAuthorizationCheck() {
         refs.buttonLogin.classList.toggle('displayNone')
         refs.buttonLogout.classList.toggle('displayNone')
         refs.buttonLogout.addEventListener('click', onLogout)
-    } 
+    }
 }
 
 function onLogout() {

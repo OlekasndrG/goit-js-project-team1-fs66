@@ -1,7 +1,4 @@
-import {
-  saveCardsReadHistory,
-  makeUniqueArrayByKey,
-} from './findCardsInBase';
+import { saveCardsReadHistory, makeUniqueArrayByKey } from './findCardsInBase';
 
 const data = {
   readCardsArray: [],
@@ -9,25 +6,25 @@ const data = {
 
 export function onClickReadMoreHome(targetElement) {
   const card = targetElement.closest('.item-news__article');
-  saveCardsDataInStorage(card);
-  showReadLabel(card);
+  const uniqueCards = takeUniqueCards(card);
+  saveCardsReadHistory('readCards', uniqueCards);
+  showReadStatus(card);
 }
 
 export function onClickReadMoreFav(targetElement) {
   const card = targetElement.closest('.item-news__article');
-  saveCardsDataInStorage(card);
+  const uniqueCards = takeUniqueCards(card);
+  saveCardsReadHistory('readCards', uniqueCards);
 }
 
-function saveCardsDataInStorage(card) {
+function takeUniqueCards(card) {
   const cardObject = makeCardObject(card);
   data.readCardsArray.push(cardObject);
 
-  const uniqueReadNewsArray = makeUniqueArrayByKey({
+  return makeUniqueArrayByKey({
     key: 'title',
     array: data.readCardsArray,
   });
-
-  saveCardsReadHistory('readCards', uniqueReadNewsArray);
 }
 
 export function makeCardObject(card) {
@@ -50,7 +47,7 @@ export function makeCardObject(card) {
   };
 }
 
-function showReadLabel(card) {
+function showReadStatus(card) {
   const cardStatus = card.querySelector('.item-news__already-read');
   const cardContentWrapper = card.querySelector('.item-news__content');
 
