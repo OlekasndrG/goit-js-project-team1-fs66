@@ -1,4 +1,3 @@
-
 import api from '../common/API';
 import paginator from './pagination';
 import PaginationSearchHandler from './paginationSearchHandler';
@@ -17,7 +16,6 @@ const date = document.getElementById('input-picker');
 function onSubmit(event) {
   event.preventDefault();
 
-
   const options = {
     api: {
       method: api.articleSearchByQuery,
@@ -29,7 +27,6 @@ function onSubmit(event) {
 
   paginator.paginate(options);
 }
-
 
 function createMarkUp(articles) {
   const markup = articles.map(article => {
@@ -117,13 +114,13 @@ function onNoResults() {
     <br>
     from this category</p>
 <picture>
-    <source srcset="../../img/mobile.png 1x, .../../img/mobile@2x.png 2x" type="image/png" media="(max-width: 480px)"
+    <source srcset="./img/mobile.png 1x, ./img/mobile@2x.png 2x" type="image/png" media="(max-width: 480px)"
         alt="empty-page" />
-    <source srcset="../../img/tablet.png 1x, ../../img/tablet@2x.png 2x" type="image/png" media="(max-width:768px)"
+    <source srcset="./img/tablet.png 1x, ./img/tablet@2x.png 2x" type="image/png" media="(max-width:768px)"
         alt="empty-page" />
-    <source srcset="../../img/desktop.png 1x, ../../img/desktop@2x.png 2x" type="image/png" media="(min-width: 1280px)"
+    <source srcset="./img/desktop.png 1x, ./img/desktop@2x.png 2x" type="image/png" media="(min-width: 1280px)"
         alt="empty-page" />
-    <img class="empty_picture" src="../../img/mobile.png" alt="empty-page" width="248" height="198" />
+    <img class="empty_picture" src="./img/mobile.png" alt="empty-page" width="248" height="198" />
 </picture>
 
 </section>`;
