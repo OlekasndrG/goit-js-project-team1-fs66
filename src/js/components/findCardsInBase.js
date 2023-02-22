@@ -1,6 +1,7 @@
-import { load } from '../common/local_storage';
+import { load, save } from '../common/local_storage';
 import { onGetCookie } from './dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
+import { writeUserCards } from './dataBase/setDatabase';
 
 export function findFavoriteCards(favPage) {
   if (load('favCards')) {
@@ -65,4 +66,64 @@ function findReadDataBase(userId) {
     .catch(error => {
       console.error(error);
     });
+}
+
+export function saveCardsReadHistory(key, array) {
+  if (onGetCookie('user')) {
+    const userId = onGetCookie('user');
+    setDataToDataBase(userId, array, key);
+  } else {
+    if (!load(key)) {
+      save(key, array);
+    } else {
+      const cardsFromLocal = load(key).concat(array);
+      const uniqueConcatedArray = makeUniqueArrayByKey({
+        key: 'title',
+        array: cardsFromLocal,
+      });
+      save(key, uniqueConcatedArray);
+    }
+  }
+}
+
+function setDataToDataBase(userId, array, key) {
+  const dbRef = ref(getDatabase());
+
+  get(child(dbRef, `users/${userId}/${key}`))
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        const cardsObject = snapshot.val();
+
+        mergeLocalAndBaseData({
+          userId,
+          dbData: cardsObject,
+          currentData: array,
+          key,
+        });
+      } else {
+        writeUserCards(userId, { [key]: array });
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+function mergeLocalAndBaseData({ userId, dbData, currentData, key }) {
+  const cardsArray = Object.values(dbData).flat().concat(currentData);
+  const uniqueConcatedArray = makeUniqueArrayByKey({
+    key: 'title',
+    array: cardsArray,
+  });
+  writeUserCards(userId, { [key]: uniqueConcatedArray });
+}
+
+export function makeUniqueArrayByKey({ key, array }) {
+  return [...new Map(array.map(item => [item[key], item])).values()];
+}
+
+export function cleanLocalStorageFav() {
+  if (load('favCards').length === 0) {
+    localStorage.removeItem('favCards');
+  }
 }

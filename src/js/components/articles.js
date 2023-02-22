@@ -5,11 +5,15 @@ import PaginationSearchHandler from './paginationSearchHandler.js';
 import { writeUserCards } from './dataBase/setDatabase';
 import { onGetCookie } from './dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
-import { findFavoriteCards, findReadCards } from './findCardsInBase';
+import {
+  findFavoriteCards,
+  findReadCards,
+  cleanLocalStorageFav,
+	saveCardsReadHistory,
+	makeUniqueArrayByKey,
+} from './findCardsInBase';
 
 const data = {
-  source: 'nyt',
-  section: 'business',
   readCardsArray: [],
 };
 
@@ -99,66 +103,6 @@ function handleClickGallery(e) {
   }
 
   cleanLocalStorageFav();
-}
-
-function saveCardsReadHistory(key, array) {
-  if (onGetCookie('user')) {
-    const userId = onGetCookie('user');
-    setDataToDataBase(userId, array, key);
-  } else {
-    if (!load(key)) {
-      save(key, array);
-    } else {
-      const cardsFromLocal = load(key).concat(array);
-      const uniqueConcatedArray = makeUniqueArrayByKey({
-        key: 'title',
-        array: cardsFromLocal,
-      });
-      save(key, uniqueConcatedArray);
-    }
-  }
-}
-
-function setDataToDataBase(userId, array, key) {
-  const dbRef = ref(getDatabase());
-
-  get(child(dbRef, `users/${userId}/${key}`))
-    .then(snapshot => {
-      if (snapshot.exists()) {
-        const cardsObject = snapshot.val();
-
-        mergeLocalAndBaseData({
-          userId,
-          dbData: cardsObject,
-          currentData: array,
-          key,
-        });
-      } else {
-        writeUserCards(userId, { [key]: array });
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-function mergeLocalAndBaseData({ userId, dbData, currentData, key }) {
-  const cardsArray = Object.values(dbData).flat().concat(currentData);
-  const uniqueConcatedArray = makeUniqueArrayByKey({
-    key: 'title',
-    array: cardsArray,
-  });
-  writeUserCards(userId, { [key]: uniqueConcatedArray });
-}
-
-function makeUniqueArrayByKey({ key, array }) {
-  return [...new Map(array.map(item => [item[key], item])).values()];
-}
-
-function cleanLocalStorageFav() {
-  if (load('favCards').length === 0) {
-    localStorage.removeItem('favCards');
-  }
 }
 
 // Кінець----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,11 +1,20 @@
 import { load, save } from './js/common/local_storage';
 import './js/components/burger-menu';
 import './js/components/theme';
-import { findFavoriteCards } from './js/components/findCardsInBase';
+import {
+  findFavoriteCards,
+  cleanLocalStorageFav,
+  saveCardsReadHistory,
+  makeUniqueArrayByKey,
+} from './js/components/findCardsInBase';
 
 const refs = {
   favPage: document.querySelector('.favotire-page-gallery'),
   emptyPage: document.querySelector('.empty-page'),
+};
+
+const data = {
+  readCardsArray: [],
 };
 
 cleanLocalStorageFav();
@@ -20,6 +29,40 @@ refs.favPage.addEventListener('click', handleClickGallery);
 function handleClickGallery(e) {
   e.preventDefault();
   const targetElement = e.target;
+
+  if (targetElement.nodeName === 'A') {
+    const date = new Date(Date.now()).toISOString();
+    const card = targetElement.closest('.item-news__article');
+    const cardImg = card.querySelector('.item-news__img');
+    const cardSection = card.querySelector('.item-news__category');
+    const cardTitle = card.querySelector('.item-news__title');
+    const cardDescr = card.querySelector('.item-news__description');
+    const carDate = card.querySelector('.item-news__info-date');
+    const readMore = card.querySelector('.item-news__info-link');
+
+    // const cardStatus = card.querySelector('.item-news__already-read');
+    // card.classList.add('is-ghost');
+    // cardStatus.classList.add('is-read');
+
+    const cardObject = {
+      image: cardImg.src.trim(),
+      section: cardSection.textContent.trim(),
+      title: cardTitle.textContent.trim(),
+      limitString: cardDescr.textContent.trim(),
+      date: carDate.textContent.trim(),
+      url: readMore.href.trim(),
+      watchDate: date,
+    };
+
+    data.readCardsArray.push(cardObject);
+
+    const uniqueReadNewsArray = makeUniqueArrayByKey({
+      key: 'title',
+      array: data.readCardsArray,
+    });
+
+    saveCardsReadHistory('readCards', uniqueReadNewsArray);
+  }
 
   const favoritesLocal = load('favCards') || [];
 
@@ -119,14 +162,7 @@ function isEmptyPage(newsList) {
   }
 }
 
-function cleanLocalStorageFav() {
-  if (load('favCards').length === 0) {
-    localStorage.removeItem('favCards');
-  }
-}
-
 import './js/components/theme';
-
 import './js/components/burger-menu';
 // import './js/components/input';
 

@@ -5,7 +5,7 @@ import { load, save } from './js/common/local_storage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
-import { findFavoriteCards } from './js/components/findCardsInBase';
+import { findFavoriteCards, cleanLocalStorageFav } from './js/components/findCardsInBase';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
@@ -268,11 +268,5 @@ function onAccordionTitleClick(e) {
       'accordion__arrow--up'
     );
     contentRef.classList.remove('is-active');
-  }
-}
-
-function cleanLocalStorageFav() {
-  if (load('favCards').length === 0) {
-    localStorage.removeItem('favCards');
   }
 }
