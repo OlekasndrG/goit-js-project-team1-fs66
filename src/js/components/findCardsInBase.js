@@ -2,18 +2,36 @@ import { load, save } from '../common/local_storage';
 import { onGetCookie } from './dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { writeUserData } from './dataBase/setDatabase';
+import { getAuth } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
 
-export function findFavoriteCards(favPage) {
-	if (load('favCards')) {
+const firebaseConfig = {
+  apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
+  authDomain: 'news-goit-1.firebaseapp.com',
+  databaseURL:
+    'https://news-goit-1-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'news-goit-1',
+  storageBucket: 'news-goit-1.appspot.com',
+  messagingSenderId: '618434101899',
+  appId: '1:618434101899:web:58e5277fd4ec3d55f6ca8e',
+  measurementId: 'G-7YDFYWJH4S',
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+export function findFavoriteCards(newsListRef) {
+  if (load('favCards')) {
     const cardsArray = load('favCards');
     const arrayHomePageCards = Array.from(
-      favPage.querySelectorAll('.item-news__article')
+      newsListRef.querySelectorAll('.item-news__article')
     );
 
     arrayHomePageCards.forEach(card => {
+      const cardTitle = card.querySelector('.item-news__title');
       const cardBtn = card.querySelector('.item-news__add-text');
       const cardHeartImg = card.querySelector('#icon-heart');
-      const cardTitle = card.querySelector('.item-news__title');
       cardsArray.forEach(({ title }) => {
         if (title === cardTitle.textContent.trim()) {
           cardBtn.textContent = 'Remove from favorite';
@@ -31,7 +49,7 @@ export function findReadCards(newsListRef) {
   } else {
     if (load('readCards')) {
       const cardsArray = load('readCards');
-      findReadLocalStorage(newsListRef, cardsArray);
+      setAlreadyReadStatus(newsListRef, cardsArray);
     }
   }
 }
@@ -42,9 +60,8 @@ function findReadDataBase(userId, newsListRef) {
   get(child(dbRef, `users/${userId}/readCards`))
     .then(snapshot => {
       if (snapshot.exists()) {
-				const cardsObject = snapshot.val();
-
-        findReadLocalStorage(newsListRef, cardsObject);
+        const cardsObject = snapshot.val();
+        setAlreadyReadStatus(newsListRef, cardsObject);
       }
     })
     .catch(error => {
@@ -52,7 +69,7 @@ function findReadDataBase(userId, newsListRef) {
     });
 }
 
-function findReadLocalStorage(newsListRef, array) {
+function setAlreadyReadStatus(newsListRef, array) {
   const arrayHomePageCards = Array.from(
     newsListRef.querySelectorAll('.item-news__article')
   );
@@ -95,13 +112,11 @@ function setDataToDataBase(userId, array, key) {
     .then(snapshot => {
       if (snapshot.exists()) {
         const cardsObject = snapshot.val();
-
-        mergeLocalAndBaseData({
-          userId,
+        const concatedArray = mergeLocalAndBaseData({
           dbData: cardsObject,
           currentData: array,
-          key,
         });
+        writeUserData(userId, { [key]: concatedArray });
       } else {
         writeUserData(userId, { [key]: array });
       }
@@ -111,13 +126,12 @@ function setDataToDataBase(userId, array, key) {
     });
 }
 
-function mergeLocalAndBaseData({ userId, dbData, currentData, key }) {
+function mergeLocalAndBaseData({ dbData, currentData }) {
   const cardsArray = Object.values(dbData).flat().concat(currentData);
-  const uniqueConcatedArray = makeUniqueArrayByKey({
+  return makeUniqueArrayByKey({
     key: 'title',
     array: cardsArray,
   });
-  writeUserData(userId, { [key]: uniqueConcatedArray });
 }
 
 export function makeUniqueArrayByKey({ key, array }) {
