@@ -1,4 +1,5 @@
-import { findFavoriteCards, findReadCards } from './articles';
+import { findFavoriteCards, findReadCards } from './findCardsInBase';
+import { newsListRef } from './articles';
 
 class Paginator {
   currentPage = 1;
@@ -67,8 +68,8 @@ class Paginator {
 
     this.render();
     this.onPageChangedCallback(paginated);
-    findFavoriteCards();
-    findReadCards();
+    findFavoriteCards(newsListRef);
+    findReadCards(newsListRef);
   }
 
   addEventListeners() {

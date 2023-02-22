@@ -1,6 +1,7 @@
 const ulCardList = document.querySelector('.list-news');
 import { format, parse } from 'date-fns';
-import { findFavoriteCards, findReadCards } from './articles';
+import { findFavoriteCards, findReadCards } from './findCardsInBase';
+import { newsListRef } from './articles';
 
 import { onRenderWetherCard } from './weather';
 const weatherRef = document.querySelector('.weather');
@@ -71,8 +72,8 @@ export async function onRenderOneCard(arrayNews) {
     })
     .join('');
   onMarkupCard(arrayCard);
-  findFavoriteCards();
-  findReadCards();
+  findFavoriteCards(newsListRef);
+  findReadCards(newsListRef);
 }
 
 function onMarkupCard(cards) {

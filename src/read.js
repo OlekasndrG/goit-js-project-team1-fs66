@@ -5,6 +5,7 @@ import { load, save } from './js/common/local_storage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
+import { findFavoriteCards } from './js/components/findCardsInBase';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
@@ -30,13 +31,13 @@ const refs = {
 if (onGetCookie('user')) {
   const auth = getAuth(app);
   const userId = onGetCookie('user');
-	renderCardsDatabase(userId);
+  renderCardsDatabase(userId);
 } else {
   if (load('readCards')) {
     renderCards(load('readCards'));
   }
   isEmptyPage();
-  findFavoriteCards();
+  findFavoriteCards(refs.readPage);
 }
 
 refs.readPage.addEventListener('click', handleClickGallery);
@@ -46,7 +47,6 @@ function handleClickGallery(e) {
   const targetElement = e.target;
 
   const favoritesLocal = load('favCards') || [];
-
   if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.item-news__article');
     const cardImg = card.querySelector('.item-news__img');
@@ -161,8 +161,8 @@ function renderCardsDatabase(userId) {
       if (snapshot.exists()) {
         const cardsObject = snapshot.val();
         const cardsArray = Object.values(cardsObject).flat();
-				renderCards(cardsArray);
-				findFavoriteCards();
+        renderCards(cardsArray);
+        findFavoriteCards();
       } else {
         console.log('No data available');
       }
@@ -271,37 +271,8 @@ function onAccordionTitleClick(e) {
   }
 }
 
-// function cleanLabelFromHomePage(cards) {
-//   cards.forEach(el => {
-//     el.classList.remove('is-ghost');
-//     const cardStatus = el.querySelector('.item-news__already-read');
-//   });
-// }
-
 function cleanLocalStorageFav() {
   if (load('favCards').length === 0) {
     localStorage.removeItem('favCards');
-  }
-}
-
-function findFavoriteCards() {
-  if (load('favCards')) {
-    const cardsArray = load('favCards');
-		const arrayHomePageCards = Array.from(
-			refs.readPage.querySelectorAll('.item-news__article')
-    );
-
-    arrayHomePageCards.forEach(card => {
-      const cardBtn = card.querySelector('.item-news__add-text');
-      const cardHeartImg = card.querySelector('.item-news__icon');
-      const cardTitle = card.querySelector('.item-news__title');
-			cardsArray.forEach(({ title }) => {
-				console.log(title);
-        if (title === cardTitle.textContent.trim()) {
-          cardBtn.textContent = 'Remove from favorite';
-          cardHeartImg.classList.add('is-saved');
-        }
-      });
-    });
   }
 }
