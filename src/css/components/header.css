@@ -55,7 +55,8 @@ body.is-open {
   display: block;
   padding-bottom: 18px;
   /* overflow-y: scroll; */
-  height: 560px;
+  /* height: 560px; */
+  height: 75vh;
 }
 .icon-close {
   display: none;
