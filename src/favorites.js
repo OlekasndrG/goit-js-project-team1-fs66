@@ -1,3 +1,6 @@
+import './js/components/theme';
+import './js/components/burger-menu';
+
 import { load, save } from './js/common/local_storage';
 import './js/components/burger-menu';
 import './js/components/theme';
@@ -8,28 +11,20 @@ import {
 import { makeCardObject, onClickReadMoreFav } from './js/components/onReadMore';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { updateUserCards } from './js/components/dataBase/setDatabase';
-import { initializeApp } from 'firebase/app';
 
 const refs = {
   favPage: document.querySelector('.favotire-page-gallery'),
   emptyPage: document.querySelector('.empty-page'),
-};
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
-  authDomain: 'news-goit-1.firebaseapp.com',
-  databaseURL:
-    'https://news-goit-1-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'news-goit-1',
-  storageBucket: 'news-goit-1.appspot.com',
-  messagingSenderId: '618434101899',
-  appId: '1:618434101899:web:58e5277fd4ec3d55f6ca8e',
-  measurementId: 'G-7YDFYWJH4S',
+  nameRef: document.getElementById('name'),
+  passRef: document.getElementById('pass'),
+  emailRef: document.getElementById('email'),
+  formRef: document.getElementById('form'),
+  buttonLogin: document.getElementById('login'),
+  buttonRegistr: document.querySelector('.registr'),
+  buttonLogout: document.querySelector('.logout'),
 };
 
 cleanLocalStorageFav();
-
-const app = initializeApp(firebaseConfig);
 
 if (load('favCards')) {
   renderCards(load('favCards'));
@@ -53,15 +48,14 @@ function handleClickGallery(e) {
     const cardBtn = card.querySelector('.item-news__add-text');
     const cardHeartImg = card.querySelector('#icon-heart');
 
-    cardHeartImg.classList.add('is-saved');
-    cardBtn.textContent = 'Remove from favorite';
-
     const indexArray = favoritesLocal.map(el => el.title);
     const index = indexArray.indexOf(cardObject.title);
 
     if (!cardObject.title) return;
     if (index == -1) {
-      favoritesLocal.push(cardObject);
+      favoritesLocal.unshift(cardObject);
+      cardHeartImg.classList.add('is-saved');
+      cardBtn.textContent = 'Remove from favorite';
     } else {
       favoritesLocal.splice(index, 1);
       cardBtn.textContent = 'Add to favorite';
@@ -71,7 +65,6 @@ function handleClickGallery(e) {
     if (onGetCookie('user')) {
       const userId = onGetCookie('user');
       save('favCards', favoritesLocal);
-      console.log(userId);
       updateUserCards(userId, { favCards: load('favCards') });
     } else {
       save('favCards', favoritesLocal);
@@ -138,8 +131,6 @@ function isEmptyPage(newsList) {
   }
 }
 
-import './js/components/theme';
-import './js/components/burger-menu';
 // import './js/components/input';
 
 // import './js/components/read';
