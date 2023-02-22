@@ -48,7 +48,7 @@ export async function onRenderOneCard(arrayNews) {
 															<span class="item-news__info-date">
 																${format(date, 'yyyy-MM-dd')}
 															</span>
-															<a class="item-news__info-link" href="${url}#">Read more</a>
+															<a class="item-news__info-link" target="_blank" href="${url}#">Read more</a>
 														</div>
 													</div>
 												</article>

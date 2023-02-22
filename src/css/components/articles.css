@@ -120,7 +120,7 @@
 }
 
 .is-saved {
-	fill: #4B48DA;
+	fill: var(--theme-color);
 }
 
 .item-news__title {

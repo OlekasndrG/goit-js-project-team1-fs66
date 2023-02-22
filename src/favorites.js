@@ -27,7 +27,6 @@ if (load('favCards')) {
 refs.favPage.addEventListener('click', handleClickGallery);
 
 function handleClickGallery(e) {
-  e.preventDefault();
   const targetElement = e.target;
 
   if (targetElement.nodeName === 'A') {
@@ -143,7 +142,7 @@ function renderCards(array) {
 															<span class="item-news__info-date">
 																${date}
 															</span>
-															<a class="item-news__info-link" href="${url}#">Read more</a>
+															<a class="item-news__info-link" target="_blank" href="${url}#">Read more</a>
 														</div>
 													</div>
 												</article>

@@ -24,7 +24,6 @@ export const newsListRef = document.querySelector('.list-news');
 newsListRef.addEventListener('click', handleClickGallery);
 
 function handleClickGallery(e) {
-  e.preventDefault();
   const targetElement = e.target;
 
   if (targetElement.nodeName === 'A') {

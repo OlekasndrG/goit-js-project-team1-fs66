@@ -46,7 +46,6 @@ if (onGetCookie('user')) {
 refs.readPage.addEventListener('click', handleClickGallery);
 
 function handleClickGallery(e) {
-  e.preventDefault();
   const targetElement = e.target;
 
   const favoritesLocal = load('favCards') || [];
@@ -141,7 +140,7 @@ function renderCardsTemplate(array) {
 															<span class="item-news__info-date">
 																${date}
 															</span>
-															<a class="item-news__info-link" href="${url}#">Read more</a>
+															<a class="item-news__info-link" target="_blank" href="${url}#">Read more</a>
 														</div>
 													</div>
 												</article>
