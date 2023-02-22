@@ -90,7 +90,7 @@ function onMarkupCard(cards) {
       });
     },
     error => {
-      console.log('🚀 ~ error:', error);
+      
     }
   );
 }
