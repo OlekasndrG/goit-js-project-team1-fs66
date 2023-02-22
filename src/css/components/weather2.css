@@ -92,7 +92,7 @@
   background: rgba(254, 254, 255, 0.5);
 }
 
-@media screen and (min-width: 320px) {
+@media screen and (max-width: 767px) {
   .weather {
     width: 288px;
     height: 469px;
