@@ -3,9 +3,7 @@ import { newsListRef } from './articles';
 
 class Paginator {
   currentPage = 1;
-  itemsPerPage = 8;
   totalPages = 1;
-  delta = 1;
   ellipsisTemplate = `<li class='pg-item pg-ellipsis'>...</li>`;
   items = null;
   api = null;
@@ -16,8 +14,13 @@ class Paginator {
     "<svg width='8px' height='12px'><use href='img/sprite-icons.svg#vector-right'></use></svg>";
 
   constructor(selector) {
+    let opts = this.getItemsPerPage();
+    this.itemsPerPage = opts.itemsPerPage;
+    this.delta = opts.delta;
     this.rootEl = document.querySelector(selector);
-    this.rootEl.innerHTML = `<button class='prev-page'>${this.iconLeft}Prev</button><ul class='pages'></ul><button class='next-page'>Next${this.iconRight}</button>`;
+    this.rootEl.innerHTML = `<button class='prev-page'>${this.iconLeft}
+      <span class="btn-text">Prev</span></button><ul class='pages'>
+      </ul><button class='next-page'><span class="btn-text">Next</span>${this.iconRight}</button>`;
     this.pagesEl = this.rootEl.querySelector('.pages');
     this.btnPrev = this.rootEl.querySelector('.prev-page');
     this.btnNext = this.rootEl.querySelector('.next-page');
@@ -25,7 +28,6 @@ class Paginator {
   }
 
   paginate(options) {
-    this.itemsPerPage = options.perPage;
     this.items = options.items;
     this.api = options.api;
     if (this.api) {
@@ -168,6 +170,21 @@ class Paginator {
       top: 0,
       behavior: 'smooth',
     });
+  }
+
+  getItemsPerPage() {
+    let delta = 1;
+    let itemsPerPage = 0;
+    if (window.matchMedia('(min-width: 769px)').matches) {
+      itemsPerPage = 8;
+    } else if (window.matchMedia('(min-width: 321px)').matches) {
+      itemsPerPage = 7;
+    } else {
+      itemsPerPage = 4;
+      delta = 0;
+    }
+
+    return { itemsPerPage, delta };
   }
 }
 

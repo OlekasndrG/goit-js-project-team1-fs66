@@ -19,7 +19,6 @@ function onSubmit(event) {
 
 
   const options = {
-    perPage: 8,
     api: {
       method: api.articleSearchByQuery,
       params: { q: input.value, date: null },

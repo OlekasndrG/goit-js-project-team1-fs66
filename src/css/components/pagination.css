@@ -5,7 +5,18 @@
   margin-top: 2rem;
   margin: 60px 0 150px;
   padding: 10px 15px;
+  font-size: 16px;
   line-height: 1.4;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 320px) {
+  .pagination {
+    font-size: 14px;
+  }
+  .btn-text {
+    display: none;
+  }
 }
 
 .pagination .pages {
@@ -39,9 +50,6 @@
   border: 1px solid var(--accent-color);
   border-radius: 2px;
   margin: 0 8px 0 0;
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 500;
 }
 
 .pg-item {
@@ -81,8 +89,9 @@ body.themeDark .pages li.pg-ellipsis {
   display: inline-block;
   margin-left: 10px;
 }
- 
+
 body.themeDark .prev-page[disabled],
 .next-page[disabled] {
-  color: #111321;
+  color: var(--second-color);
 }
+

@@ -16,7 +16,6 @@ export function onSerchByCategori() {
     );
 
     const options = {
-      perPage: 8,
       api: {
         method: api.articleSearchByCategory,
         params: { category: category, date: null },
