@@ -1,5 +1,10 @@
 import './js/components/theme';
 import './js/components/burger-menu';
+import './js/components/dataBase/auth';
+import './js/components/dataBase/setDatabase';
+import './js/components/dataBase/register';
+import './js/components/dataBase/modal';
+import './js/components/dataBase/authForm';
 
 import { load, save } from './js/common/local_storage';
 import './js/components/burger-menu';

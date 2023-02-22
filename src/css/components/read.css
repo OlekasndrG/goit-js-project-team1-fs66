@@ -1,11 +1,5 @@
 .read-page-gallery {
 	margin-top: 40px;
-	margin-bottom: 40px;
-}
-
-.accordion {
-	display: block;
-	margin-bottom: 60px;
 }
 
 .accordion__border {
@@ -13,8 +7,8 @@
 	margin-bottom: 40px;
 }
 
-.accordion__by-date {
-	display: block;
+.accordion__by-date:not(:last-child) {
+	margin-bottom: 60px;
 }
 
 .accordion__title {

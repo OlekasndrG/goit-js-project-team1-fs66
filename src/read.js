@@ -1,5 +1,10 @@
 import './js/components/burger-menu';
 import './js/components/theme';
+import './js/components/dataBase/auth';
+import './js/components/dataBase/setDatabase';
+import './js/components/dataBase/register';
+import './js/components/dataBase/modal';
+import './js/components/dataBase/authForm';
 
 import { load, save } from './js/common/local_storage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
@@ -86,7 +91,6 @@ function renderCardsTemplate(array) {
   for (let date of datesArray) {
     const newsArray = array[date];
 
-    const accordion = makeAccordionMarkup();
     const title = makeTitleMarkup(date);
     const arrow = makeArrowMarkUp();
     const content = makeContentMarkup();
@@ -131,12 +135,11 @@ function renderCardsTemplate(array) {
     title.append(arrow);
     content.insertAdjacentHTML('beforeend', renderedNewsArray.join(''));
 
-    accordion.appendChild(title);
-    accordion.appendChild(border);
-    accordion.appendChild(content);
-    accordionByDate.appendChild(accordion);
+    accordionByDate.appendChild(title);
+    accordionByDate.appendChild(border);
+    accordionByDate.appendChild(content);
 
-    const titleArrayRef = accordion.querySelectorAll('.accordion__title');
+    const titleArrayRef = accordionByDate.querySelectorAll('.accordion__title');
     ListenAllTitleClick(titleArrayRef);
   }
   refs.readPage.appendChild(accordionByDate);
@@ -196,12 +199,6 @@ function makeAccordionByDateMarkup() {
   return accordionByDate;
 }
 
-function makeAccordionMarkup() {
-  const accordion = document.createElement('div');
-  accordion.classList.add('accordion');
-  return accordion;
-}
-
 function makeTitleMarkup(textContent) {
   const title = document.createElement('h2');
   title.classList.add('accordion__title');
@@ -213,7 +210,7 @@ function makeTitleMarkup(textContent) {
 function makeArrowMarkUp() {
   const arrow = document.createElement('div');
   arrow.classList.add('accordion__arrow');
-  arrow.classList.add('accordion__arrow--up');
+  arrow.classList.add('accordion__arrow--down');
   return arrow;
 }
 
@@ -238,20 +235,20 @@ function ListenAllTitleClick(refArray) {
 
 function onAccordionTitleClick(e) {
   const targetElement = e.target;
-  const accordion = targetElement.closest('.accordion');
-  const arrowRef = accordion.querySelector('.accordion__arrow');
-  const contentRef = accordion.querySelector('.accordion__content');
+  const accordionByDate = targetElement.closest('.accordion__by-date');
+  const arrowRef = accordionByDate.querySelector('.accordion__arrow');
+  const contentRef = accordionByDate.querySelector('.accordion__content');
 
-  if (arrowRef.classList.contains('accordion__arrow--up')) {
+  if (arrowRef.classList.contains('accordion__arrow--down')) {
     arrowRef.classList.replace(
-      'accordion__arrow--up',
-      'accordion__arrow--down'
+      'accordion__arrow--down',
+      'accordion__arrow--up'
     );
     contentRef.classList.add('is-active');
   } else {
     arrowRef.classList.replace(
-      'accordion__arrow--down',
-      'accordion__arrow--up'
+      'accordion__arrow--up',
+      'accordion__arrow--down'
     );
     contentRef.classList.remove('is-active');
   }
