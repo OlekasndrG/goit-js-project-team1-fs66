@@ -4,11 +4,10 @@
   | default @import url()
   |============================
 */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Poppins&display=swap');
+
 @import url('./common.css');
 @import url('./reset.css');
 @import url('./components/articles.css');
-@import url('./components/burger-menu.css');
 @import url('./components/calendar.css');
 @import url('./components/categories.css');
 @import url('./components/favorites.css');

@@ -34,4 +34,5 @@ body {
   font-family: Manrope, sans-serif;
   color: var(--main-color);
   background-color: var(--bg-color);
+  margin: 0;
 }
