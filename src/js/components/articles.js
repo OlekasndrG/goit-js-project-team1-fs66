@@ -1,21 +1,8 @@
 import { load, save } from '../common/local_storage';
-import api from '../common/API';
-import paginator from './pagination.js';
-import PaginationSearchHandler from './paginationSearchHandler.js';
-import { writeUserCards } from './dataBase/setDatabase';
+import { updateUserCards } from './dataBase/setDatabase';
 import { onGetCookie } from './dataBase/getCookie';
-import { getDatabase, ref, child, get } from 'firebase/database';
-import {
-  findFavoriteCards,
-  findReadCards,
-  cleanLocalStorageFav,
-  saveCardsReadHistory,
-  makeUniqueArrayByKey,
-} from './findCardsInBase';
-
-const data = {
-  readCardsArray: [],
-};
+import { cleanLocalStorageFav } from './findCardsInBase';
+import { makeCardObject, onClickReadMoreHome } from './onReadMore';
 
 cleanLocalStorageFav();
 
@@ -27,71 +14,24 @@ function handleClickGallery(e) {
   const targetElement = e.target;
 
   if (targetElement.nodeName === 'A') {
-    const date = new Date(Date.now()).toISOString();
-    const card = targetElement.closest('.item-news__article');
-    const cardContentWrapper = card.querySelector('.item-news__content');
-    const cardImg = card.querySelector('.item-news__img');
-    const cardSection = card.querySelector('.item-news__category');
-    const cardTitle = card.querySelector('.item-news__title');
-    const cardDescr = card.querySelector('.item-news__description');
-    const carDate = card.querySelector('.item-news__info-date');
-    const readMore = card.querySelector('.item-news__info-link');
-    const cardStatus = card.querySelector('.item-news__already-read');
-
-    cardContentWrapper.classList.add('is-ghost');
-    cardStatus.classList.add('is-read');
-
-    const cardObject = {
-      image: cardImg.src.trim(),
-      section: cardSection.textContent.trim(),
-      title: cardTitle.textContent.trim(),
-      limitString: cardDescr.textContent.trim(),
-      date: carDate.textContent.trim(),
-      url: readMore.href.trim(),
-      watchDate: date,
-    };
-
-    data.readCardsArray.push(cardObject);
-
-    const uniqueReadNewsArray = makeUniqueArrayByKey({
-      key: 'title',
-      array: data.readCardsArray,
-    });
-
-    saveCardsReadHistory('readCards', uniqueReadNewsArray);
+    onClickReadMoreHome(targetElement);
   }
 
   const favoritesLocal = load('favCards') || [];
 
   if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.item-news__article');
-    const cardImg = card.querySelector('.item-news__img');
-    const cardSection = card.querySelector('.item-news__category');
-    const cardTitle = card.querySelector('.item-news__title');
-    const cardDescr = card.querySelector('.item-news__description');
-    const carDate = card.querySelector('.item-news__info-date');
-    const readMore = card.querySelector('.item-news__info-link');
-
+    const cardObject = makeCardObject(card);
     const cardBtn = card.querySelector('.item-news__add-text');
     const cardHeartImg = card.querySelector('#icon-heart');
 
     cardHeartImg.classList.add('is-saved');
     cardBtn.textContent = 'Remove from favorite';
 
-    const cardObject = {
-      image: cardImg.src.trim(),
-      section: cardSection.textContent.trim(),
-      title: cardTitle.textContent.trim(),
-      limitString: cardDescr.textContent.trim(),
-      date: carDate.textContent.trim(),
-      url: readMore.href.trim(),
-    };
-
     const indexArray = favoritesLocal.map(el => el.title);
-    const index = indexArray.indexOf(cardTitle.textContent.trim());
+    const index = indexArray.indexOf(cardObject.title);
 
-    if (!cardTitle) return;
-
+    if (!cardObject.title) return;
     if (index == -1) {
       favoritesLocal.push(cardObject);
     } else {
@@ -100,11 +40,33 @@ function handleClickGallery(e) {
       cardHeartImg.classList.remove('is-saved');
     }
 
-    save('favCards', favoritesLocal);
+    if (onGetCookie('user')) {
+      const userId = onGetCookie('user');
+      save('favCards', favoritesLocal);
+      updateUserCards(userId, { favCards: load('favCards') });
+    } else {
+      save('favCards', favoritesLocal);
+    }
   }
 
   cleanLocalStorageFav();
 }
+
+// function findFavDataBase(userId) {
+//   const dbRef = ref(getDatabase());
+
+//   get(child(dbRef, `users/${userId}/favCards`))
+//     .then(snapshot => {
+//       if (snapshot.exists()) {
+//         const cardsObject = snapshot.val();
+//         console.log(cardsObject);
+//         // save('favCardsDb', cardsObject);
+//       }
+//     })
+//     .catch(error => {
+//       console.error(error);
+//     });
+// }
 
 // Кінець----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

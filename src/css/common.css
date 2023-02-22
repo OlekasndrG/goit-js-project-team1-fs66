@@ -31,7 +31,7 @@ body.themeDark {
 }
 
 body {
-  font-family: var(--main-font);
+  font-family: Manrope, sans-serif;
   color: var(--main-color);
-  background-color: var(--main-light-backgroundd);
+  background-color: var(--bg-color);
 }

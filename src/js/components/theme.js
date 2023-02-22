@@ -22,10 +22,12 @@ const STORAGE_THEME = "theme";
 
 let storageMemory =  localStorage.getItem(STORAGE_THEME) || undefined;
 
+
 export function saveLocalStorageTheme(){
    if (onGetCookie('user')) {
     readDataBaseAddClass(onGetCookie('user'))
    } else {
+
     if(storageMemory === 'dark') {
       body.classList.add('themeDark')
       changeThemeBtn.checked = true;
@@ -72,7 +74,7 @@ function addDarkClassToHTML() {
   }
 
 }
-  
+
 
 function readDataBaseAddClass(userId) {
   const dbRef = ref(getDatabase());

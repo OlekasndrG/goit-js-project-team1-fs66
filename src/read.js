@@ -9,6 +9,8 @@ import {
   findFavoriteCards,
   cleanLocalStorageFav,
 } from './js/components/findCardsInBase';
+import { makeCardObject } from './js/components/onReadMore';
+import { updateUserCards } from './js/components/dataBase/setDatabase';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
@@ -52,33 +54,17 @@ function handleClickGallery(e) {
 
   if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.item-news__article');
-    const cardImg = card.querySelector('.item-news__img');
-    const cardSection = card.querySelector('.item-news__category');
-    const cardTitle = card.querySelector('.item-news__title');
-    const cardDescr = card.querySelector('.item-news__description');
-    const carDate = card.querySelector('.item-news__info-date');
-    const readMore = card.querySelector('.item-news__info-link');
-
+    const cardObject = makeCardObject(card);
     const cardBtn = card.querySelector('.item-news__add-text');
     const cardHeartImg = card.querySelector('#icon-heart');
 
     cardHeartImg.classList.add('is-saved');
     cardBtn.textContent = 'Remove from favorite';
 
-    const cardObject = {
-      image: cardImg.src.trim(),
-      section: cardSection.textContent.trim(),
-      title: cardTitle.textContent.trim(),
-      limitString: cardDescr.textContent.trim(),
-      date: carDate.textContent.trim(),
-      url: readMore.href.trim(),
-    };
-
     const indexArray = favoritesLocal.map(el => el.title);
-    const index = indexArray.indexOf(cardTitle.textContent.trim());
+    const index = indexArray.indexOf(cardObject.title);
 
-    if (!cardTitle) return;
-
+    if (!cardObject.title) return;
     if (index == -1) {
       favoritesLocal.push(cardObject);
     } else {
@@ -87,7 +73,14 @@ function handleClickGallery(e) {
       cardHeartImg.classList.remove('is-saved');
     }
 
-    save('favCards', favoritesLocal);
+    if (onGetCookie('user')) {
+      const userId = onGetCookie('user');
+      save('favCards', favoritesLocal);
+      console.log(userId);
+      updateUserCards(userId, { favCards: load('favCards') });
+    } else {
+      save('favCards', favoritesLocal);
+    }
   }
 
   cleanLocalStorageFav();
@@ -169,7 +162,7 @@ function renderCardsDatabase(userId) {
         const cardsObject = snapshot.val();
         const cardsArray = Object.values(cardsObject).flat();
         renderCards(cardsArray);
-        findFavoriteCards();
+        findFavoriteCards(refs.readPage);
       } else {
         console.log('No data available');
       }
@@ -180,7 +173,6 @@ function renderCardsDatabase(userId) {
 }
 
 function cardsByDate(array) {
-  // console.log(array);
   const decrSortedDates = array.sort(
     (a, b) => new Date(b.watchDate) - new Date(a.watchDate)
   );
