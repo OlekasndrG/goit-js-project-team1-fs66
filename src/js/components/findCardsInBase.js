@@ -1,10 +1,10 @@
 import { load, save } from '../common/local_storage';
 import { onGetCookie } from './dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
-import { writeUserCards } from './dataBase/setDatabase';
+import { writeUserData } from './dataBase/setDatabase';
 
 export function findFavoriteCards(favPage) {
-  if (load('favCards')) {
+	if (load('favCards')) {
     const cardsArray = load('favCards');
     const arrayHomePageCards = Array.from(
       favPage.querySelectorAll('.item-news__article')
@@ -12,7 +12,7 @@ export function findFavoriteCards(favPage) {
 
     arrayHomePageCards.forEach(card => {
       const cardBtn = card.querySelector('.item-news__add-text');
-      const cardHeartImg = card.querySelector('.item-news__icon');
+      const cardHeartImg = card.querySelector('#icon-heart');
       const cardTitle = card.querySelector('.item-news__title');
       cardsArray.forEach(({ title }) => {
         if (title === cardTitle.textContent.trim()) {
@@ -24,48 +24,50 @@ export function findFavoriteCards(favPage) {
   }
 }
 
-export function findReadCards(link) {
+export function findReadCards(newsListRef) {
   if (onGetCookie('user')) {
     const userId = onGetCookie('user');
-    findReadDataBase(userId);
+    findReadDataBase(userId, newsListRef);
   } else {
     if (load('readCards')) {
       const cardsArray = load('readCards');
-      findReadLocalStorage(link, cardsArray);
+      findReadLocalStorage(newsListRef, cardsArray);
     }
   }
 }
 
-function findReadLocalStorage(link, array) {
-  const arrayHomePageCards = Array.from(
-    link.querySelectorAll('.item-news__article')
-  );
-
-  arrayHomePageCards.forEach(card => {
-    const cardStatus = card.querySelector('.item-news__already-read');
-    const cardTitle = card.querySelector('.item-news__title');
-    array.forEach(({ title }) => {
-      if (title === cardTitle.textContent.trim()) {
-        cardStatus.classList.add('is-read');
-        card.classList.add('is-ghost');
-      }
-    });
-  });
-}
-
-function findReadDataBase(userId) {
+function findReadDataBase(userId, newsListRef) {
   const dbRef = ref(getDatabase());
 
   get(child(dbRef, `users/${userId}/readCards`))
     .then(snapshot => {
       if (snapshot.exists()) {
-        const cardsObject = snapshot.val();
-        findReadLocalStorage(cardsObject);
+				const cardsObject = snapshot.val();
+
+        findReadLocalStorage(newsListRef, cardsObject);
       }
     })
     .catch(error => {
       console.error(error);
     });
+}
+
+function findReadLocalStorage(newsListRef, array) {
+  const arrayHomePageCards = Array.from(
+    newsListRef.querySelectorAll('.item-news__article')
+  );
+
+  arrayHomePageCards.forEach(card => {
+    const cardContentWrapper = card.querySelector('.item-news__content');
+    const cardStatus = card.querySelector('.item-news__already-read');
+    const cardTitle = card.querySelector('.item-news__title');
+    array.forEach(({ title }) => {
+      if (title === cardTitle.textContent.trim()) {
+        cardStatus.classList.add('is-read');
+        cardContentWrapper.classList.add('is-ghost');
+      }
+    });
+  });
 }
 
 export function saveCardsReadHistory(key, array) {
@@ -101,7 +103,7 @@ function setDataToDataBase(userId, array, key) {
           key,
         });
       } else {
-        writeUserCards(userId, { [key]: array });
+        writeUserData(userId, { [key]: array });
       }
     })
     .catch(error => {
@@ -115,7 +117,7 @@ function mergeLocalAndBaseData({ userId, dbData, currentData, key }) {
     key: 'title',
     array: cardsArray,
   });
-  writeUserCards(userId, { [key]: uniqueConcatedArray });
+  writeUserData(userId, { [key]: uniqueConcatedArray });
 }
 
 export function makeUniqueArrayByKey({ key, array }) {

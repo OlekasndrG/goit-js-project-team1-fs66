@@ -7,7 +7,7 @@ const STORAGE_THEME = "theme";
 let storageMemory =  localStorage.getItem(STORAGE_THEME) || undefined;
 
 function saveLocalStorageTheme(){
-   
+
     if(storageMemory === 'dark') {
         body.classList.add('themeDark')
         changeThemeBtn.checked = true;
@@ -37,14 +37,14 @@ function addDarkClassToHTML() {
     try {
       if (localStorage.getItem('theme') === 'dark') {
         body.classList.add('themeDark');
-        
+
       }
       else {
         body.classList.remove('themeDark');
       }
     } catch (err) {}
 }
-  
+
 
 
 

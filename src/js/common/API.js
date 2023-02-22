@@ -25,7 +25,7 @@ class API {
 
     const articles = response.data.response.docs.map(result => {
       let image =
-        'https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg';
+        'https://textis.ru/wp-content/uploads/2017/02/kak-pisat-novosti.png';
       if (result.multimedia.length > 0) {
         image = 'https://nyt.com/' + result.multimedia[0].url;
       }
@@ -57,7 +57,7 @@ class API {
         return {
           title: result.title,
           image:
-            'https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg',
+            'https://textis.ru/wp-content/uploads/2017/02/kak-pisat-novosti.png',
           description: result.abstract,
           date: parse(result.published_date, 'yyyy-MM-dd', new Date()),
           url: result.url,
@@ -106,7 +106,7 @@ class API {
 
 function getImage(result) {
   if (!result.multimedia || result.multimedia.length === 0) {
-    return 'https://static01.nyt.com/images/2023/02/12/opinion/12French/12French-mediumThreeByTwo440.jpg';
+    return 'https://textis.ru/wp-content/uploads/2017/02/kak-pisat-novosti.png';
   }
   return getBiggestImage(result.multimedia).url;
 }

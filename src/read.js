@@ -5,7 +5,12 @@ import { load, save } from './js/common/local_storage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
-import { findFavoriteCards, cleanLocalStorageFav } from './js/components/findCardsInBase';
+import {
+  findFavoriteCards,
+  cleanLocalStorageFav,
+} from './js/components/findCardsInBase';
+import { makeCardObject } from './js/components/onReadMore';
+import { updateUserCards } from './js/components/dataBase/setDatabase';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
@@ -43,38 +48,23 @@ if (onGetCookie('user')) {
 refs.readPage.addEventListener('click', handleClickGallery);
 
 function handleClickGallery(e) {
-  e.preventDefault();
   const targetElement = e.target;
 
   const favoritesLocal = load('favCards') || [];
+
   if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.item-news__article');
-    const cardImg = card.querySelector('.item-news__img');
-    const cardSection = card.querySelector('.item-news__category');
-    const cardTitle = card.querySelector('.item-news__title');
-    const cardDescr = card.querySelector('.item-news__description');
-    const carDate = card.querySelector('.item-news__info-date');
-    const readMore = card.querySelector('.item-news__info-link');
-
+    const cardObject = makeCardObject(card);
     const cardBtn = card.querySelector('.item-news__add-text');
-    const cardHeartImg = card.querySelector('.item-news__icon');
+    const cardHeartImg = card.querySelector('#icon-heart');
+
     cardHeartImg.classList.add('is-saved');
     cardBtn.textContent = 'Remove from favorite';
 
-    const cardObject = {
-      image: cardImg.src.trim(),
-      section: cardSection.textContent.trim(),
-      title: cardTitle.textContent.trim(),
-      limitString: cardDescr.textContent.trim(),
-      date: carDate.textContent.trim(),
-      url: readMore.href.trim(),
-    };
-
     const indexArray = favoritesLocal.map(el => el.title);
-    const index = indexArray.indexOf(cardTitle.textContent.trim());
+    const index = indexArray.indexOf(cardObject.title);
 
-    if (!cardTitle) return;
-
+    if (!cardObject.title) return;
     if (index == -1) {
       favoritesLocal.push(cardObject);
     } else {
@@ -83,8 +73,16 @@ function handleClickGallery(e) {
       cardHeartImg.classList.remove('is-saved');
     }
 
-    save('favCards', favoritesLocal);
+    if (onGetCookie('user')) {
+      const userId = onGetCookie('user');
+      save('favCards', favoritesLocal);
+      console.log(userId);
+      updateUserCards(userId, { favCards: load('favCards') });
+    } else {
+      save('favCards', favoritesLocal);
+    }
   }
+
   cleanLocalStorageFav();
 }
 
@@ -109,35 +107,37 @@ function renderCardsTemplate(array) {
     const renderedNewsArray = newsArray.map(el => {
       const { image, section, title, limitString, date, url } = el;
       return `<li class="list-news__item">
-        <article class="item-news__article">
-            <div class="item-news__wrapper-img">
-                <img class="item-news__img" src="${image}" alt="">
-                <p class="item-news__category">${section}</p>
-                <div class="item-news__add-to-favorite">
-                <p class="item-news__add-text">Add to favorite</p>
-               	<svg class='item-news__icon' viewBox="0 0 30 32">
-									<path stroke="#4440F7" style="stroke: var(--color3, #4440F7)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2" d="M9.334 4c-3.682 0-6.668 2.954-6.668 6.6 0 2.942 1.168 9.926 12.652 16.986 0.194 0.12 0.43 0.191 0.682 0.191s0.488-0.071 0.688-0.194l-0.006 0.003c11.484-7.060 12.652-14.044 12.652-16.986 0-3.646-2.986-6.6-6.668-6.6-3.68 0-6.666 4-6.666 4s-2.986-4-6.666-4z"></path>
-					      </svg>
-              </div>
-						</div>
-              <div class='item-news__already-read is-read'>
-                <span class='item-news__already-read-text'>Have Read</span>
-              </div>
-            <div class="item-news__wrapper-text">
-                <h2 class="item-news__title">
-                ${title}
-                </h2>
-                <p class="item-news__description">
-                ${limitString}</p>
-            </div>
-            <div class="item-news__info">
-                <span class="item-news__info-date">
-                ${date}
-                </span>
-                <a class="item-news__info-link" href="${url}#">Read more</a>
-            </div>
-        </article>
-    </li>`;
+												<article class="item-news__article">
+													<div class='item-news__already-read is-read'>
+														<span class='item-news__already-read-text'>Have read</span>
+													</div>
+													<div class="item-news__content">
+														<div class="item-news__wrapper-img">
+															<img class="item-news__img" src="${image}" alt="">
+															<p class="item-news__category">${section}</p>
+															<div class="item-news__add-to-favorite">
+																<p class="item-news__add-text">Add to favorite</p>
+																<svg class='item-news__icon' id='icon-heart' viewBox="0 0 30 32">
+																	<path stroke="#4440F7" style="stroke: var(--color3, #4440F7)" stroke-linejoin="round" stroke-linecap="round"
+																		stroke-miterlimit="4" stroke-width="2"
+																		d="M9.334 4c-3.682 0-6.668 2.954-6.668 6.6 0 2.942 1.168 9.926 12.652 16.986 0.194 0.12 0.43 0.191 0.682 0.191s0.488-0.071 0.688-0.194l-0.006 0.003c11.484-7.060 12.652-14.044 12.652-16.986 0-3.646-2.986-6.6-6.668-6.6-3.68 0-6.666 4-6.666 4s-2.986-4-6.666-4z">
+																	</path>
+																</svg>
+															</div>
+														</div>
+														<div class="item-news__wrapper-text">
+															<h2 class="item-news__title">${title}</h2>
+															<p class="item-news__description">${limitString}</p>
+														</div>
+														<div class="item-news__info">
+															<span class="item-news__info-date">
+																${date}
+															</span>
+															<a class="item-news__info-link" target="_blank" href="${url}#">Read more</a>
+														</div>
+													</div>
+												</article>
+											</li>`;
     });
 
     title.append(arrow);
@@ -162,7 +162,7 @@ function renderCardsDatabase(userId) {
         const cardsObject = snapshot.val();
         const cardsArray = Object.values(cardsObject).flat();
         renderCards(cardsArray);
-        findFavoriteCards();
+        findFavoriteCards(refs.readPage);
       } else {
         console.log('No data available');
       }
@@ -173,7 +173,6 @@ function renderCardsDatabase(userId) {
 }
 
 function cardsByDate(array) {
-  // console.log(array);
   const decrSortedDates = array.sort(
     (a, b) => new Date(b.watchDate) - new Date(a.watchDate)
   );

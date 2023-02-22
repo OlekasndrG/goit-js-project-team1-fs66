@@ -33,13 +33,13 @@
 	cursor: pointer;
 	outline: none;
 	transition: 0.4s;
-	color: #111321;
+	color: var(--main-color);
 }
 
 .accordion__arrow {
 	pointer-events: none;
 	margin-left: 8px;
-	border: solid black;
+	border: solid var(--main-color);
 	border-width: 0 2px 2px 0;
 	display: inline-block;
 	padding: 3px;
