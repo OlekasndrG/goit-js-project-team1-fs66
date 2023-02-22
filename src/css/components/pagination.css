@@ -51,6 +51,7 @@
 .prev-page[disabled],
 .next-page[disabled] {
   cursor: default;
+  color: #111321;
 }
 
 .pages li.pg-ellipsis {
