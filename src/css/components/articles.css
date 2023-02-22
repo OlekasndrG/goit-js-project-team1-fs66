@@ -97,7 +97,7 @@
 	font-size: 12px;
 	line-height: calc(16/12);
 	text-align: left;
-	color: var(--main-color);
+	color: #111321;
 }
 
 .item-news__icon {
@@ -115,7 +115,7 @@
 }
 
 .is-saved {
-	fill: var(--switcher-accent-day);
+	fill: var(--theme-color);
 }
 
 .item-news__title {
