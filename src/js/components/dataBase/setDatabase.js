@@ -19,9 +19,9 @@ export function updateUserCards(userId, object) {
   update(ref(db, 'users/' + userId), { ...object });
 }
 
-export function updateUserCards(userId, object) {
-  const database = getDatabase();
-  const db = getDatabase();
-  update(ref(db, 'users/' + userId), { ...object });
-}
+// export function updateUserCards(userId, object) {
+//   const database = getDatabase();
+//   const db = getDatabase();
+//   update(ref(db, 'users/' + userId), { ...object });
+// }
 
