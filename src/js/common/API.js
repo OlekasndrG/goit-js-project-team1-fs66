@@ -31,7 +31,7 @@ class API {
       }
 
       return {
-        category: result.section_name,
+        section: result.section_name,
         title: result.headline.main,
         image: image,
         description: result.abstract,
