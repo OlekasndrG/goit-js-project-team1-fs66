@@ -1,9 +1,10 @@
 
 const ulCardList = document.querySelector('.list-news')
 import { format, parse } from 'date-fns';
-
-
-export function onRenderOneCard(arrayNews) {
+import {onRenderWetherCard} from './weather'
+const weatherRef = document.querySelector('.weather')
+export async function onRenderOneCard(arrayNews) {
+  const WETHER = await onRenderWetherCard({});
   const arrayCard = arrayNews
     .map((news, index) => {
       const { image, section, title, description, date, url } = news;
@@ -13,15 +14,12 @@ export function onRenderOneCard(arrayNews) {
       }
       let limitString = truncateString(description);
 
-      const WETHER = '<li class="wether-a"></li>';
       const MARKUP = `<li class="list-news__item">
         <article class="item-news__article">
             <div class="item-news__wrapper-img">
                 <img class="item-news__img" src="${image}" alt="">
                 <p class="item-news__category">${section}</p>
-
                 <div class="item-news__add-to-favorite">
-
                 <p class="item-news__add-text">Add to favorite</p>
                 <svg class="item-news__icon" width="16" height="16">
                   <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
@@ -50,10 +48,25 @@ export function onRenderOneCard(arrayNews) {
             </div>
         </article>
     </li>`;
-      if (index === 1) {
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      if (index === 0) {
+        return WETHER + MARKUP ;
+      }
+      return MARKUP;
+    } else if(window.matchMedia("(min-width: 768px)").matches && window.matchMedia("(max-width: 1280px)").matches){
+      if (index === 0) {
         return MARKUP + WETHER;
       }
       return MARKUP;
+    }else{
+      if (index === 1) {
+
+        return MARKUP + `<li class="weathers">${WETHER}</li>`;
+      }
+      return MARKUP;
+
+    }
+      
     })
     .join('');
   onMarkupCard(arrayCard);
@@ -62,5 +75,19 @@ export function onRenderOneCard(arrayNews) {
 function onMarkupCard(cards) {
 
     ulCardList.innerHTML = cards
+    window.navigator.geolocation.getCurrentPosition(getGeolocation => {
+      const geolocationNew = {
+        lat: getGeolocation.coords.latitude,
+        lon: getGeolocation.coords.longitude
+      }
+      
+      onRenderWetherCard(geolocationNew).then(dataNew => {
+
+          document.querySelector('.weathers').innerHTML = `${dataNew}`
+      })
+      
+    }, error => {
+      console.log("🚀 ~ error:", error);
+    });
   }
 
