@@ -247,7 +247,7 @@
 
 .calendar-icon {
     fill: var(--accent-color);
-    cursor: url(cursor-hand.fe1b03e6.svg),pointer;
+    /* cursor: url(cursor-hand.fe1b03e6.svg),pointer; */
     /* margin-left: 12px; */
     transition-duration: .25s;
     transition-timing-function: cubic-bezier(.4,0,.2,1);
@@ -263,7 +263,7 @@
 .calendar-arrows {
     z-index: 1;
     fill: var(--accent-color);
-    cursor: url(cursor-hand.fe1b03e6.svg),pointer;
+    /* cursor: url(cursor-hand.fe1b03e6.svg),pointer; */
     margin-left: 12px;
     transition-duration: .25s;
     transition-timing-function: cubic-bezier(.4,0,.2,1);
@@ -285,7 +285,7 @@
     text-align: center;
     letter-spacing: .02em;
     color: var(--main-color);
-    cursor: url(cursor-hand.fe1b03e6.svg),pointer;
+    /* cursor: url(cursor-hand.fe1b03e6.svg),pointer; */
     background-color: rgba(0,0,0,0);
     border-radius: 20px;
     justify-content: space-between;
