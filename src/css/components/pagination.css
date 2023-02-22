@@ -64,7 +64,7 @@ body.themeDark .prev-page,
 .next-page,
 .pages li {
   background-color: var(--third-color);
-  color: var(--main-color);
+  color: #111321;
 }
 
 body.themeDark .pages li.pg-ellipsis {
@@ -84,5 +84,5 @@ body.themeDark .pages li.pg-ellipsis {
  
 body.themeDark .prev-page[disabled],
 .next-page[disabled] {
-  color: var( --second-color);
+  color: #111321;
 }

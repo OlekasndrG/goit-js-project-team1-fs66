@@ -37,7 +37,7 @@ body.is-open {
   display: inline-block;
   padding: 0;
   margin-left: auto;
-  background-color: #fff;
+  background-color: var(--third-color);
   border: none;
   width: 24px;
   height: 24px;
@@ -128,7 +128,7 @@ body.is-open {
   font-size: 12px;
   line-height: 21px;
   letter-spacing: 0.02em;
-  color: #111321;
+  color: var(--main-color);
   opacity: 0.4;
   margin-left: 32px;
   opacity: 0.4;
@@ -148,7 +148,7 @@ body.is-open {
 
 .input-label:hover .input-search {
   border: 1px solid var(--main-color);
-  background-color: #fff;
+  background-color: var(--third-color);
 }
 
 .icon-search {
@@ -214,16 +214,27 @@ body.is-open {
 
 .login {
   margin-bottom: 20px;
+  font-weight: 400;
+  color: var(--main-color);
 }
-body.themeDark .login {
-  color: #fff;
+/* body.themeDark .login {
+  
+} */
+
+.registr {
+  color: var(--main-color);
+  font-weight: 400;
 }
-body.themeDark .registr {
-  color: #fff;
+/* body.themeDark .registr {
+  color: var(--third-color);
+} */
+.logout {
+   color: var(--main-color);
+   font-weight: 400;
 }
-body.themeDark .logout {
-  color: #fff;
-}
+/* body.themeDark .logout {
+  color: var(--third-color);
+} */
 @media screen and (min-width: 768px) {
   .logo {
     font-size: 32px;
