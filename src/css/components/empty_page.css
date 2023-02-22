@@ -8,6 +8,14 @@
 	justify-content: center;
 	margin-bottom: 59px;
 }
+.empty_main {
+		text-align: center;
+	align-content: center;
+	justify-content: center;
+	margin-bottom: 59px;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 .is-show {
 	display: block;

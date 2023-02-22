@@ -1,8 +1,11 @@
 import { getAuth } from 'firebase/auth';
+import './js/components/burger-menu';
+import './js/components/theme';
 import { load, save } from './js/common/local_storage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
+import { findFavoriteCards, cleanLocalStorageFav } from './js/components/findCardsInBase';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
@@ -15,6 +18,8 @@ const firebaseConfig = {
   appId: '1:618434101899:web:58e5277fd4ec3d55f6ca8e',
   measurementId: 'G-7YDFYWJH4S',
 };
+
+cleanLocalStorageFav();
 
 const app = initializeApp(firebaseConfig);
 
@@ -31,9 +36,8 @@ if (onGetCookie('user')) {
   if (load('readCards')) {
     renderCards(load('readCards'));
   }
-  findFavoriteCards();
-
   isEmptyPage();
+  findFavoriteCards(refs.readPage);
 }
 
 refs.readPage.addEventListener('click', handleClickGallery);
@@ -41,27 +45,38 @@ refs.readPage.addEventListener('click', handleClickGallery);
 function handleClickGallery(e) {
   e.preventDefault();
   const targetElement = e.target;
-  const favoritesLocal = load('favCards') || [];
 
-  if (targetElement.nodeName === 'P') {
-    const card = targetElement.closest('.list-news__item');
-    const cardBtn = card.querySelector('.item-news__add-text');
+  const favoritesLocal = load('favCards') || [];
+  if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
+    const card = targetElement.closest('.item-news__article');
+    const cardImg = card.querySelector('.item-news__img');
+    const cardSection = card.querySelector('.item-news__category');
     const cardTitle = card.querySelector('.item-news__title');
-    const cardHeartImg = card.querySelector('.item-news__heart-icon');
+    const cardDescr = card.querySelector('.item-news__description');
+    const carDate = card.querySelector('.item-news__info-date');
+    const readMore = card.querySelector('.item-news__info-link');
+
+    const cardBtn = card.querySelector('.item-news__add-text');
+    const cardHeartImg = card.querySelector('.item-news__icon');
     cardHeartImg.classList.add('is-saved');
     cardBtn.textContent = 'Remove from favorite';
-    const stringifyCard = card.outerHTML;
+
+    const cardObject = {
+      image: cardImg.src.trim(),
+      section: cardSection.textContent.trim(),
+      title: cardTitle.textContent.trim(),
+      limitString: cardDescr.textContent.trim(),
+      date: carDate.textContent.trim(),
+      url: readMore.href.trim(),
+    };
 
     const indexArray = favoritesLocal.map(el => el.title);
-    const index = indexArray.indexOf(cardTitle.textContent);
+    const index = indexArray.indexOf(cardTitle.textContent.trim());
 
     if (!cardTitle) return;
 
     if (index == -1) {
-      favoritesLocal.push({
-        card: stringifyCard,
-        title: cardTitle.textContent,
-      });
+      favoritesLocal.push(cardObject);
     } else {
       favoritesLocal.splice(index, 1);
       cardBtn.textContent = 'Add to favorite';
@@ -70,6 +85,7 @@ function handleClickGallery(e) {
 
     save('favCards', favoritesLocal);
   }
+  cleanLocalStorageFav();
 }
 
 function renderCards(array) {
@@ -79,37 +95,63 @@ function renderCards(array) {
 
 function renderCardsTemplate(array) {
   const datesArray = Object.keys(array);
-  const accordionGallery = makeAccordionGalleryMarkup();
+  const accordionByDate = makeAccordionByDateMarkup();
 
   for (let date of datesArray) {
-    const news = array[date];
-    const parsedDatesToString = new Date(date).toLocaleDateString('en-GB');
+    const newsArray = array[date];
 
     const accordion = makeAccordionMarkup();
-    const title = makeTitleMarkup(parsedDatesToString);
+    const title = makeTitleMarkup(date);
     const arrow = makeArrowMarkUp();
     const content = makeContentMarkup();
+    const border = makeBorderMarkUp();
+
+    const renderedNewsArray = newsArray.map(el => {
+      const { image, section, title, limitString, date, url } = el;
+      return `<li class="list-news__item">
+        <article class="item-news__article">
+            <div class="item-news__wrapper-img">
+                <img class="item-news__img" src="${image}" alt="">
+                <p class="item-news__category">${section}</p>
+                <div class="item-news__add-to-favorite">
+                <p class="item-news__add-text">Add to favorite</p>
+               	<svg class='item-news__icon' viewBox="0 0 30 32">
+									<path stroke="#4440F7" style="stroke: var(--color3, #4440F7)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2" d="M9.334 4c-3.682 0-6.668 2.954-6.668 6.6 0 2.942 1.168 9.926 12.652 16.986 0.194 0.12 0.43 0.191 0.682 0.191s0.488-0.071 0.688-0.194l-0.006 0.003c11.484-7.060 12.652-14.044 12.652-16.986 0-3.646-2.986-6.6-6.668-6.6-3.68 0-6.666 4-6.666 4s-2.986-4-6.666-4z"></path>
+					      </svg>
+              </div>
+						</div>
+              <div class='item-news__already-read is-read'>
+                <span class='item-news__already-read-text'>Have Read</span>
+              </div>
+            <div class="item-news__wrapper-text">
+                <h2 class="item-news__title">
+                ${title}
+                </h2>
+                <p class="item-news__description">
+                ${limitString}</p>
+            </div>
+            <div class="item-news__info">
+                <span class="item-news__info-date">
+                ${date}
+                </span>
+                <a class="item-news__info-link" href="${url}#">Read more</a>
+            </div>
+        </article>
+    </li>`;
+    });
 
     title.append(arrow);
-    content.insertAdjacentHTML('beforeend', news.join(''));
-
-    const cardBtn = content.querySelector('.item-news__add-text');
-    const cardHeartImg = content.querySelector('.item-news__heart-icon');
-
-    cardBtn.textContent = 'Add to favorite';
-    cardHeartImg.classList.remove('is-saved');
+    content.insertAdjacentHTML('beforeend', renderedNewsArray.join(''));
 
     accordion.appendChild(title);
+    accordion.appendChild(border);
     accordion.appendChild(content);
-    accordionGallery.appendChild(accordion);
+    accordionByDate.appendChild(accordion);
 
     const titleArrayRef = accordion.querySelectorAll('.accordion__title');
     ListenAllTitleClick(titleArrayRef);
-
-    const cardStatusRef = content.querySelectorAll('.item-news__already-read');
-    changeCardStatus(cardStatusRef);
   }
-  refs.readPage.appendChild(accordionGallery);
+  refs.readPage.appendChild(accordionByDate);
 }
 
 function renderCardsDatabase(userId) {
@@ -120,6 +162,7 @@ function renderCardsDatabase(userId) {
         const cardsObject = snapshot.val();
         const cardsArray = Object.values(cardsObject).flat();
         renderCards(cardsArray);
+        findFavoriteCards();
       } else {
         console.log('No data available');
       }
@@ -130,22 +173,22 @@ function renderCardsDatabase(userId) {
 }
 
 function cardsByDate(array) {
+  // console.log(array);
   const decrSortedDates = array.sort(
     (a, b) => new Date(b.watchDate) - new Date(a.watchDate)
   );
 
   return decrSortedDates.reduce((acc, card) => {
-    const { card: newsCard } = card;
-    const date = new Date(card.watchDate).toLocaleDateString({
+    const date = new Date(card.watchDate).toLocaleDateString('en-GB', {
       year: 'numeric',
       day: 'numeric',
       month: 'numeric',
     });
 
     if (acc[date]) {
-      acc[date].push(newsCard);
+      acc[date].push(card);
     } else {
-      acc[date] = [newsCard];
+      acc[date] = [card];
     }
 
     return acc;
@@ -161,10 +204,10 @@ function isEmptyPage() {
   }
 }
 
-function makeAccordionGalleryMarkup() {
-  const accordionGallery = document.createElement('div');
-  accordionGallery.classList.add('accordion__by-date');
-  return accordionGallery;
+function makeAccordionByDateMarkup() {
+  const accordionByDate = document.createElement('div');
+  accordionByDate.classList.add('accordion__by-date');
+  return accordionByDate;
 }
 
 function makeAccordionMarkup() {
@@ -176,6 +219,7 @@ function makeAccordionMarkup() {
 function makeTitleMarkup(textContent) {
   const title = document.createElement('h2');
   title.classList.add('accordion__title');
+  title.classList.add('container');
   title.textContent = textContent;
   return title;
 }
@@ -185,6 +229,12 @@ function makeArrowMarkUp() {
   arrow.classList.add('accordion__arrow');
   arrow.classList.add('accordion__arrow--up');
   return arrow;
+}
+
+function makeBorderMarkUp() {
+  const border = document.createElement('div');
+  border.classList.add('accordion__border');
+  return border;
 }
 
 function makeContentMarkup() {
@@ -200,13 +250,11 @@ function ListenAllTitleClick(refArray) {
   );
 }
 
-function changeCardStatus(array) {
-  array.forEach(status => (status.textContent = 'Have read'));
-}
-
 function onAccordionTitleClick(e) {
-  const arrowRef = e.target.querySelector('.accordion__arrow');
-  const contentRef = e.target.nextSibling;
+  const targetElement = e.target;
+  const accordion = targetElement.closest('.accordion');
+  const arrowRef = accordion.querySelector('.accordion__arrow');
+  const contentRef = accordion.querySelector('.accordion__content');
 
   if (arrowRef.classList.contains('accordion__arrow--up')) {
     arrowRef.classList.replace(
@@ -220,26 +268,5 @@ function onAccordionTitleClick(e) {
       'accordion__arrow--up'
     );
     contentRef.classList.remove('is-active');
-  }
-}
-
-function findFavoriteCards() {
-  if (load('favCards')) {
-    const cardsArray = load('favCards');
-    const arrayHomePageCards = Array.from(
-      refs.readPage.querySelectorAll('.item-news__article')
-    );
-
-    arrayHomePageCards.forEach(card => {
-      const cardBtn = card.querySelector('.item-news__add-text');
-      const cardHeartImg = card.querySelector('.item-news__heart-icon');
-      const cardTitle = card.querySelector('.item-news__title');
-      cardsArray.forEach(({ title }) => {
-        if (title === cardTitle.textContent) {
-          cardBtn.textContent = 'Remove from favorite';
-          cardHeartImg.classList.add('is-saved');
-        }
-      });
-    });
   }
 }

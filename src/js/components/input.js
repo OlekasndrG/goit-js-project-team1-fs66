@@ -1,6 +1,8 @@
+
 import api from '../common/API';
 import paginator from './pagination';
 import PaginationSearchHandler from './paginationSearchHandler';
+import { format, parse } from 'date-fns';
 // console.log(API);
 
 const form = document.querySelector('form.form-search');
@@ -15,6 +17,7 @@ const date = document.getElementById('input-picker');
 function onSubmit(event) {
   event.preventDefault();
 
+
   const options = {
     api: {
       method: api.articleSearchByQuery,
@@ -26,6 +29,7 @@ function onSubmit(event) {
 
   paginator.paginate(options);
 }
+
 
 function createMarkUp(articles) {
   const markup = articles.map(article => {
@@ -65,31 +69,41 @@ function generateArticlesMarkup({
   let limitString = truncateString(description);
 
   return `<li class="list-news__item">
-            <article class="item-news__article">
-                <div class="item-news__wrapper-img">
-                    <img class="item-news__img" src="${image}" alt="">
-                    <p class="item-news__category">${category}</p>
-                    <p class="item-news__add-to-favorite">Add to favorite
-                        <svg class="item-news__icon" width="16" height="16">
-                            <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
-                        </svg>
-                    </p>
-                </div>
-                <div class=".item-news__wrapper-text">
-                    <h2 class="item-news__title">
-                        ${title}
-                    </h2>
-                    <p class="item-news__description">
-                        ${limitString}</p>
-                </div>
-                <div class="item-news__info">
-                    <span class="item-news__info-date">
-                        ${date}
-                    </span>
-                    <a class="item-news__info-link" href="${url}">Read more</a>
-                </div>
-            </article>
-        </li>`;
+        <article class="item-news__article">
+            <div class="item-news__wrapper-img">
+                <img class="item-news__img" src="${image}" alt="">
+                <p class="item-news__category">${category}</p>
+
+                <div class="item-news__add-to-favorite">
+
+                <p class="item-news__add-text">Add to favorite</p>
+               	<svg class='item-news__icon' viewBox="0 0 30 32">
+									<path stroke="#4440F7" style="stroke: var(--color3, #4440F7)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2" d="M9.334 4c-3.682 0-6.668 2.954-6.668 6.6 0 2.942 1.168 9.926 12.652 16.986 0.194 0.12 0.43 0.191 0.682 0.191s0.488-0.071 0.688-0.194l-0.006 0.003c11.484-7.060 12.652-14.044 12.652-16.986 0-3.646-2.986-6.6-6.668-6.6-3.68 0-6.666 4-6.666 4s-2.986-4-6.666-4z"></path>
+					      </svg>
+              </div>
+						</div>
+              <div class='item-news__already-read'>
+                <span class='item-news__already-read-text'>Already read</span>
+                <svg class='item-news__icon' width='18' height='18'>
+                  <use class='item-news__check-icon' href='./img/sprite-icons.svg#icon-done'></use>
+                </svg>
+              </div>
+
+            <div class="item-news__wrapper-text">
+                <h2 class="item-news__title">
+                ${title}
+                </h2>
+                <p class="item-news__description">
+                ${limitString}</p>
+            </div>
+            <div class="item-news__info">
+                <span class="item-news__info-date">
+                ${format(date, 'yyyy-MM-dd')}
+                </span>
+                <a class="item-news__info-link" href="${url}#">Read more</a>
+            </div>
+        </article>
+    </li>`;
 }
 
 function insertMarkUp(markup) {
@@ -97,7 +111,7 @@ function insertMarkUp(markup) {
 }
 
 function onNoResults() {
-  return `<section class="empty">
+  return `<section class="empty_main">
 
 <p class="empty_title">We haven't found news
     <br>

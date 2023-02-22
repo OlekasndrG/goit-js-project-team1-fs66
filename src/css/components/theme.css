@@ -89,10 +89,10 @@ body.themeDark .sun {
   font-weight: 400;
   font-size: 18px;
   line-height: 1.333;
-  color: var(--switcher-accent-day);
+  color: var(--theme-color);
 }
 body.themeDark .theme__light {
-  color: var(--bg-color);
+  color: var(--main-color );
   opacity: 0.4;
 }
 .theme__dark {
@@ -104,7 +104,7 @@ body.themeDark .theme__light {
   color: var(--switcher-gray-moon);
 }
 body.themeDark .theme__dark {
-  color: var(--switcher-gray-moon);
+  color: var(--border-color);
 }
 
 @media screen and (max-width: 1279px) {

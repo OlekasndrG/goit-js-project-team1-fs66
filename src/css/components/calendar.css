@@ -314,4 +314,10 @@
     transition-duration: 250ms;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     color: var(--third-color);
-  }
+}
+body.themeDark.input-calendar::placeholder {
+    color: var(--main-color);
+}
+body.themeDark.input-calendar::placeholder {
+    color: #a8a8a8;
+}
