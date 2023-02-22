@@ -40,7 +40,8 @@ refs.formRef.addEventListener('submit', (e)=>{
     Notify.success('Registration successful');
     return user
   }).then(user => {
-    writeUserData(user.uid, {name: UserName})
+    writeUserData(user.uid, {name: UserName,})
+    // writeUserData(user.uid, {'STORAGE_THEME': null,})
     return user
   }).then((user)=>{
     onAuthorizationUser(password, user.email)
