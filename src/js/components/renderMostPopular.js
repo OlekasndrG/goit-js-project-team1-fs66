@@ -1,4 +1,6 @@
+
 import api from '../common/API';
+import { findFavoriteCards, findReadCards } from './articles';
 import { onRenderOneCard } from './renderOneCard';
 import paginator from './pagination.js';
 
@@ -13,4 +15,7 @@ async function onRanderMostPopular() {
   };
 
   paginator.paginate(options);
+  findFavoriteCards();
+  findReadCards();
 }
+

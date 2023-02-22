@@ -1,10 +1,13 @@
-import { getAuth } from 'firebase/auth';
 import { load, save } from './js/common/local_storage';
+import './js/components/burger-menu';
+import './js/components/theme';
 
 const refs = {
   favPage: document.querySelector('.favotire-page-gallery'),
   emptyPage: document.querySelector('.empty-page'),
 };
+
+cleanLocalStorageFav();
 
 if (load('favCards')) {
   renderCards(load('favCards'));
@@ -17,7 +20,7 @@ function handleClickGallery(e) {
   const targetElement = e.target;
   const favoritesLocal = load('favCards') || [];
 
-  if (targetElement.nodeName === 'P') {
+  if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.list-news__item');
     const cardBtn = card.querySelector('.item-news__add-text');
     const cardTitle = card.querySelector('.item-news__title');
@@ -44,17 +47,20 @@ function handleClickGallery(e) {
 
     save('favCards', favoritesLocal);
   }
+
+  cleanLocalStorageFav();
 }
 
 function renderCards(array) {
   const newsList = document.createElement('ul');
-	newsList.classList.add('list-news');
-	newsList.classList.add('favorite-flex-start');
-
+  newsList.classList.add('list-news');
+  newsList.classList.add('favorite-flex-start');
 
   const cardsMarup = array.map(el => Object.values(el)[0]);
   newsList.insertAdjacentHTML('beforeend', cardsMarup.join(''));
+  const cards = newsList.querySelectorAll('.list-news__item');
 
+  cleanLabelFromHomePage(cards);
   isEmptyPage(newsList);
 }
 
@@ -65,3 +71,34 @@ function isEmptyPage(newsList) {
     refs.emptyPage.classList.add('is-show');
   }
 }
+
+function cleanLabelFromHomePage(cards) {
+  cards.forEach(el => {
+    el.classList.remove('is-ghost');
+    const cardStatus = el.querySelector('.item-news__already-read');
+    cardStatus.classList.remove('is-read');
+  });
+}
+
+function cleanLocalStorageFav() {
+  if (load('favCards').length === 0) {
+    localStorage.removeItem('favCards');
+  }
+}
+
+import './js/components/theme';
+
+import './js/components/burger-menu';
+// import './js/components/input';
+
+
+// import './js/components/read';
+// import './js/components/weather';
+
+// import './js/components/dataBase/auth';
+// import './js/components/dataBase/setDatabase';
+// import './js/components/dataBase/register';
+// import './js/components/dataBase/modal';
+// import './js/components/dataBase/authForm';
+// import './js/components/renderMostPopular';
+// import './js/common/markup_template';
