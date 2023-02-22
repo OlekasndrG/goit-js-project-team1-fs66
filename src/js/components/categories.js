@@ -3,7 +3,10 @@ import {onSerchByCategori} from './clickByCategoriesLink'
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const buttonCategoriesRef = document.querySelector('.button-categories')
 const ulCategoriesRef = document.querySelector('.categories-list')
-const ulCategoriesOtherRef = document.querySelector('.categories-list-others')
+const ulCategoriesOtherRef = document.querySelector('.categories-list-others');
+const categorieBox = document.querySelector('.categories-menu');
+const categorieOthersBox = document.querySelector('.categories-others-menu');
+
 const categorieItem = [];
 const categorieOther = [];
 
@@ -68,6 +71,8 @@ function onMarkupSixCategories(item, other) {
 }
 
 function categoriesIsOpen() {
+  categorieBox.classList.toggle('js-open')
+  categorieOthersBox.classList.toggle('js-others-open')
   ulCategoriesRef.classList.toggle('is-open')
   buttonCategoriesRef.classList.toggle('is-open')
   ulCategoriesOtherRef.classList.toggle('is-open')
@@ -77,6 +82,13 @@ async function searchCategories() {
   onFilterCategories(result)
 }
 
-buttonCategoriesRef.addEventListener('click', categoriesIsOpen)
+buttonCategoriesRef.addEventListener('click', categoriesIsOpen);
 
+ulCategoriesRef.addEventListener('click', categoriesIsOpen);
+ulCategoriesOtherRef.addEventListener('click', categoriesIsOpen);
 
+// Дяденко вніс зміни:
+// categorieBox.classList.toggle('js-open') в function categoriesIsOpen()
+// const categorieBox = document.querySelector('.categories-menu');
+// ulCategoriesRef.addEventListener('click', categoriesIsOpen);
+// ulCategoriesOtherRef.addEventListener('click', categoriesIsOpen);
