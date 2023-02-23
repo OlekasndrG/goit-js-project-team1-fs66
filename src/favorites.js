@@ -138,3 +138,4 @@ function isEmptyPage(newsList) {
     refs.favPage.classList.remove('is-favorite');
   }
 }
+
