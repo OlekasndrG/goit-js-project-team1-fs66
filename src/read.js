@@ -37,7 +37,6 @@ if (onGetCookie('user')) {
   if (load('readCards')) {
     renderCards(load('readCards'));
   }
-  isEmptyPage();
   findFavoriteCards(refs.readPage);
 }
 
@@ -86,6 +85,12 @@ function renderCards(array) {
 
 function renderCardsTemplate(array) {
   const datesArray = Object.keys(array);
+
+  if (!datesArray.length > 0) {
+    refs.emptyPage.classList.add('is-show');
+  } else {
+    refs.emptyPage.classList.remove('is-show');
+  }
 
   for (let date of datesArray) {
     const newsArray = array[date];
@@ -143,6 +148,7 @@ function renderCardsTemplate(array) {
     ListenAllTitleClick(titleArrayRef);
 
     refs.readPage.appendChild(accordionByDate);
+    refs.readPage.classList.add('have-read-articles');
   }
 }
 
@@ -154,9 +160,10 @@ function renderCardsDatabase(userId) {
         const cardsObject = snapshot.val();
         const cardsArray = Object.values(cardsObject).flat();
         renderCards(cardsArray);
-        isEmptyPage();
         findFavoriteCards(refs.readPage);
+        refs.emptyPage.classList.remove('is-show');
       } else {
+        refs.emptyPage.classList.add('is-show');
         console.log('No data available');
       }
     })
@@ -185,17 +192,6 @@ function cardsByDate(array) {
 
     return acc;
   }, {});
-}
-
-function isEmptyPage() {
-  const content = document.querySelector('.accordion__content');
-
-  if (!content) {
-    refs.emptyPage.classList.add('is-show');
-    refs.readPage.classList.remove('have-read-articles');
-  } else {
-    refs.readPage.classList.add('have-read-articles');
-  }
 }
 
 function makeAccordionByDateMarkup() {
