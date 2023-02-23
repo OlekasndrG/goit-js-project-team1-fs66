@@ -1,5 +1,6 @@
 .read-page-gallery {
 	margin-top: 40px;
+	min-height: 100vh;
 }
 
 .accordion__border {
