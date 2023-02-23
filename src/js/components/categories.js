@@ -84,10 +84,6 @@ async function searchCategories() {
 
 buttonCategoriesRef.addEventListener('click', categoriesIsOpen);
 
-// Дяденко вніс зміни:
-// categorieBox.classList.toggle('js-open') в function categoriesIsOpen()
-// const categorieBox = document.querySelector('.categories-menu');
-// і код нижче
 
 ulCategoriesRef.addEventListener('click', ()=>{
   ulCategoriesRef.classList.remove('is-open');

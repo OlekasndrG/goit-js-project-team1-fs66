@@ -115,8 +115,6 @@
 
 .item-news__heart-icon {
 	position: absolute;
-	/* transition-duration: 250ms;
-	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); */
 }
 
 .is-saved {
@@ -144,7 +142,6 @@
 .item-news__info {
 	display: flex;
 	justify-content: space-between;
-	/* margin-top: 20px; */
 }
 
 .item-news__info-date {
@@ -209,11 +206,6 @@
 			width: 395px;
 			height: 395px;
 		}
-
-		/* .item-news__info {
-			width: 100%;
-		} */
-
 		.item-news__wrapper-text {
 			display: flex;
 			flex-direction: column;
