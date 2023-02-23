@@ -3,6 +3,7 @@ import paginator from './pagination';
 import PaginationSearchHandler from './paginationSearchHandler';
 import { format, parse } from 'date-fns';
 import { onRenderOneCard } from './renderOneCard';
+import { classActiv } from './clickByCategoriesLink';
 
 const form = document.querySelector('form.form-search');
 const input = document.querySelector('.input-search');
@@ -13,7 +14,9 @@ const date = document.getElementById('input-picker');
 
 function onSubmit(event) {
   event.preventDefault();
-
+  if (classActiv !== null) {
+    classActiv.classList.remove('categories-activ')
+  }
   const options = {
     api: {
       method: api.articleSearchByQuery,
