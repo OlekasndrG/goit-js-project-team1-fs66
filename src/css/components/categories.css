@@ -1,6 +1,6 @@
 .section {
   margin-top: 24px;
-  padding-bottom: 60px;
+  padding-bottom: 40px;
 }
 .position-categories {
   display: flex;
@@ -69,6 +69,11 @@
   margin-bottom: 12px;
 }
 @media screen and (min-width: 768px) {
+.section {
+    margin-top: 28px;
+  padding-bottom: 48px;
+}
+
   .categories-list {
     display: flex;
     flex-direction: row;
@@ -167,6 +172,10 @@
   }
 }
 @media screen and (min-width: 1280px) {
+.section {
+  padding-bottom: 60px;
+}
+
   .categories-list.is-desktop {
     display: flex;
     flex-direction: row;
