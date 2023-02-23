@@ -130,16 +130,3 @@ function isEmptyPage(newsList) {
     refs.emptyPage.classList.add('is-show');
   }
 }
-
-// import './js/components/input';
-
-// import './js/components/read';
-// import './js/components/weather';
-
-// import './js/components/dataBase/auth';
-// import './js/components/dataBase/setDatabase';
-// import './js/components/dataBase/register';
-// import './js/components/dataBase/modal';
-// import './js/components/dataBase/authForm';
-// import './js/components/renderMostPopular';
-// import './js/common/markup_template';

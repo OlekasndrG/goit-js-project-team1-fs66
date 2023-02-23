@@ -5,11 +5,15 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" type="image/svg+xml" href="/favicon2.svg" />
+	<title>Read</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Poppins&family=Roboto&display=swap"
+		rel="stylesheet" />
 	<link rel="stylesheet" href="./css/styles.css" />
-	<title>Read</title>
 </head>
 
 <body>
@@ -35,8 +39,7 @@
 								</svg></a>
 						</li>
 						<li class="site-nav--item">
-							<a href="./read.html" class="site-nav--link current-page"> <svg width="32" height="32"
-									class="icon">
+							<a href="./read.html" class="site-nav--link current-page"> <svg width="32" height="32" class="icon">
 									<use href="./img/symbol-defs.svg#icon-book"></use>
 								</svg>Read<svg width="24" height="24" class="icon-right">
 									<use href="./img/symbol-defs.svg#icon-Frame-right"></use>
@@ -79,10 +82,12 @@
 			</button>
 		</div>
 	</header>
+	<load="partials/modalWindow.html" />
 	<div class="read-page-gallery"></div>
 	<div class="empty-page">
 		<load="partials/empty_page.html" />
 	</div>
+	<load="partials/footer.html" />
 	<script type="module" src="./read.js"></script>
 </body>
 
