@@ -341,7 +341,7 @@ body.is-open {
     position: absolute;
     bottom: 0;
     top: 0px;
-    right: -370px;
+    right: -340px;
   }
   .current-page {
     border-bottom: 1px solid var(--accent-color);
