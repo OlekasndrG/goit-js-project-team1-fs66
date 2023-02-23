@@ -4,6 +4,7 @@ const V3_API_KEY = '2CU5jHC0OFWuoOquTogFU31832ZDQk3X';
 import axios from 'axios';
 import { format, parse } from 'date-fns';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import emptyImage from '/img/imageholder.jpeg';
 
 class API {
   async articleSearchByQuery({ q, page = 1, date = null }) {
@@ -26,7 +27,7 @@ class API {
       );
 
       const articles = response.data.response.docs.map(result => {
-        let image = './img/imageholder.jpeg';
+        let image = emptyImage;
         if (result.multimedia.length > 0) {
           image = 'https://nyt.com/' + result.multimedia[0].url;
         }
@@ -121,14 +122,14 @@ class API {
 
 function getImageCategory(result) {
   if (!result.multimedia || result.multimedia.length === 0) {
-    return './img/imageholder.jpeg';
+    return emptyImage;
   }
   return getBiggestImage(result.multimedia).url;
 }
 
 function getImageByPopular(result) {
   if (!result.media || result.media.length === 0) {
-    return './img/imageholder.jpeg';
+    return emptyImage;
   }
   return getBiggestImage(result.media[0]['media-metadata']).url;
 }
