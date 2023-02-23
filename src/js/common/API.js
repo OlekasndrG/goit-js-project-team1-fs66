@@ -86,7 +86,7 @@ class API {
       { params: { 'api-key': V3_API_KEY, limit: limit, offset: offset } }
     );
     const articles = response.data.results.map(result => {
-      console.log(result);
+
       return {
         title: result.title,
         image: getImage(result),

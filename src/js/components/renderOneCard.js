@@ -93,7 +93,7 @@ function onMarkupCard(cards) {
       });
     },
     error => {
-
+      error
     }
   );
 }

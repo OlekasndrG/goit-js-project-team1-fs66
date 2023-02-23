@@ -129,7 +129,7 @@
   .categories-list-others.is-open {
     max-height: 320px;
     overflow: auto;
-    z-index: 20;
+    z-index: 200;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -141,6 +141,7 @@
     color: #4b48db;
     border-radius: 20px;
     padding: 0px 24px 8px 24px;
+    background-color: #f4f4f4;
   }
   .categories-item-tablet-other {
     font-size: 12px;
@@ -154,7 +155,7 @@
   .categories-item-tablet-other:first-child {
     margin-top: 24px;
   }
-  .categories-item-tablet:nth-child(3) {
+  .categories-activ {
     background-color: #4440f7;
     color: #f4f4f4;
   }
@@ -182,19 +183,12 @@
     position: absolute;
     top: 38px;
     left: 600px;
+    z-index: 200;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
     color: #4b48db;
     border-radius: 20px;
     padding: 0px 24px;
     background-color: #f4f4f4;
-  }
-  .categories-item-tablet:nth-child(3) {
-    background-color: #f4f4f4;
-    color: #4440f7;
-  }
-  .categories-item-tablet:nth-child(4) {
-    background-color: #4440f7;
-    color: #f4f4f4;
   }
 }
 /* Дяденко вніс зміни */
