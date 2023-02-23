@@ -1,7 +1,7 @@
 import './js/components/theme';
 import './js/components/burger-menu';
 
-import { load, save } from './js/common/local_storage';
+import { load, save } from './js/common/localStorage';
 import './js/components/burger-menu';
 import './js/components/theme';
 import {

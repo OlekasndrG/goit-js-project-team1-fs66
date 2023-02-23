@@ -1,7 +1,7 @@
 import './js/components/burger-menu';
 import './js/components/theme';
 
-import { load, save } from './js/common/local_storage';
+import { load, save } from './js/common/localStorage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import {
