@@ -25,7 +25,7 @@ class API {
 
     const articles = response.data.response.docs.map(result => {
       let image =
-        'https://textis.ru/wp-content/uploads/2017/02/kak-pisat-novosti.png';
+        'https://blog.hubspot.com/hs-fs/hubfs/404-error-page.jpg?width=595&height=400&name=404-error-page.jpg';
       if (result.multimedia.length > 0) {
         image = 'https://nyt.com/' + result.multimedia[0].url;
       }
@@ -57,7 +57,7 @@ class API {
         return {
           title: result.title,
           image:
-            'https://textis.ru/wp-content/uploads/2017/02/kak-pisat-novosti.png',
+            'https://blog.hubspot.com/hs-fs/hubfs/404-error-page.jpg?width=595&height=400&name=404-error-page.jpg',
           description: result.abstract,
           date: parse(result.published_date, 'yyyy-MM-dd', new Date()),
           url: result.url,
@@ -106,7 +106,7 @@ class API {
 
 function getImage(result) {
   if (!result.multimedia || result.multimedia.length === 0) {
-    return 'https://textis.ru/wp-content/uploads/2017/02/kak-pisat-novosti.png';
+    return 'https://blog.hubspot.com/hs-fs/hubfs/404-error-page.jpg?width=595&height=400&name=404-error-page.jpg';
   }
   return getBiggestImage(result.multimedia).url;
 }
