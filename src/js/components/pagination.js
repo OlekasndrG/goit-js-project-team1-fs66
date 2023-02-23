@@ -148,7 +148,7 @@ class Paginator {
     this.btnNext.disabled = this.currentPage === this.totalPages;
 
     this.scrollToTop();
-    this.pagesEl.querySelectorAll('.pg-link').forEach(el => {
+    this.pagesEl.querySelectorAll('.pg-item').forEach(el => {
       el.addEventListener('click', e => {
         e.preventDefault();
         const page = parseInt(el.dataset.page, 10);
@@ -162,13 +162,13 @@ class Paginator {
   renderPage(page, isActive) {
     return `<li class='pg-item${
       isActive ? ' active' : ''
-    }'><a class='pg-link' href='#' data-page='${page}'>${page}</a></li>`;
+    }'  data-page='${page}'><a class='pg-link' href='#'>${page}</a></li>`;
   }
 
   scrollToTop() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: 'instant',
     });
   }
 
