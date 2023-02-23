@@ -1,5 +1,5 @@
 // import API from '../common/weather_API.js';
-import {getWeather} from '../common/weather_API'
+import {getWeather} from '../common/weatherAPI'
 
 export async function onRenderWetherCard({lat = "48.452339", lon = '35.027011'}) {
     const Objectcard = await getWeather(lat, lon)

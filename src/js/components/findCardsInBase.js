@@ -1,4 +1,4 @@
-import { load, save } from '../common/local_storage';
+import { load, save } from '../common/localStorage';
 import { onGetCookie } from './dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { writeUserData } from './dataBase/setDatabase';
