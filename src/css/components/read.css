@@ -1,6 +1,10 @@
-.have-read-articles{
-	margin-top: 40px;
+.read-page-gallery {
+	margin-top: 60px;
+}
+
+.have-read-articles {
 	min-height: 100vh;
+	margin-bottom: 210px;
 }
 
 .accordion__border {
@@ -8,7 +12,7 @@
 	margin-bottom: 40px;
 }
 
-.accordion__by-date{
+.accordion__by-date {
 	margin-bottom: 60px;
 }
 
