@@ -9,9 +9,9 @@ class Paginator {
   api = null;
   apiHandler = null;
   iconLeft =
-    "<svg width='8px' height='13px'><use href='.img/sprite-icons.svg#vector-left'></use></svg>";
+    "<svg width='8px' height='13px'><use href='./img/sprite-icons.svg#vector-left'></use></svg>";
   iconRight =
-    "<svg width='8px' height='12px'><use href='.img/sprite-icons.svg#vector-right'></use></svg>";
+    "<svg width='8px' height='12px'><use href='./img/sprite-icons.svg#vector-right'></use></svg>";
 
   constructor(selector) {
     let opts = this.getItemsPerPage();
