@@ -2,24 +2,6 @@ import { load, save } from '../common/localStorage';
 import { onGetCookie } from './dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { writeUserData } from './dataBase/setDatabase';
-import { getAuth } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyCAzOEobkX7zjzKcWCZNu8dhUnsurUUSAw',
-  authDomain: 'news-goit-1.firebaseapp.com',
-  databaseURL:
-    'https://news-goit-1-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'news-goit-1',
-  storageBucket: 'news-goit-1.appspot.com',
-  messagingSenderId: '618434101899',
-  appId: '1:618434101899:web:58e5277fd4ec3d55f6ca8e',
-  measurementId: 'G-7YDFYWJH4S',
-};
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
 
 export function findFavoriteCards(newsListRef) {
   if (load('favCards')) {
