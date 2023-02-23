@@ -1,0 +1,70 @@
+<div class="backdrop is-hidden" data-modal>
+	<div class="modal">
+		<button class="button-exit" type="button" data-modal-close>
+			<svg width="11" height="11">
+				<use href="./img/icons_site.svg#exit"></use>
+			</svg>
+		</button>
+		<h2 class="modal--head">Create user profile</h2>
+		<div>
+			<form action="" class="modal-form" id="formReg">
+				<label for="nameReg" class="modal-form--label" name="nameReg"> Name
+					<input type="text" id="nameReg" class="modal-form--input" required>
+					<svg width="18" height="18" class="modal-form--icon">
+						<use href="./img/icons_site.svg#name"></use>
+					</svg>
+				</label>
+				<label for="passReg" class="modal-form--label">Password
+					<input type="password" id="passReg" class="modal-form--input" name="passReg" required>
+					<svg width="18" height="18" class="modal-form--icon">
+						<use href="./img/icons_site.svg#icon-password"></use>
+					</svg>
+				</label>
+				<label for="emailReg" class="modal-form--label">Email
+					<input type="email" class="modal-form--input" id="emailReg" name="emailReg" required>
+					<svg width="18" height="18" class="modal-form--icon">
+						<use href="./img/icons_site.svg#mail"></use>
+					</svg>
+				</label>
+				<label for="checkbox" class="checkbox--label">
+					<input type="checkbox" id="checkbox" class="checkbox" name="checkbox" required>
+					I agree that team #1 is the best
+					<span class="checkbox--icon">
+						<svg width="12" height="11" class="checkbox--svg">
+							<use href="./img/icons_site.svg#iconcheck"></use>
+						</svg>
+					</span>
+				</label>
+
+				<button type="submit" class="modal--submit" id="submitReg" data-submitReg>Register</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="backdrop is-hidden" data-modal-auth>
+	<div class="modal">
+		<button class="button-exit" type="button" data-modal-close-auth>
+			<svg width="11" height="11">
+				<use href="./img/icons_site.svg#exit"></use>
+			</svg>
+		</button>
+		<h2 class="modal--head">Sign In user profile</h2>
+		<div>
+			<form action="" class="modal-form" id="form">
+				<label for="email" class="modal-form--label">Email
+					<input type="email" class="modal-form--input" id="email" name="email" required>
+					<svg width="18" height="18" class="modal-form--icon">
+						<use href="./img/icons_site.svg#mail"></use>
+					</svg>
+				</label>
+				<label for="pass" class="modal-form--label">Password
+					<input type="password" id="pass" class="modal-form--input" required>
+					<svg width="18" height="18" class="modal-form--icon">
+						<use href="./img/icons_site.svg#icon-password"></use>
+					</svg>
+				</label>
+				<button type="submit" class="modal--submit submit-auth" id="submit">Login</button>
+			</form>
+		</div>
+	</div>
+</div>
