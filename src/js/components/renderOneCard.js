@@ -55,7 +55,7 @@ export async function onRenderOneCard(arrayNews) {
 											</li>`;
       if (window.matchMedia('(max-width: 768px)').matches) {
         if (index === 0) {
-          return WETHER + MARKUP;
+          return `<li class="weathers">${WETHER}</li>` + MARKUP;
         }
         return MARKUP;
       } else if (
@@ -63,7 +63,7 @@ export async function onRenderOneCard(arrayNews) {
         window.matchMedia('(max-width: 1280px)').matches
       ) {
         if (index === 0) {
-          return MARKUP + WETHER;
+          return MARKUP + `<li class="weathers">${WETHER}</li>`;
         }
         return MARKUP;
       } else {
