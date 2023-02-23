@@ -18,9 +18,9 @@ class Paginator {
     this.itemsPerPage = opts.itemsPerPage;
     this.delta = opts.delta;
     this.rootEl = document.querySelector(selector);
-    this.rootEl.innerHTML = `<button class='prev-page'>${this.iconLeft}
+    this.rootEl.innerHTML = `<button class='prev-page'><svg width='8px' height='13px'><use href='./img/sprite-icons.svg#vector-left'></use></svg>
       <span class="btn-text">Prev</span></button><ul class='pages'>
-      </ul><button class='next-page'><span class="btn-text">Next</span>${this.iconRight}</button>`;
+      </ul><button class='next-page'><span class="btn-text">Next</span><svg width='8px' height='12px'><use href='./img/sprite-icons.svg#vector-right'></use></svg></button>`;
     this.pagesEl = this.rootEl.querySelector('.pages');
     this.btnPrev = this.rootEl.querySelector('.prev-page');
     this.btnNext = this.rootEl.querySelector('.next-page');
