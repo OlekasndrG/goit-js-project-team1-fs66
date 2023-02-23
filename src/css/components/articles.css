@@ -1,3 +1,7 @@
+.section__list-news {
+	margin-top: 0;
+}
+
 .list-news {
 	display: flex;
 	flex-wrap: wrap;
