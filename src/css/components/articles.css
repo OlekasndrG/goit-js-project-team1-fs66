@@ -136,6 +136,7 @@
 }
 
 .item-news__description {
+	min-height: 44px;
 	font-style: normal;
 	font-weight: 400;
 	font-size: 14px;
