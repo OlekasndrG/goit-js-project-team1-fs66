@@ -66,7 +66,8 @@ function handleClickGallery(e) {
       cardBtn.textContent = 'Add to favorite';
       cardHeartImg.classList.remove('is-saved');
     }
-
+   
+    
     if (onGetCookie('user')) {
       const userId = onGetCookie('user');
       save('favCards', favoritesLocal);
