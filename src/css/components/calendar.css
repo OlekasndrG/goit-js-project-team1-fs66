@@ -20,17 +20,17 @@
   color: #000000;
 }
 .calendar-weeks__list {
-  min-width: 14px;
-  height: 18px;
-  font-family: var(--main-font);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1.5;
-  text-align: center;
-  letter-spacing: -0.078px;
-  color: rgba(60, 60, 67, 0.3);
-  /* margin-right: 18px; */
+
+    min-width: 14px;
+    height: 18px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+    letter-spacing: -0.078px;
+    color: rgba(60, 60, 67, 0.3);
 }
 .calendar-weeks__list:last-child {
   margin-right: 0;
@@ -44,29 +44,33 @@
   cursor: pointer;
 }
 .calendar-img__date {
-  margin-right: 48px;
-}
+
+    margin-right: 48px;
+    cursor: pointer;
 
 .icons-calendar {
   display: flex;
   align-items: end;
 }
 .calendar-days__list {
-  margin-bottom: 12px;
-  font-family: var(--main-font);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 25px;
-  text-align: center;
-  color: #000000;
+    margin-bottom: 12px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.78;
+    text-align: center;
+    color: #000000;
 }
 
 .calendar-days,
 .calendar-weeks {
-  display: flex;
-  list-style: none;
-  flex-wrap: wrap;
+
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    cursor: pointer;
+
 }
 .calendar-weeks {
   margin-bottom: 14px;
@@ -161,7 +165,6 @@
 @media screen and (min-width: 1280px) {
   .calendar-form__text {
     color: var(--main-color);
-    /* margin-left: 111px; */
     margin-right: -180px;
     font-family: var(--main-font);
     font-size: 18px;
@@ -202,89 +205,89 @@
   box-shadow: 0 10px 60px rgb(0 0 0 / 0%);
 }
 .wrapper-calendar__container {
-  cursor: default;
-  z-index: 2;
-  width: 250px;
-  background: var(--third-color);
-  border-radius: 20px;
-  margin-left: 0;
-  padding: 16px 16px 20px;
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  position: absolute;
-  right: 0;
-  overflow: hidden;
-  box-shadow: 0 10px 60px rgb(0 0 0 / 10%);
-  /* border: 1px solid blue; */
+    cursor: default;
+    z-index: 2;
+    width: 250px;
+    background: var(--third-color);
+    border-radius: 20px;
+    margin-left: 0;
+    padding: 16px 16px 20px;
+    transition-duration: .25s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+    box-shadow: 0 10px 60px rgb(0 0 0 / 10%);
+    
+
+    
 }
 
 .calendar-icon {
-  fill: var(--accent-color);
-  cursor: pointer;
-  /* cursor: url(cursor-hand.fe1b03e6.svg),pointer; */
-  /* margin-left: 12px; */
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  position: absolute;
-  right: 125px;
+    fill: var(--accent-color);
+    cursor: pointer;
+    transition-duration: .25s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    position: absolute;
+    right: 125px;
 }
-.calendar-icon.change_color {
-  z-index: 1;
-  fill: var(--third-color);
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+.calendar-icon.change_color{
+    z-index: 1;
+    fill: var(--third-color);
+    transition-duration: .25s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
 }
 .calendar-arrows {
-  z-index: 1;
-  fill: var(--accent-color);
-  cursor: pointer;
-  /* cursor: url(cursor-hand.fe1b03e6.svg),pointer; */
-  margin-left: 12px;
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  position: absolute;
-  /* right: 12px; */
-  left: 120px;
+    z-index: 1;
+    fill: var(--accent-color);
+    cursor: pointer;
+    margin-left: 12px;
+    transition-duration: .25s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    display: flex;
+    position: absolute;
+    left: 120px;
 }
-.calendar-arrows.changeUp {
-  fill: var(--third-color);
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transform: rotateX(180deg);
+.calendar-arrows.changeUp{
+    fill: var(--third-color);
+    transition-duration: .25s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    transform: rotateX(180deg);
 }
 .input-calendar {
-  width: 152px;
-  height: 31px;
-  border: 1px solid var(--accent-color);
-  text-align: center;
-  letter-spacing: 0.02em;
-  color: var(--main-color);
-  cursor: pointer;
-  /* cursor: url(cursor-hand.fe1b03e6.svg),pointer; */
-  background-color: rgba(0, 0, 0, 0);
-  border-radius: 20px;
-  justify-content: space-between;
-  align-items: center;
-  gap: 13px;
-  padding: 5px 12px;
-  font-family: Manrope;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.75;
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  position: relative;
+    width: 152px;
+    height: 31px;
+    border: 1px solid var(--accent-color);
+    text-align: center;
+    letter-spacing: .02em;
+    color: var(--main-color);
+    cursor: pointer;
+    background-color: rgba(0,0,0,0);
+    border-radius: 20px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 13px;
+    padding: 5px 12px;
+    font-family: Manrope;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.75;
+    transition-duration: .25s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    display: flex;
+    position: relative;
 }
-.input-calendar.is-Active {
-  background-color: var(--accent-color);
-  color: var(--third-color);
-  border-color: var(--accent-color);
-  border: 1px solid var(--border-color);
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+.input-calendar.is-Active{
+    background-color: var(--accent-color);
+    color: var(--third-color);
+    border-color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    transition-duration: .25s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
+
+
 }
 .input-calendar.is-Active::placeholder {
   transition-duration: 250ms;
