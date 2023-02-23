@@ -1,7 +1,12 @@
 import './js/components/theme';
 import './js/components/burger-menu';
+import './js/components/dataBase/auth';
+import './js/components/dataBase/setDatabase';
+import './js/components/dataBase/register';
+import './js/components/dataBase/modal';
+import './js/components/dataBase/authForm';
 
-import { load, save } from './js/common/local_storage';
+import { load, save } from './js/common/localStorage';
 import './js/components/burger-menu';
 import './js/components/theme';
 import {
@@ -120,13 +125,16 @@ function renderCards(array) {
   });
 
   newsList.insertAdjacentHTML('beforeend', renderedNewsArray.join(''));
+
   isEmptyPage(newsList);
 }
 
 function isEmptyPage(newsList) {
   if (newsList.hasChildNodes()) {
     refs.favPage.appendChild(newsList);
+    refs.favPage.classList.add('is-favorite');
   } else {
     refs.emptyPage.classList.add('is-show');
+    refs.favPage.classList.remove('is-favorite');
   }
 }

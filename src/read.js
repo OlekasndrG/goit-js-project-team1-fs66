@@ -6,7 +6,7 @@ import './js/components/dataBase/register';
 import './js/components/dataBase/modal';
 import './js/components/dataBase/authForm';
 
-import { load, save } from './js/common/local_storage';
+import { load, save } from './js/common/localStorage';
 import { onGetCookie } from './js/components/dataBase/getCookie';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import {
