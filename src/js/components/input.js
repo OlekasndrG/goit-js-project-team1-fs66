@@ -4,6 +4,13 @@ import PaginationSearchHandler from './paginationSearchHandler';
 import { format, parse } from 'date-fns';
 import { onRenderOneCard } from './renderOneCard';
 import { classActiv } from './clickByCategoriesLink';
+import mobile2x from '/img/mobile@2x.png';
+import tablet2x from '/img/tablet@2x.png';
+import desktop2x from '/img/desktop@2x.png';
+import mobile from '/img/mobile.png';
+import tablet from '/img/tablet.png';
+import desktop from '/img/desktop.png';
+
 
 const form = document.querySelector('form.form-search');
 const input = document.querySelector('.input-search');
@@ -53,13 +60,13 @@ function onNoResults() {
     <br>
     from this category</p>
 <picture>
-    <source srcset="./img/mobile.png 1x, ./img/mobile@2x.png 2x" type="image/png" media="(max-width: 480px)"
+    <source srcset="${mobile} 1x, ${mobile2x} 2x" type="image/png" media="(max-width: 480px)"
         alt="empty-page" />
-    <source srcset="./img/tablet.png 1x, ./img/tablet@2x.png 2x" type="image/png" media="(max-width:768px)"
+    <source srcset="${tablet} 1x, ${tablet2x} 2x" type="image/png" media="(max-width:768px)"
         alt="empty-page" />
-    <source srcset="./img/desktop.png 1x, ./img/desktop@2x.png 2x" type="image/png" media="(min-width: 1280px)"
+    <source srcset="${desktop} 1x, ${desktop2x} 2x" type="image/png" media="(min-width: 1280px)"
         alt="empty-page" />
-    <img class="empty_picture" src="./img/mobile.png" alt="empty-page" width="248" height="198" />
+    <img class="empty_picture" src="${mobile}" alt="empty-page" width="248" height="198" />
 </picture>
 
 </section>`;
