@@ -167,7 +167,7 @@
 }
 
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 768px) {
 	.list-news__item {
 		width: calc(50% - 15px);
 		min-height: 675px;
