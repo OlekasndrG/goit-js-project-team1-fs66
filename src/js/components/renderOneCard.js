@@ -53,7 +53,7 @@ export async function onRenderOneCard(arrayNews) {
 													</div>
 												</article>
 											</li>`;
-      if (window.matchMedia('(max-width: 768px)').matches) {
+      if (window.matchMedia('(max-width: 767px)').matches) {
         if (index === 0) {
           return `<li class="weathers">${WETHER}</li>` + MARKUP;
         }
