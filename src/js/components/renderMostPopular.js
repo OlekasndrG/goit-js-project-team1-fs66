@@ -4,7 +4,7 @@ import { onRenderOneCard } from './renderOneCard';
 import paginator from './pagination.js';
 
 onRanderMostPopular();
-async function onRanderMostPopular() {
+export async function onRanderMostPopular() {
   const result = await api.articleSearchMostPopular();
 
   const options = {

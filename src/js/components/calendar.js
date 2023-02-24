@@ -1,3 +1,4 @@
+import {onRanderMostPopular} from './renderMostPopular'
 const currentDate = document.querySelector('.current-date'),
 daysTag = document.querySelector('.calendar-days'),
 prevNextIcon = document.querySelectorAll('.calendar-img'),
@@ -7,7 +8,7 @@ inputBtn = document.querySelector('.calendar-arrows'),
 modalOpenBtn = document.querySelector('.input-date-form '),
 modal = document.querySelector('.wrapper-calendar'),
 iconCalendar = document.querySelector('.calendar-icon')
-
+export let inputCurrentDateValue
 
 
 modalOpenBtn.addEventListener("click", toggleInput);
@@ -32,7 +33,6 @@ function hideModal(e){
         localStorage.removeItem('VALUE');
         localStorage.removeItem('Date_current');
     }
-    
 
 }
 
@@ -126,7 +126,8 @@ const renderCalendar = () => {
         
 
         // збереження дати в локальному сховищі
-        let inputCurrentDateValue = document.querySelector('.input-calendar').value;
+        inputCurrentDateValue = document.querySelector('.input-calendar').value;
+        onRanderMostPopular(inputCurrentDateValue)
         localStorage.setItem('Date_current', JSON.stringify(inputCurrentDateValue));
     })
     

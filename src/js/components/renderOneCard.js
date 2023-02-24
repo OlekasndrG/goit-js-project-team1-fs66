@@ -2,18 +2,25 @@ const ulCardList = document.querySelector('.list-news');
 import { format, parse } from 'date-fns';
 import { findFavoriteCards, findReadCards } from './findCardsInBase';
 import { newsListRef } from './articles';
+import { inputCurrentDateValue } from './calendar'
 
 import { onRenderWetherCard } from './weather';
 const weatherRef = document.querySelector('.weather');
 export async function onRenderOneCard(arrayNews) {
   const WETHER = await onRenderWetherCard({});
+  let array
+  if (inputCurrentDateValue) {
+    array = arrayNews.filter(card => {
+      return format(card.date, 'yyyy/MM/dd') === format(parse(inputCurrentDateValue, 'yyyy/MM/dd', new Date()), 'yyyy/MM/dd')})
 
-  const arrayCard = arrayNews
-    .map((news, index) => {
+  } else{
+    array = arrayNews
+  }
+  const arrayCard = array.map((news, index) => {
       const { image, section, title, description, date, url } = news;
       function truncateString(str) {
         return str.length > 75 ? str.slice(0, 75) + '...' : str;
-      }
+      }      
       let limitString = truncateString(description);
 
       const MARKUP = `<li class="list-news__item">
@@ -89,7 +96,9 @@ function onMarkupCard(cards) {
       };
 
       onRenderWetherCard(geolocationNew).then(dataNew => {
+        if (cards) {
         document.querySelector('.weathers').innerHTML = `${dataNew}`;
+        }
       });
     },
     error => {
