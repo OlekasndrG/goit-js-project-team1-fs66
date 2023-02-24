@@ -14,7 +14,7 @@ const categorieOther = [];
 searchCategories()
 onSerchByCategori()
 function onFilterCategories(arrayNews) {
-  // const arrayCategories = arrayNews.map(categorie => {  })
+
       if (window.matchMedia("(max-width: 768px)").matches) {
         const arrayCategories = arrayNews.map(categorie => `<li class="categories-item"><a class="categories-link">${categorie.display_name}</a></li>`).join('')
 

@@ -1,5 +1,6 @@
 const V2_API_KEY = 'lN1jAQVvVGOPSqcIQoMHMLLJA9oE1Rka';
 const V3_API_KEY = '2CU5jHC0OFWuoOquTogFU31832ZDQk3X';
+const V1_API_KEY = 'FoTuvAlXuYDVQYZPH6OxOy31ekAM4HNA';
 // 3CItmRm8j68GAL0hCexL4TtbIz43N2Mu
 import axios from 'axios';
 import { format, parse } from 'date-fns';
@@ -61,6 +62,41 @@ class API {
       const response = await axios.get(
         'https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json',
         { params: { 'api-key': V2_API_KEY } }
+      );
+
+      const articles = response.data.results.map(result => {
+        return {
+          title: result.title,
+          image: getImageByPopular(result),
+          description: result.abstract,
+          date: parse(result.published_date, 'yyyy-MM-dd', new Date()),
+          url: result.url,
+          section: result.section,
+        };
+      });
+
+      return {
+        articles: articles,
+        total: response.data.num_results,
+      };
+    } catch (error) {
+      console.log(error);
+      handleError(error.response);
+      return {
+        articles: [],
+        total: 0,
+      };
+    }
+  }
+
+  async articleSearchArchiv(date) {
+    try {
+      const year = format(parse(date, 'yyyy/MM/dd', new Date()), 'yyyy');
+      const month = format(parse(date, 'yyyy/MM/dd', new Date()), 'MM');
+      const response = await axios.get(
+        `https://api.nytimes.com/svc/archive/v1/2019/1.json?api-key=FoTuvAlXuYDVQYZPH6OxOy31ekAM4HNA`,
+        { params: { headers: {"Access-Control-Allow-Origin": '*'}
+      } }
       );
 
       const articles = response.data.results.map(result => {

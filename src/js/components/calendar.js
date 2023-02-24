@@ -1,4 +1,4 @@
-import {onRanderMostPopular} from './renderMostPopular'
+import {onSearchDataAndCategorie} from './dataAndCategorie'
 const currentDate = document.querySelector('.current-date'),
 daysTag = document.querySelector('.calendar-days'),
 prevNextIcon = document.querySelectorAll('.calendar-img'),
@@ -127,7 +127,7 @@ const renderCalendar = () => {
 
         // збереження дати в локальному сховищі
         inputCurrentDateValue = document.querySelector('.input-calendar').value;
-        onRanderMostPopular(inputCurrentDateValue)
+        onSearchDataAndCategorie(inputCurrentDateValue)
         localStorage.setItem('Date_current', JSON.stringify(inputCurrentDateValue));
     })
     
