@@ -1,6 +1,9 @@
 .empty-page {
-	display: none;
+	position: absolute;
 	height: 100vh;
+	transition: opacity 0.5s ease-in-out;
+	opacity: 0;
+	pointer-events: none;
 }
 
 .empty {
@@ -9,8 +12,9 @@
 	justify-content: center;
 	margin-bottom: 59px;
 }
+
 .empty_main {
-		text-align: center;
+	text-align: center;
 	align-content: center;
 	justify-content: center;
 	margin-bottom: 59px;
@@ -19,7 +23,8 @@
 }
 
 .is-show {
-	display: block;
+	position: relative;
+	opacity: 1;
 }
 
 .empty_title {
