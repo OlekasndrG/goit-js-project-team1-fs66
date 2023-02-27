@@ -14,6 +14,7 @@
 
 .is-disappered {
 	opacity: 0;
+	pointer-events: none;
 }
 
 .is-removed {
