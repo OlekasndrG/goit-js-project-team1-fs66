@@ -31,10 +31,7 @@ const refs = {
 
 cleanLocalStorageFav();
 
-if (load('favCards')) {
-  renderCards(load('favCards'));
-  findFavoriteCards(refs.favPage);
-}
+renderCardByCondition();
 
 refs.favPage.addEventListener('click', handleClickGallery);
 
@@ -49,6 +46,7 @@ function handleClickGallery(e) {
 
   if (targetElement.nodeName === 'P' || targetElement.nodeName === 'DIV') {
     const card = targetElement.closest('.item-news__article');
+    const cardItem = card.closest('.list-news__item');
     const cardObject = makeCardObject(card);
     const cardBtn = card.querySelector('.item-news__add-text');
     const cardHeartImg = card.querySelector('#icon-heart');
@@ -56,18 +54,17 @@ function handleClickGallery(e) {
     const indexArray = favoritesLocal.map(el => el.title);
     const index = indexArray.indexOf(cardObject.title);
 
-    if (!cardObject.title) return;
-    if (index == -1) {
-      favoritesLocal.unshift(cardObject);
-      cardHeartImg.classList.add('is-saved');
-      cardBtn.textContent = 'Remove from favorite';
-    } else {
-      favoritesLocal.splice(index, 1);
-      cardBtn.textContent = 'Add to favorite';
-      cardHeartImg.classList.remove('is-saved');
-    }
-   
-    
+    favoritesLocal.splice(index, 1);
+    cardBtn.textContent = 'Add to favorite';
+    cardHeartImg.classList.remove('is-saved');
+    card.classList.add('is-disappered');
+
+    setTimeout(() => {
+      cardItem.classList.add('is-removed');
+    }, 700);
+
+    isEmptyList();
+
     if (onGetCookie('user')) {
       const userId = onGetCookie('user');
       save('favCards', favoritesLocal);
@@ -82,7 +79,6 @@ function handleClickGallery(e) {
 function renderCards(array) {
   const newsList = document.createElement('ul');
   newsList.classList.add('list-news');
-  newsList.classList.add('favorite-flex-start');
 
   const renderedNewsArray = array.map(el => {
     const { image, section, title, limitString, date, url } = el;
@@ -140,3 +136,17 @@ function isEmptyPage(newsList) {
   }
 }
 
+function isEmptyList() {
+  if (load('favCards').length === 1) {
+    setTimeout(() => {
+      refs.emptyPage.classList.add('is-show');
+    }, 500);
+  }
+}
+
+function renderCardByCondition() {
+  if (load('favCards')) {
+    renderCards(load('favCards'));
+    findFavoriteCards(refs.favPage);
+  }
+}

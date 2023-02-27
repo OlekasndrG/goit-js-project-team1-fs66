@@ -1,8 +1,23 @@
+.body {
+	position: relative;
+}
+
 .is-favorite {
 	margin-top: 60px;
 	margin-bottom: 210px;
 }
 
-.favorite-flex-start {
-	justify-content: flex-start;
+.item-news__article {
+	opacity: 1;
+	transition: opacity 350ms ease-in;
+}
+
+.is-disappered {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.is-removed {
+	position: absolute;
+	transform: translateY(-700px);
 }

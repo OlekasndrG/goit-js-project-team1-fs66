@@ -94,6 +94,10 @@
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.item-news__add-to-favorite:hover{
+	transform: scale(1.01);
+}
+
 .item-news__add-text {
 	user-select: none;
 	margin: 0;
@@ -166,6 +170,10 @@
 	color: var(--accent-color);
 }
 
+.item-news__info-link:hover {
+	text-decoration: underline;
+}
+
 
 @media screen and (min-width: 768px) {
 	.list-news__item {
@@ -211,6 +219,7 @@
 			width: 395px;
 			height: 395px;
 		}
+
 		.item-news__wrapper-text {
 			display: flex;
 			flex-direction: column;
