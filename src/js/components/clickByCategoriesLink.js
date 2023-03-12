@@ -3,7 +3,6 @@ import api from '../common/API';
 import paginator from './pagination';
 const data = localStorage.getItem('Date_current');
 const inputEl = document.getElementById('search');
-console.log(inputEl);
 export let classActiv = null;
 
 export function onSerchByCategori() {
